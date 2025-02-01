@@ -50,5 +50,6 @@
         <!-- Style -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered</item>
         <item name="popupTheme">@style/Widget.Material3.PopupMenu.Overflow</item>
+        <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
     </style>
 </resources>
