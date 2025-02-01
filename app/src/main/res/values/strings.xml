@@ -2,4 +2,8 @@
     <string name="app_name">Centsation</string>
 
     <string name="empty_indicator">You have no savings to display,\n please add one first.</string>
+
+    <string name="dialog_title_add_saving">New Saving</string>
+    <string name="dialog_button_close">Close</string>
+    <string name="dialog_button_add">Add</string>
 </resources>
