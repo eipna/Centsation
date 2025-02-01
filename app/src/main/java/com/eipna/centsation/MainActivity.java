@@ -3,10 +3,13 @@ package com.eipna.centsation;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.eipna.centsation.databinding.ActivityMainBinding;
@@ -33,9 +36,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAddSavingDialog() {
+        @SuppressLint("InflateParams")
+        View addSavingDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_saving, null);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_add_saving)
-                .setIcon(R.drawable.ic_add)
+                .setView(addSavingDialogView)
                 .setNegativeButton(R.string.dialog_button_close, null)
                 .setPositiveButton(R.string.dialog_button_add, null);
 
