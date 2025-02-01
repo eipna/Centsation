@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Centsation</string>
+
+    <string name="empty_indicator">You have no savings to display,\n please add one first.</string>
 </resources>
