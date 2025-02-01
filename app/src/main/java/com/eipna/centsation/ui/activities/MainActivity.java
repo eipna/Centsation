@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.archive) startActivity(new Intent(this, ArchiveActivity.class));
         if (item.getItemId() == R.id.settings) startActivity(new Intent(this, SettingsActivity.class));
         return true;
     }

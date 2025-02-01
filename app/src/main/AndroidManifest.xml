@@ -13,9 +13,13 @@
         android:theme="@style/Theme.Centsation"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.SettingsActivity"
+            android:name=".ui.activities.ArchiveActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.activities.MainActivity" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
