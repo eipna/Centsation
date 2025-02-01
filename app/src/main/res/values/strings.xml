@@ -4,7 +4,7 @@
     <string name="empty_indicator">You have no savings to display,\n please add one first.</string>
 
     <string name="field_saving_title">Title</string>
-    <string name="field_saving_current_amount">Current Saving</string>
+    <string name="field_saving_current_amount">Current Amount</string>
     <string name="field_saving_goal">Goal (Optional)</string>
     <string name="field_saving_notes">Notes (Optional)</string>
 
