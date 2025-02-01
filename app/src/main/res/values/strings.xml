@@ -10,6 +10,6 @@
     <string name="field_saving_notes">Notes (Optional)</string>
 
     <string name="dialog_title_add_saving">New Saving</string>
-    <string name="dialog_button_close">Close</string>
+    <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_add">Add</string>
 </resources>

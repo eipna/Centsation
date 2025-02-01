@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_add_saving)
                 .setView(addSavingDialogView)
-                .setNeutralButton(R.string.dialog_button_close, null)
+                .setIcon(R.drawable.ic_add)
+                .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_add, null);
 
         AlertDialog dialog = builder.create();
