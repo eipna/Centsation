@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         app:title="@string/preference_category_about"
@@ -9,6 +10,17 @@
             app:title="@string/preference_app_license"
             app:summary="@string/app_license"
             app:iconSpaceReserved="false"/>
+
+        <Preference
+            app:key="app_source_code"
+            app:title="@string/preference_app_source_code_title"
+            app:summary="@string/preference_app_source_code_summary"
+            app:iconSpaceReserved="false">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_app_source_code"/>
+        </Preference>
 
         <Preference
             app:key="app_version"
