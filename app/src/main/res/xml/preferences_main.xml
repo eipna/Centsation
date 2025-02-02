@@ -23,6 +23,17 @@
         </Preference>
 
         <Preference
+            app:key="app_author"
+            app:title="@string/preference_app_author"
+            app:summary="@string/app_author"
+            app:iconSpaceReserved="false">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/link_app_author"/>
+        </Preference>
+
+        <Preference
             app:key="app_version"
             app:title="@string/preference_app_version"
             app:iconSpaceReserved="false"/>

@@ -2,8 +2,10 @@
     <string name="app_name">Centsation</string>
     <string name="app_easter_egg">Why are you here?</string>
     <string name="app_license">GNU General Public License v3.0</string>
+    <string name="app_author">eipna</string>
 
     <string name="link_app_source_code">https://github.com/eipna/Centsation</string>
+    <string name="link_app_author">https://github.com/eipna</string>
 
     <string name="toolbar_settings">Settings</string>
     <string name="toolbar_archive">Archive</string>
@@ -31,4 +33,5 @@
     <string name="preference_app_license">License</string>
     <string name="preference_app_source_code_title">Source Code</string>
     <string name="preference_app_source_code_summary">Check the Github repository and the README</string>
+    <string name="preference_app_author">Author</string>
 </resources>
