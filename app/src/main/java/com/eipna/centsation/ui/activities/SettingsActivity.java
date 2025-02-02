@@ -1,10 +1,15 @@
 package com.eipna.centsation.ui.activities;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.eipna.centsation.R;
@@ -41,9 +46,36 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
+
+        private Preference appVersion;
+
+        private int easterEggCounter;
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences_main, rootKey);
+            setPreferences();
+
+            try {
+                PackageManager packageManager = requireContext().getPackageManager();
+                PackageInfo packageInfo = packageManager.getPackageInfo(requireContext().getPackageName(), 0);
+                appVersion.setSummary(packageInfo.versionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            appVersion.setOnPreferenceClickListener(preference -> {
+                easterEggCounter++;
+                if (easterEggCounter == 7) {
+                    String easterEggMessage = getString(R.string.app_easter_egg);
+                    Toast.makeText(requireContext(), easterEggMessage, Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            });
+        }
+
+        private void setPreferences() {
+            appVersion = findPreference("app_version");
         }
     }
 }
