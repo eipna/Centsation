@@ -5,6 +5,12 @@
         app:iconSpaceReserved="false">
 
         <Preference
+            app:key="app_license"
+            app:title="@string/preference_app_license"
+            app:summary="@string/app_license"
+            app:iconSpaceReserved="false"/>
+
+        <Preference
             app:key="app_version"
             app:title="@string/preference_app_version"
             app:iconSpaceReserved="false"/>
