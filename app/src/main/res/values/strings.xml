@@ -4,7 +4,8 @@
     <string name="toolbar_settings">Settings</string>
     <string name="toolbar_archive">Archive</string>
 
-    <string name="empty_indicator">You have no savings to display,\n please add one first.</string>
+    <string name="empty_indicator_main">You have no savings to display,\n please add one first.</string>
+    <string name="empty_indicator_archive">You have no savings\n archived at the moment.</string>
 
     <string name="field_error_required">*required</string>
     <string name="field_saving_title">Title</string>

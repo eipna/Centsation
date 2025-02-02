@@ -20,4 +20,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/empty_indicator"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_inventory"
+            tools:ignore="ContentDescription"
+            app:tint="?attr/colorTertiary" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:text="@string/empty_indicator_archive"
+            android:textSize="18sp"
+            android:alpha="0.7"
+            android:layout_marginTop="4dp"
+            android:textColor="?attr/colorOnSurface"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
