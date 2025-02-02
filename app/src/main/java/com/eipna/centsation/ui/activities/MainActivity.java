@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
     private void showAddSavingDialog() {
         @SuppressLint("InflateParams")
         View addSavingDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_saving, null);
-        TextInputLayout savingTitleLayout = addSavingDialogView.findViewById(R.id.field_saving_title_layout);
+        TextInputLayout savingTitleLayout = addSavingDialogView.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingCurrentAmountLayout = addSavingDialogView.findViewById(R.id.field_saving_current_amount_layout);
-        TextInputEditText savingTitleInput = addSavingDialogView.findViewById(R.id.field_saving_title_text);
+        TextInputEditText savingTitleInput = addSavingDialogView.findViewById(R.id.field_saving_name_text);
         TextInputEditText savingCurrentAmountInput = addSavingDialogView.findViewById(R.id.field_saving_current_amount_text);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)

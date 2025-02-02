@@ -8,7 +8,7 @@
     <string name="empty_indicator_archive">You have no savings\n archived at the moment.</string>
 
     <string name="field_error_required">*required</string>
-    <string name="field_saving_title">Title</string>
+    <string name="field_saving_name">Name</string>
     <string name="field_saving_current_amount">Current Amount</string>
     <string name="field_saving_goal">Goal (Optional)</string>
     <string name="field_saving_notes">Notes (Optional)</string>
