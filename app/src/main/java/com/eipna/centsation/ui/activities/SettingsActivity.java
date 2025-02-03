@@ -40,8 +40,6 @@ public class SettingsActivity extends BaseActivity {
 
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
