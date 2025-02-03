@@ -10,7 +10,7 @@ import com.eipna.centsation.R;
 import com.eipna.centsation.databinding.ActivityArchiveBinding;
 import com.google.android.material.shape.MaterialShapeDrawable;
 
-public class ArchiveActivity extends AppCompatActivity {
+public class ArchiveActivity extends BaseActivity {
 
     private ActivityArchiveBinding binding;
 
