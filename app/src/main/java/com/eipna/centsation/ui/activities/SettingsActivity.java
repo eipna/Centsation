@@ -70,7 +70,7 @@ public class SettingsActivity extends BaseActivity {
 
         private int easterEggCounter;
 
-        private String listThemePrefs;
+        private String themePrefs;
         private boolean dynamicColorsPrefs;
 
         @Override
@@ -88,8 +88,8 @@ public class SettingsActivity extends BaseActivity {
 
             listTheme.setEntries(Theme.getValues());
             listTheme.setEntryValues(Theme.getValues());
-            listTheme.setSummary(listThemePrefs);
-            listTheme.setValue(listThemePrefs);
+            listTheme.setSummary(themePrefs);
+            listTheme.setValue(themePrefs);
             listTheme.setOnPreferenceChangeListener((preference, newValue) -> {
                 String selectedTheme = (String) newValue;
                 if (selectedTheme.equals(Theme.LIGHT.VALUE)) {
@@ -134,7 +134,7 @@ public class SettingsActivity extends BaseActivity {
         private void setPreferences() {
             sharedPreferencesUtil = new SharedPreferencesUtil(requireContext());
 
-            listThemePrefs = sharedPreferencesUtil.getString("theme", Theme.SYSTEM.VALUE);
+            themePrefs = sharedPreferencesUtil.getString("theme", Theme.SYSTEM.VALUE);
             dynamicColorsPrefs = sharedPreferencesUtil.getBoolean("dynamic_colors", false);
 
             listTheme = findPreference("theme");
