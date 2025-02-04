@@ -29,6 +29,7 @@
 
     <!-- App Preference Category -->
     <string name="preference_category_app">App</string>
+    <string name="preference_list_theme">Theme</string>
 
     <!--About Preference Category -->
     <string name="preference_category_about">About</string>

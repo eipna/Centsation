@@ -6,6 +6,10 @@
         app:iconSpaceReserved="false"
         app:allowDividerBelow="true">
 
+        <ListPreference
+            app:key="theme"
+            app:title="@string/preference_list_theme"
+            app:iconSpaceReserved="false"/>
     </PreferenceCategory>
 
     <PreferenceCategory
