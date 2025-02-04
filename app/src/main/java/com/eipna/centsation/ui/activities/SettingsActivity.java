@@ -11,11 +11,15 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
+import com.eipna.centsation.util.SharedPreferencesUtil;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
 
@@ -53,15 +57,43 @@ public class SettingsActivity extends BaseActivity {
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
+        private SharedPreferencesUtil sharedPreferencesUtil;
+
+        private ListPreference listTheme;
+
         private Preference appVersion;
         private Preference appLicense;
 
         private int easterEggCounter;
 
+        private String listThemePrefs;
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences_main, rootKey);
             setPreferences();
+
+            listTheme.setEntries(Theme.getValues());
+            listTheme.setEntryValues(Theme.getValues());
+            listTheme.setSummary(listThemePrefs);
+            listTheme.setValue(listThemePrefs);
+            listTheme.setOnPreferenceChangeListener((preference, newValue) -> {
+                String selectedTheme = (String) newValue;
+                if (selectedTheme.equals(Theme.LIGHT.VALUE)) {
+                    sharedPreferencesUtil.setString("theme", Theme.LIGHT.VALUE);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                } else if (selectedTheme.equals(Theme.DARK.VALUE)) {
+                    sharedPreferencesUtil.setString("theme", Theme.DARK.VALUE);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else if (selectedTheme.equals(Theme.BATTERY.VALUE)) {
+                    sharedPreferencesUtil.setString("theme", Theme.BATTERY.VALUE);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                } else if (selectedTheme.equals(Theme.SYSTEM.VALUE)) {
+                    sharedPreferencesUtil.setString("theme", Theme.SYSTEM.VALUE);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                }
+                return true;
+            });
 
             try {
                 PackageManager packageManager = requireContext().getPackageManager();
@@ -87,6 +119,11 @@ public class SettingsActivity extends BaseActivity {
         }
 
         private void setPreferences() {
+            sharedPreferencesUtil = new SharedPreferencesUtil(requireContext());
+
+            listThemePrefs = sharedPreferencesUtil.getString("theme", Theme.SYSTEM.VALUE);
+
+            listTheme = findPreference("theme");
             appVersion = findPreference("app_version");
             appLicense = findPreference("app_license");
         }
