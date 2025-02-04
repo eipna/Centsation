@@ -15,11 +15,13 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
 import com.eipna.centsation.util.SharedPreferencesUtil;
+import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
 
@@ -61,17 +63,28 @@ public class SettingsActivity extends BaseActivity {
 
         private ListPreference listTheme;
 
+        private SwitchPreferenceCompat switchDynamicColors;
+
         private Preference appVersion;
         private Preference appLicense;
 
         private int easterEggCounter;
 
         private String listThemePrefs;
+        private boolean dynamicColorsPrefs;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences_main, rootKey);
             setPreferences();
+
+            switchDynamicColors.setVisible(DynamicColors.isDynamicColorAvailable());
+            switchDynamicColors.setChecked(dynamicColorsPrefs);
+            switchDynamicColors.setOnPreferenceChangeListener((preference, newValue) -> {
+                sharedPreferencesUtil.setBoolean("dynamic_colors", (boolean) newValue);
+                requireActivity().recreate();
+                return true;
+            });
 
             listTheme.setEntries(Theme.getValues());
             listTheme.setEntryValues(Theme.getValues());
@@ -122,8 +135,10 @@ public class SettingsActivity extends BaseActivity {
             sharedPreferencesUtil = new SharedPreferencesUtil(requireContext());
 
             listThemePrefs = sharedPreferencesUtil.getString("theme", Theme.SYSTEM.VALUE);
+            dynamicColorsPrefs = sharedPreferencesUtil.getBoolean("dynamic_colors", false);
 
             listTheme = findPreference("theme");
+            switchDynamicColors = findPreference("dynamic_colors");
             appVersion = findPreference("app_version");
             appLicense = findPreference("app_license");
         }
