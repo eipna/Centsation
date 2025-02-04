@@ -10,6 +10,13 @@
             app:key="theme"
             app:title="@string/preference_list_theme"
             app:iconSpaceReserved="false"/>
+
+        <SwitchPreferenceCompat
+            app:key="dynamic_colors"
+            app:iconSpaceReserved="false"
+            app:widgetLayout="@layout/view_preference_switch"
+            app:title="@string/preference_switch_dynamic_colors_title"
+            app:summary="@string/preference_switch_dynamic_colors_summary"/>
     </PreferenceCategory>
 
     <PreferenceCategory
