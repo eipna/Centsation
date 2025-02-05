@@ -142,7 +142,7 @@ public enum Currency {
     TANZANIAN_SHILLING("Tanzanian Shilling", "TZS", "TSh"),
     THAI_BAHT("Thai Baht", "THB", "฿"),
     TOGOLESE_CFA_FRANC("Togolese CFA Franc", "XOF", "CFA"),
-    TONGAN_PAʻANGA("Tongan Paʻanga", "TOP", "T$"),
+    TONGAN_PAANGA("Tongan Paʻanga", "TOP", "T$"),
     TRINIDAD_AND_TOBAGO_DOLLAR("Trinidad and Tobago Dollar", "TTD", "$"),
     TUNISIAN_DINAR("Tunisian Dinar", "TND", "د.ت"),
     TURKISH_LIRA("Turkish Lira", "TRY", "₺"),
