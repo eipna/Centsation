@@ -172,4 +172,20 @@ public enum Currency {
         this.CODE = code;
         this.SYMBOL = symbol;
     }
+
+    public static String[] getNames() {
+        String[] names = new String[values().length];
+        for (int i = 0; i < values().length; i++) {
+            names[i] = String.format("%s (%s)", values()[i].NAME, values()[i].SYMBOL);
+        }
+        return names;
+    }
+
+    public static String[] getCodes() {
+        String[] codes = new String[values().length];
+        for (int i = 0; i < values().length; i++) {
+            codes[i] = values()[i].CODE;
+        }
+        return codes;
+    }
 }
