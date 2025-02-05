@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -16,6 +17,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
 import com.eipna.centsation.util.SharedPreferencesUtil;
@@ -60,6 +62,7 @@ public class SettingsActivity extends BaseActivity {
         private SharedPreferencesUtil sharedPreferencesUtil;
 
         private ListPreference listTheme;
+        private ListPreference listCurrency;
 
         private SwitchPreferenceCompat switchDynamicColors;
 
@@ -69,12 +72,23 @@ public class SettingsActivity extends BaseActivity {
         private int easterEggCounter;
 
         private String themePrefs;
+        private String currencyPrefs;
         private boolean dynamicColorsPrefs;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences_main, rootKey);
             setPreferences();
+
+            listCurrency.setEntries(Currency.getNames());
+            listCurrency.setEntryValues(Currency.getCodes());
+            listCurrency.setValue(currencyPrefs);
+            listCurrency.setSummary(Currency.getName(currencyPrefs));
+            listCurrency.setOnPreferenceChangeListener((preference, newValue) -> {
+                sharedPreferencesUtil.setString("currency", (String) newValue);
+                listCurrency.setSummary(Currency.getName((String) newValue));
+                return true;
+            });
 
             switchDynamicColors.setVisible(DynamicColors.isDynamicColorAvailable());
             switchDynamicColors.setChecked(dynamicColorsPrefs);
@@ -132,9 +146,11 @@ public class SettingsActivity extends BaseActivity {
         private void setPreferences() {
             sharedPreferencesUtil = new SharedPreferencesUtil(requireContext());
 
+            currencyPrefs = sharedPreferencesUtil.getString("currency", Currency.UNITED_STATES_DOLLAR.CODE);
             themePrefs = sharedPreferencesUtil.getString("theme", Theme.SYSTEM.VALUE);
             dynamicColorsPrefs = sharedPreferencesUtil.getBoolean("dynamic_colors", false);
 
+            listCurrency = findPreference("currency");
             listTheme = findPreference("theme");
             switchDynamicColors = findPreference("dynamic_colors");
             appVersion = findPreference("app_version");

@@ -17,6 +17,11 @@
             app:widgetLayout="@layout/view_preference_switch"
             app:title="@string/preference_switch_dynamic_colors_title"
             app:summary="@string/preference_switch_dynamic_colors_summary"/>
+
+        <ListPreference
+            app:key="currency"
+            app:title="@string/preference_list_currency"
+            app:iconSpaceReserved="false"/>
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -173,6 +173,15 @@ public enum Currency {
         this.SYMBOL = symbol;
     }
 
+    public static String getName(String code) {
+        for (Currency currency : currencies) {
+            if (currency.CODE.equals(code)) {
+                return currency.NAME;
+            }
+        }
+        return null;
+    }
+
     public static String[] getNames() {
         String[] names = new String[values().length];
         for (int i = 0; i < values().length; i++) {
