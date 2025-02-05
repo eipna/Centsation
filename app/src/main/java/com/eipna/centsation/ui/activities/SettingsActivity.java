@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -158,7 +156,7 @@ public class SettingsActivity extends BaseActivity {
             StringBuilder stringBuilder = new StringBuilder();
             AssetManager assetManager = requireContext().getAssets();
 
-            try (InputStream inputStream = assetManager.open("LICENSE.txt")) {
+            try (InputStream inputStream = assetManager.open("license.txt")) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
