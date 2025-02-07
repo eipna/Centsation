@@ -47,7 +47,7 @@
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
 
-        <!-- Styles -->
+        <!-- Style -->
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered</item>
         <item name="popupTheme">@style/Widget.Material3.PopupMenu</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
@@ -58,8 +58,8 @@
         <item name="backgroundTint">?attr/colorSurfaceContainerHigh</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="dialogCornerRadius">28dp</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog</item>
         <item name="buttonBarNeutralButtonStyle">@style/Widget.Material3.Button.TextButton.Dialog.Flush</item>
     </style>
 </resources>
