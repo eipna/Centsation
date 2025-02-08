@@ -1,10 +1,12 @@
 package com.eipna.centsation.ui.activities;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.databinding.ActivityArchiveBinding;
@@ -28,5 +30,11 @@ public class ArchiveActivity extends BaseActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) finishAfterTransition();
+        return true;
     }
 }
