@@ -7,6 +7,7 @@ public class Saving {
     private String name;
     private double currentAmount;
     private double goal;
+    private String notes;
     private boolean isArchived;
 
     public Saving() {
@@ -14,6 +15,7 @@ public class Saving {
         this.name = null;
         this.currentAmount = 0.0;
         this.goal = 0.0;
+        this.notes = null;
         this.isArchived = false;
     }
 
@@ -55,5 +57,13 @@ public class Saving {
 
     public void setArchived(boolean archived) {
         isArchived = archived;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getNotes() {
+        return notes;
     }
 }
