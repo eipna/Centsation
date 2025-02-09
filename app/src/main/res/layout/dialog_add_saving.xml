@@ -50,21 +50,4 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/field_saving_notes_layout"
-        android:hint="@string/field_saving_notes"
-        android:layout_marginTop="4dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="120"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/field_saving_notes_text"
-            android:maxLength="120"
-            android:inputType="textMultiLine|textAutoComplete"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

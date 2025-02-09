@@ -7,7 +7,6 @@ public class Saving {
     private String name;
     private double currentAmount;
     private double goal;
-    private String notes;
     private boolean isArchived;
 
     public Saving() {
@@ -15,7 +14,6 @@ public class Saving {
         this.name = null;
         this.currentAmount = 0.0;
         this.goal = 0.0;
-        this.notes = null;
         this.isArchived = false;
     }
 
@@ -49,14 +47,6 @@ public class Saving {
 
     public void setGoal(double goal) {
         this.goal = goal;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public boolean isArchived() {

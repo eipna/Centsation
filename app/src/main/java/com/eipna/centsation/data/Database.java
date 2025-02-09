@@ -16,7 +16,6 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_SAVING_NAME = "name";
     public static final String COLUMN_SAVING_CURRENT_AMOUNT = "current_amount";
     public static final String COLUMN_SAVING_GOAL = "goal";
-    public static final String COLUMN_SAVING_NOTES = "notes";
     public static final String COLUMN_SAVING_IS_ARCHIVED = "is_archived";
 
     public Database(@Nullable Context context) {
@@ -30,7 +29,6 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_SAVING_NAME + " TEXT, " +
                 COLUMN_SAVING_CURRENT_AMOUNT + " REAL, " +
                 COLUMN_SAVING_GOAL + " REAL, " +
-                COLUMN_SAVING_NOTES + " TEXT, " +
                 COLUMN_SAVING_IS_ARCHIVED + " INTEGER)";
         sqLiteDatabase.execSQL(createSavingTable);
     }
