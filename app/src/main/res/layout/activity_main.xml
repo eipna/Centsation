@@ -50,12 +50,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_saving"
-        android:layout_gravity="right|bottom"
+        android:layout_gravity="end|bottom"
         android:src="@drawable/ic_add"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        tools:ignore="ContentDescription,RtlHardcoded" />
+        android:importantForAccessibility="no" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
