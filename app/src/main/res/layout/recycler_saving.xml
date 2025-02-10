@@ -33,7 +33,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -61,6 +61,17 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/saving_goal"
                 android:text="1000.0"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="16sp"
+                android:layout_marginEnd="4dp"
+                app:fontFamily="sans-serif-medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/saving_percent"
+                android:text="(100.0%)"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp"
                 app:fontFamily="sans-serif-medium"
@@ -129,7 +140,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 
