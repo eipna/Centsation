@@ -37,4 +37,10 @@ public class ArchiveActivity extends BaseActivity {
         if (item.getItemId() == android.R.id.home) finishAfterTransition();
         return true;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
 }
