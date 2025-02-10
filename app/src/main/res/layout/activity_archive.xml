@@ -40,7 +40,8 @@
         <com.google.android.material.textview.MaterialTextView
             android:text="@string/empty_indicator_archive"
             android:textSize="18sp"
-            android:alpha="0.7"
+            android:alpha="0.8"
+            app:fontFamily="sans-serif-medium"
             android:layout_marginTop="4dp"
             android:textColor="?attr/colorOnSurface"
             android:textAlignment="center"
