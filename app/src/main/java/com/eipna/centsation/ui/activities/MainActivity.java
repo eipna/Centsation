@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
+import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.databinding.ActivityMainBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
@@ -143,27 +144,12 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     @Override
-    public void OnItemClick(int position) {
+    public void OnClick(int position) {
 
     }
 
     @Override
-    public void OnUpdateClick(int position) {
-
-    }
-
-    @Override
-    public void OnHistoryClick(int position) {
-
-    }
-
-    @Override
-    public void OnArchiveClick(int position) {
-
-    }
-
-    @Override
-    public void OnDeleteClick(int position) {
+    public void OnOperationClick(SavingOperation operation, int position) {
 
     }
 }
