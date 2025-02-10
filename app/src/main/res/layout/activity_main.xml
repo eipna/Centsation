@@ -35,14 +35,14 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_savings"
             tools:ignore="ContentDescription"
-            app:tint="?attr/colorTertiary" />
+            app:tint="?attr/colorOnSurfaceVariant" />
 
         <com.google.android.material.textview.MaterialTextView
             android:text="@string/empty_indicator_main"
             android:textSize="18sp"
             app:fontFamily="sans-serif-medium"
             android:alpha="0.8"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:textAlignment="center"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
