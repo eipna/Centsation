@@ -1,5 +1,6 @@
 package com.eipna.centsation.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,12 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         this.context = context;
         this.savingListener = savingListener;
         this.savings = savings;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void update(ArrayList<Saving> updatedSavings) {
+        savings = updatedSavings;
+        notifyDataSetChanged();
     }
 
     @NonNull

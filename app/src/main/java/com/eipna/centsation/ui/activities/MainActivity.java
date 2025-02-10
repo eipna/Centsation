@@ -14,19 +14,28 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.MenuCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.saving.Saving;
+import com.eipna.centsation.data.saving.SavingListener;
+import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.databinding.ActivityMainBinding;
+import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements SavingListener {
 
     private ActivityMainBinding binding;
+    private SavingRepository savingRepository;
+    private SavingAdapter savingAdapter;
+    private ArrayList<Saving> savings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +46,16 @@ public class MainActivity extends BaseActivity {
 
         Drawable drawable = MaterialShapeDrawable.createWithElevationOverlay(this);
         binding.appBar.setStatusBarForeground(drawable);
-
         setSupportActionBar(binding.toolbar);
 
+        savingRepository = new SavingRepository(this);
+        savings = new ArrayList<>(savingRepository.getSavings(false));
+
+        savingAdapter = new SavingAdapter(this, this, savings);
+        binding.savingList.setLayoutManager(new LinearLayoutManager(this));
+        binding.savingList.setAdapter(savingAdapter);
+
+        binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
         binding.addSaving.setOnClickListener(view -> showAddSavingDialog());
     }
 
@@ -101,6 +117,7 @@ public class MainActivity extends BaseActivity {
                     savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
                     return;
                 }
+                createSaving(savingNameString, savingCurrentAmount, savingGoal, savingNotesString);
                 dialog.dismiss();
             }
 
@@ -109,5 +126,44 @@ public class MainActivity extends BaseActivity {
             savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
         }));
         dialog.show();
+    }
+
+    private void createSaving(String name, double amount, double goal, String notes) {
+        Saving createdSaving = new Saving();
+        createdSaving.setName(name);
+        createdSaving.setCurrentAmount(amount);
+        createdSaving.setGoal(goal);
+        createdSaving.setNotes(notes);
+        createdSaving.setArchived(false);
+
+        savingRepository.create(createdSaving);
+        savings = new ArrayList<>(savingRepository.getSavings(false));
+        savingAdapter.update(savings);
+        binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void OnItemClick(int position) {
+
+    }
+
+    @Override
+    public void OnUpdateClick(int position) {
+
+    }
+
+    @Override
+    public void OnHistoryClick(int position) {
+
+    }
+
+    @Override
+    public void OnArchiveClick(int position) {
+
+    }
+
+    @Override
+    public void OnDeleteClick(int position) {
+
     }
 }
