@@ -28,6 +28,13 @@
 
     <string name="menu_item_archive">Archive</string>
     <string name="menu_item_settings">Settings</string>
+    <string name="menu_item_overflow">More Options</string>
+    <string name="menu_item_sort">Sort By</string>
+    <string name="menu_item_sort_name">Name</string>
+    <string name="menu_item_sort_amount">Amount</string>
+    <string name="menu_item_sort_goal">Goal</string>
+    <string name="menu_item_sort_ascending">Ascending</string>
+    <string name="menu_item_sort_descending">Descending</string>
 
     <!-- App Preference Category -->
     <string name="preference_category_app">App</string>
