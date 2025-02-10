@@ -35,7 +35,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_inventory"
             tools:ignore="ContentDescription"
-            app:tint="?attr/colorOnSurfaceVariant" />
+            app:tint="?attr/colorTertiary" />
 
         <com.google.android.material.textview.MaterialTextView
             android:text="@string/empty_indicator_archive"
