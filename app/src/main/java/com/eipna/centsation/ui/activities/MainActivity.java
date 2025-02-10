@@ -3,6 +3,7 @@ package com.eipna.centsation.ui.activities;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.MenuCompat;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
@@ -47,6 +48,7 @@ public class MainActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+        MenuCompat.setGroupDividerEnabled(menu, true);
         return true;
     }
 
