@@ -75,10 +75,16 @@ public class MainActivity extends BaseActivity {
     private void showAddSavingDialog() {
         @SuppressLint("InflateParams")
         View addSavingDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_saving, null);
-        TextInputLayout savingTitleLayout = addSavingDialogView.findViewById(R.id.field_saving_name_layout);
+
+        TextInputLayout savingNameLayout = addSavingDialogView.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingCurrentAmountLayout = addSavingDialogView.findViewById(R.id.field_saving_current_amount_layout);
-        TextInputEditText savingTitleInput = addSavingDialogView.findViewById(R.id.field_saving_name_text);
+        TextInputLayout savingGoalLayout = addSavingDialogView.findViewById(R.id.field_saving_goal_layout);
+        TextInputLayout savingNotesLayout = addSavingDialogView.findViewById(R.id.field_saving_notes_layout);
+
+        TextInputEditText savingNameInput = addSavingDialogView.findViewById(R.id.field_saving_name_text);
         TextInputEditText savingCurrentAmountInput = addSavingDialogView.findViewById(R.id.field_saving_current_amount_text);
+        TextInputEditText savingGoalInput = addSavingDialogView.findViewById(R.id.field_saving_goal_text);
+        TextInputEditText savingNotesInput = addSavingDialogView.findViewById(R.id.field_saving_notes_text);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_add_saving)
@@ -90,20 +96,25 @@ public class MainActivity extends BaseActivity {
         AlertDialog dialog = builder.create();
 
         dialog.setOnShowListener(dialogInterface -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
-            String savingTitle = Objects.requireNonNull(savingTitleInput.getText()).toString();
-            String savingCurrentAmount = Objects.requireNonNull(savingCurrentAmountInput.getText()).toString();
+            String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
+            String savingCurrentAmountString = Objects.requireNonNull(savingCurrentAmountInput.getText()).toString();
+            String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
+            String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
 
-            if (!savingTitle.isEmpty() && !savingCurrentAmount.isEmpty()) {
+            if (!savingNameString.isEmpty() && !savingCurrentAmountString.isEmpty() && !savingGoalString.isEmpty()) {
+                double savingCurrentAmount = Double.parseDouble(savingCurrentAmountString);
+                double savingGoal = Double.parseDouble(savingGoalString);
+
+                if (savingCurrentAmount > savingGoal) {
+                    savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
+                    return;
+                }
                 dialog.dismiss();
             }
 
-            if (savingTitle.isEmpty()) {
-                savingTitleLayout.setError(getString(R.string.field_error_required));
-            }
-
-            if (savingCurrentAmount.isEmpty()) {
-                savingCurrentAmountLayout.setError(getString(R.string.field_error_required));
-            }
+            savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
+            savingCurrentAmountLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_lower_goal) : null);
+            savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
         }));
         dialog.show();
     }

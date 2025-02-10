@@ -14,9 +14,10 @@
     <string name="empty_indicator_archive">No archived savings</string>
 
     <string name="field_error_required">*required</string>
+    <string name="field_error_lower_goal">Goal cannot be lower</string>
     <string name="field_saving_name">Name</string>
     <string name="field_saving_current_amount">Current Amount</string>
-    <string name="field_saving_goal">Goal (Optional)</string>
+    <string name="field_saving_goal">Goal</string>
     <string name="field_saving_notes">Notes (Optional)</string>
 
     <string name="dialog_title_add_saving">New Saving</string>
