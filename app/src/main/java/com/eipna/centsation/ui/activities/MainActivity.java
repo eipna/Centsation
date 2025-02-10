@@ -1,12 +1,6 @@
 package com.eipna.centsation.ui.activities;
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.view.MenuCompat;
-
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,6 +9,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.MenuCompat;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.databinding.ActivityMainBinding;
@@ -60,15 +59,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.archive) {
-            Intent archiveIntent = new Intent(getApplicationContext(), ArchiveActivity.class);
-            startActivity(archiveIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }
-
-        if (item.getItemId() == R.id.settings) {
-            Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(settingsIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }
+        if (item.getItemId() == R.id.archive) startActivity(new Intent(this, ArchiveActivity.class));
+        if (item.getItemId() == R.id.settings) startActivity(new Intent(this, SettingsActivity.class));
         return true;
     }
 
