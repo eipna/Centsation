@@ -19,7 +19,7 @@ import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
-import com.eipna.centsation.util.SharedPreferencesUtil;
+import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
@@ -64,7 +64,7 @@ public class SettingsActivity extends BaseActivity {
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
-        private SharedPreferencesUtil sharedPreferencesUtil;
+        PreferenceUtil preferences;
 
         private ListPreference listTheme;
         private ListPreference listCurrency;
@@ -76,10 +76,6 @@ public class SettingsActivity extends BaseActivity {
 
         private int easterEggCounter;
 
-        private String themePrefs;
-        private String currencyPrefs;
-        private boolean dynamicColorsPrefs;
-
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences_main, rootKey);
@@ -87,41 +83,33 @@ public class SettingsActivity extends BaseActivity {
 
             listCurrency.setEntries(Currency.getNames());
             listCurrency.setEntryValues(Currency.getCodes());
-            listCurrency.setValue(currencyPrefs);
-            listCurrency.setSummary(Currency.getName(currencyPrefs));
-            listCurrency.setOnPreferenceChangeListener((preference, newValue) -> {
-                sharedPreferencesUtil.setString("currency", (String) newValue);
-                listCurrency.setSummary(Currency.getName((String) newValue));
+            listCurrency.setValue(preferences.getCurrency());
+            listCurrency.setSummary(Currency.getName(preferences.getCurrency()));
+            listCurrency.setOnPreferenceChangeListener((preference, currency) -> {
+                preferences.setCurrency((String) currency);
+                listCurrency.setSummary(Currency.getName((String) currency));
                 return true;
             });
 
             switchDynamicColors.setVisible(DynamicColors.isDynamicColorAvailable());
-            switchDynamicColors.setChecked(dynamicColorsPrefs);
-            switchDynamicColors.setOnPreferenceChangeListener((preference, newValue) -> {
-                sharedPreferencesUtil.setBoolean("dynamic_colors", (boolean) newValue);
+            switchDynamicColors.setChecked(preferences.isDynamicColors());
+            switchDynamicColors.setOnPreferenceChangeListener((preference, isChecked) -> {
+                preferences.setDynamicColors((boolean) isChecked);
                 requireActivity().recreate();
                 return true;
             });
 
             listTheme.setEntries(Theme.getValues());
             listTheme.setEntryValues(Theme.getValues());
-            listTheme.setSummary(themePrefs);
-            listTheme.setValue(themePrefs);
+            listTheme.setSummary(preferences.getTheme());
+            listTheme.setValue(preferences.getTheme());
             listTheme.setOnPreferenceChangeListener((preference, newValue) -> {
                 String selectedTheme = (String) newValue;
-                if (selectedTheme.equals(Theme.LIGHT.VALUE)) {
-                    sharedPreferencesUtil.setString("theme", Theme.LIGHT.VALUE);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                } else if (selectedTheme.equals(Theme.DARK.VALUE)) {
-                    sharedPreferencesUtil.setString("theme", Theme.DARK.VALUE);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else if (selectedTheme.equals(Theme.BATTERY.VALUE)) {
-                    sharedPreferencesUtil.setString("theme", Theme.BATTERY.VALUE);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
-                } else if (selectedTheme.equals(Theme.SYSTEM.VALUE)) {
-                    sharedPreferencesUtil.setString("theme", Theme.SYSTEM.VALUE);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                }
+                if (selectedTheme.equals(Theme.SYSTEM.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                if (selectedTheme.equals(Theme.BATTERY.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                if (selectedTheme.equals(Theme.LIGHT.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                if (selectedTheme.equals(Theme.DARK.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                preferences.setTheme(selectedTheme);
                 return true;
             });
 
@@ -149,12 +137,7 @@ public class SettingsActivity extends BaseActivity {
         }
 
         private void setPreferences() {
-            sharedPreferencesUtil = new SharedPreferencesUtil(requireContext());
-
-            currencyPrefs = sharedPreferencesUtil.getString("currency", Currency.UNITED_STATES_DOLLAR.CODE);
-            themePrefs = sharedPreferencesUtil.getString("theme", Theme.SYSTEM.VALUE);
-            dynamicColorsPrefs = sharedPreferencesUtil.getBoolean("dynamic_colors", false);
-
+            preferences = new PreferenceUtil(requireContext());
             listCurrency = findPreference("currency");
             listTheme = findPreference("theme");
             switchDynamicColors = findPreference("dynamic_colors");
