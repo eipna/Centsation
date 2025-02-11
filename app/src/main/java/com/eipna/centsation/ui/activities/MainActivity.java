@@ -52,13 +52,14 @@ public class MainActivity extends BaseActivity implements SavingListener {
         setSupportActionBar(binding.toolbar);
 
         savingRepository = new SavingRepository(this);
-        savings = new ArrayList<>(savingRepository.getSavings(false));
+        savings = new ArrayList<>();
+        savings.addAll(savingRepository.getSavings(false));
+        binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
         savingAdapter = new SavingAdapter(this, this, savings);
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
 
-        binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
         binding.addSaving.setOnClickListener(view -> showAddSavingDialog());
     }
 
@@ -66,6 +67,13 @@ public class MainActivity extends BaseActivity implements SavingListener {
     protected void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    private void updateSavingsList() {
+        savings.clear();
+        savings.addAll(savingRepository.getSavings(false));
+        savingAdapter.update(savings);
+        binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -139,9 +147,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         createdSaving.setArchived(false);
 
         savingRepository.create(createdSaving);
-        savings = new ArrayList<>(savingRepository.getSavings(false));
-        savingAdapter.update(savings);
-        binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
+        updateSavingsList();
     }
 
     private void showEditSavingDialog(Saving selectedSaving) {
@@ -182,8 +188,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
                     savingRepository.delete(savingID);
-                    savings = new ArrayList<>(savingRepository.getSavings(false));
-                    savingAdapter.update(savings);
+                    updateSavingsList();
                 });
 
         AlertDialog dialog = builder.create();
