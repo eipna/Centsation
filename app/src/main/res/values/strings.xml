@@ -22,10 +22,13 @@
 
     <string name="dialog_title_add_saving">New Saving</string>
     <string name="dialog_title_edit_saving">Edit Saving</string>
+    <string name="dialog_title_delete_saving">Delete Saving</string>
+    <string name="dialog_message_delete_saving">You are about to delete this saving. Do you want to proceed?</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_add">Add</string>
     <string name="dialog_button_close">Close</string>
     <string name="dialog_button_edit">Edit</string>
+    <string name="dialog_button_delete">Delete</string>
 
     <string name="menu_item_archive">Archive</string>
     <string name="menu_item_settings">Settings</string>

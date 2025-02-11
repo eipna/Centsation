@@ -173,6 +173,22 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
+    private void showDeleteSavingDialog(int savingID) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.dialog_title_delete_saving)
+                .setMessage(R.string.dialog_message_delete_saving)
+                .setIcon(R.drawable.ic_warning_outline)
+                .setNegativeButton(R.string.dialog_button_cancel, null)
+                .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
+                    savingRepository.delete(savingID);
+                    savings = new ArrayList<>(savingRepository.getSavings(false));
+                    savingAdapter.update(savings);
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     @Override
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
@@ -181,6 +197,9 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     @Override
     public void OnOperationClick(SavingOperation operation, int position) {
-
+        if (operation.equals(SavingOperation.DELETE)) {
+            int savingID = savings.get(position).getID();
+            showDeleteSavingDialog(savingID);
+        }
     }
 }

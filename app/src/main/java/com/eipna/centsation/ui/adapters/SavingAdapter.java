@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
+import com.eipna.centsation.data.saving.SavingOperation;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textview.MaterialTextView;
@@ -50,6 +51,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         holder.bind(currentSaving);
 
         holder.itemView.setOnClickListener(view -> savingListener.OnClick(position));
+        holder.delete.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.DELETE, position));
     }
 
     @Override
