@@ -18,8 +18,8 @@
                     android:title="@string/menu_item_sort_name" />
 
                 <item
-                    android:id="@+id/sort_amount"
-                    android:title="@string/menu_item_sort_amount" />
+                    android:id="@+id/sort_value"
+                    android:title="@string/menu_item_sort_value" />
 
                 <item
                     android:id="@+id/sort_goal"
