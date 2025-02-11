@@ -48,6 +48,8 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Saving currentSaving = savings.get(position);
         holder.bind(currentSaving);
+
+        holder.itemView.setOnClickListener(view -> savingListener.OnClick(position));
     }
 
     @Override

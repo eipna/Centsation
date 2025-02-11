@@ -82,23 +82,22 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showAddSavingDialog() {
-        @SuppressLint("InflateParams")
-        View addSavingDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null);
+        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
 
-        TextInputLayout savingNameLayout = addSavingDialogView.findViewById(R.id.field_saving_name_layout);
-        TextInputLayout savingCurrentAmountLayout = addSavingDialogView.findViewById(R.id.field_saving_current_amount_layout);
-        TextInputLayout savingGoalLayout = addSavingDialogView.findViewById(R.id.field_saving_goal_layout);
-        TextInputLayout savingNotesLayout = addSavingDialogView.findViewById(R.id.field_saving_notes_layout);
+        TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
+        TextInputLayout savingCurrentAmountLayout = savingNameLayout.findViewById(R.id.field_saving_current_amount_layout);
+        TextInputLayout savingGoalLayout = savingDialog.findViewById(R.id.field_saving_goal_layout);
+        TextInputLayout savingNotesLayout = savingGoalLayout.findViewById(R.id.field_saving_notes_layout);
 
-        TextInputEditText savingNameInput = addSavingDialogView.findViewById(R.id.field_saving_name_text);
-        TextInputEditText savingCurrentAmountInput = addSavingDialogView.findViewById(R.id.field_saving_current_amount_text);
-        TextInputEditText savingGoalInput = addSavingDialogView.findViewById(R.id.field_saving_goal_text);
-        TextInputEditText savingNotesInput = addSavingDialogView.findViewById(R.id.field_saving_notes_text);
+        TextInputEditText savingNameInput = savingDialog.findViewById(R.id.field_saving_name_text);
+        TextInputEditText savingCurrentAmountInput = savingNameInput.findViewById(R.id.field_saving_current_amount_text);
+        TextInputEditText savingGoalInput = savingDialog.findViewById(R.id.field_saving_goal_text);
+        TextInputEditText savingNotesInput = savingGoalInput.findViewById(R.id.field_saving_notes_text);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_add_saving)
-                .setView(addSavingDialogView)
                 .setIcon(R.drawable.ic_add)
+                .setView(savingDialog)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_add, null);
 
@@ -143,9 +142,24 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
+    private void showEditSavingDialog(Saving selectedSaving) {
+        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
+
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.dialog_title_edit_saving)
+                .setIcon(R.drawable.ic_edit)
+                .setView(savingDialog)
+                .setPositiveButton(R.string.dialog_button_edit, null)
+                .setNegativeButton(R.string.dialog_button_cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     @Override
     public void OnClick(int position) {
-
+        Saving selectedSaving = savings.get(position);
+        showEditSavingDialog(selectedSaving);
     }
 
     @Override
