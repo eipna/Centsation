@@ -11,7 +11,7 @@
     app:cardElevation="1dp"
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
-    app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
+    app:cardBackgroundColor="?attr/colorSurfaceContainer"
     style="@style/Widget.Material3.CardView.Filled"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
