@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.util.PreferenceUtil;
+import com.eipna.centsation.util.ThemeUtil;
 import com.google.android.material.color.DynamicColors;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -19,11 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         preferences = new PreferenceUtil(this);
         super.onCreate(savedInstanceState);
 
-        if (preferences.getTheme().equals(Theme.SYSTEM.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        if (preferences.getTheme().equals(Theme.BATTERY.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
-        if (preferences.getTheme().equals(Theme.LIGHT.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        if (preferences.getTheme().equals(Theme.DARK.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
+        ThemeUtil.set(preferences.getTheme());
         if (preferences.isDynamicColors()) DynamicColors.applyToActivityIfAvailable(this);
     }
 }
