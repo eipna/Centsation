@@ -14,7 +14,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String TABLE_SAVING = "savings";
     public static final String COLUMN_SAVING_ID = "saving_id";
     public static final String COLUMN_SAVING_NAME = "name";
-    public static final String COLUMN_SAVING_CURRENT_AMOUNT = "current_amount";
+    public static final String COLUMN_SAVING_VALUE = "value";
     public static final String COLUMN_SAVING_GOAL = "goal";
     public static final String COLUMN_SAVING_NOTES = "notes";
     public static final String COLUMN_SAVING_IS_ARCHIVED = "is_archived";
@@ -28,7 +28,7 @@ public class Database extends SQLiteOpenHelper {
         String createSavingTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SAVING + "(" +
                 COLUMN_SAVING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_SAVING_NAME + " TEXT, " +
-                COLUMN_SAVING_CURRENT_AMOUNT + " REAL, " +
+                COLUMN_SAVING_VALUE + " REAL, " +
                 COLUMN_SAVING_GOAL + " REAL, " +
                 COLUMN_SAVING_NOTES + " TEXT, " +
                 COLUMN_SAVING_IS_ARCHIVED + " INTEGER)";

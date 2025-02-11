@@ -24,7 +24,7 @@ public class SavingRepository extends Database {
         int isArchiveValue = createdSaving.isArchived() ? 1 : 0;
 
         values.put(COLUMN_SAVING_NAME, createdSaving.getName());
-        values.put(COLUMN_SAVING_CURRENT_AMOUNT, createdSaving.getCurrentAmount());
+        values.put(COLUMN_SAVING_VALUE, createdSaving.getValue());
         values.put(COLUMN_SAVING_GOAL, createdSaving.getGoal());
         values.put(COLUMN_SAVING_NOTES, createdSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, isArchiveValue);
@@ -39,7 +39,7 @@ public class SavingRepository extends Database {
         int isArchiveValue = updatedSaving.isArchived() ? 1 : 0;
 
         values.put(COLUMN_SAVING_NAME, updatedSaving.getName());
-        values.put(COLUMN_SAVING_CURRENT_AMOUNT, updatedSaving.getCurrentAmount());
+        values.put(COLUMN_SAVING_VALUE, updatedSaving.getValue());
         values.put(COLUMN_SAVING_GOAL, updatedSaving.getGoal());
         values.put(COLUMN_SAVING_NOTES, updatedSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, isArchiveValue);
@@ -68,11 +68,11 @@ public class SavingRepository extends Database {
                 Saving queriedSaving = new Saving();
                 queriedSaving.setID(cursor.getInt(cursor.getColumnIndex(COLUMN_SAVING_ID)));
                 queriedSaving.setName(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_NAME)));
-                queriedSaving.setCurrentAmount(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_CURRENT_AMOUNT)));
+                queriedSaving.setValue(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_VALUE)));
                 queriedSaving.setGoal(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_GOAL)));
                 queriedSaving.setNotes(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_NOTES)));
 
-                int queriedArchiveValue = cursor.getInt(cursor.getColumnIndex(COLUMN_SAVING_CURRENT_AMOUNT));
+                int queriedArchiveValue = cursor.getInt(cursor.getColumnIndex(COLUMN_SAVING_VALUE));
                 queriedSaving.setArchived(queriedArchiveValue == 1);
                 list.add(queriedSaving);
             } while (cursor.moveToNext());

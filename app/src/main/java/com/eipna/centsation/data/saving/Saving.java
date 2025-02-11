@@ -5,7 +5,7 @@ public class Saving {
 
     private int ID;
     private String name;
-    private double currentAmount;
+    private double value;
     private double goal;
     private String notes;
     private boolean isArchived;
@@ -13,7 +13,7 @@ public class Saving {
     public Saving() {
         this.ID = -1;
         this.name = null;
-        this.currentAmount = 0.0;
+        this.value = 0.0;
         this.goal = 0.0;
         this.notes = null;
         this.isArchived = false;
@@ -35,12 +35,12 @@ public class Saving {
         this.name = name;
     }
 
-    public double getCurrentAmount() {
-        return currentAmount;
+    public double getValue() {
+        return value;
     }
 
-    public void setCurrentAmount(double currentAmount) {
-        this.currentAmount = currentAmount;
+    public void setValue(double value) {
+        this.value = value;
     }
 
     public double getGoal() {

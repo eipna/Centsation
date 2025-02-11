@@ -14,7 +14,6 @@ import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -62,13 +61,13 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialTextView name, amount, goal, percent;
+        MaterialTextView name, value, goal, percent;
         MaterialButton update, history, archive, delete, copyNotes;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.saving_name);
-            amount = itemView.findViewById(R.id.saving_amount);
+            value = itemView.findViewById(R.id.saving_value);
             goal = itemView.findViewById(R.id.saving_goal);
             percent = itemView.findViewById(R.id.saving_percent);
 
@@ -82,7 +81,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
         public void bind(Saving currentSaving) {
             name.setText(currentSaving.getName());
-            amount.setText(String.valueOf(currentSaving.getCurrentAmount()));
+            value.setText(String.valueOf(currentSaving.getValue()));
             goal.setText(String.valueOf(currentSaving.getGoal()));
         }
     }
