@@ -2,6 +2,7 @@ package com.eipna.centsation.ui.activities;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.databinding.ActivityMainBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.textfield.TextInputEditText;
@@ -70,8 +72,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void updateSavingsList() {
-        savings.clear();
-        savings.addAll(savingRepository.getSavings(false));
+        savings = new ArrayList<>(savingRepository.getSavings(false));
         savingAdapter.update(savings);
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }
@@ -205,6 +206,23 @@ public class MainActivity extends BaseActivity implements SavingListener {
         }
     }
 
+    private void showUpdateSavingValueDialog(Saving selectedSaving) {
+        View updateSavingValue = LayoutInflater.from(this).inflate(R.layout.dialog_saving_update, null, false);
+
+        TextInputLayout savingValueLayout = updateSavingValue.findViewById(R.id.field_saving_update_layout);
+        TextInputEditText savingValueInput = updateSavingValue.findViewById(R.id.field_saving_update_text);
+
+        MaterialButton addButton = updateSavingValue.findViewById(R.id.button_saving_add);
+        MaterialButton deductButton = updateSavingValue.findViewById(R.id.button_saving_deduct);
+
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.dialog_title_update_value)
+                .setIcon(R.drawable.ic_update)
+                .setView(updateSavingValue);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     @Override
     public void OnClick(int position) {
@@ -214,14 +232,9 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     @Override
     public void OnOperationClick(SavingOperation operation, int position) {
-        if (operation.equals(SavingOperation.DELETE)) {
-            int savingID = savings.get(position).getID();
-            showDeleteSavingDialog(savingID);
-        }
-
-        if (operation.equals(SavingOperation.COPY_NOTES)) {
-            Saving selectedSaving = savings.get(position);
-            copySavingNotes(selectedSaving.getNotes());
-        }
+        Saving selectedSaving = savings.get(position);
+        if (operation.equals(SavingOperation.DELETE)) showDeleteSavingDialog(selectedSaving.getID());
+        if (operation.equals(SavingOperation.COPY_NOTES)) copySavingNotes(selectedSaving.getNotes());
+        if (operation.equals(SavingOperation.UPDATE)) showUpdateSavingValueDialog(selectedSaving);
     }
 }
