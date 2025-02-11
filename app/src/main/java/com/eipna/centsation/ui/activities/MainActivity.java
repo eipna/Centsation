@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     private void showAddSavingDialog() {
         @SuppressLint("InflateParams")
-        View addSavingDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_saving, null);
+        View addSavingDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null);
 
         TextInputLayout savingNameLayout = addSavingDialogView.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingCurrentAmountLayout = addSavingDialogView.findViewById(R.id.field_saving_current_amount_layout);
