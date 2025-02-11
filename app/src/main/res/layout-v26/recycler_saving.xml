@@ -26,9 +26,10 @@
             android:id="@+id/saving_name"
             android:text="Saving Name"
             android:textSize="24sp"
-            app:fontFamily="serif"
-            android:textColor="?attr/colorPrimary"
-            android:layout_width="wrap_content"
+            android:ellipsize="end"
+            android:textColor="?attr/colorSecondary"
+            android:maxLines="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="HardcodedText" />
 
