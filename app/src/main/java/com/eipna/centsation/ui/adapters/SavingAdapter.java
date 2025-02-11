@@ -22,7 +22,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
     private final Context context;
     private final SavingListener savingListener;
-    private ArrayList<Saving> savings;
+    private final ArrayList<Saving> savings;
 
     public SavingAdapter(Context context, SavingListener savingListener, ArrayList<Saving> savings) {
         this.context = context;
@@ -84,6 +84,12 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             name.setText(currentSaving.getName());
             value.setText(String.valueOf(currentSaving.getValue()));
             goal.setText(String.valueOf(currentSaving.getGoal()));
+            percent.setText(getPercent(currentSaving.getValue(), currentSaving.getGoal()));
+        }
+
+        public String getPercent(double value, double goal) {
+            double percent = (value / goal) * 100;
+            return String.format(" (%s%c)", (int) percent, '%');
         }
     }
 }
