@@ -1,6 +1,8 @@
 package com.eipna.centsation.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -189,6 +192,17 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
+    private void copySavingNotes(String notes) {
+        if (notes.isEmpty()) {
+            Toast.makeText(this, getString(R.string.toast_saving_empty_notes), Toast.LENGTH_SHORT).show();
+        } else {
+            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("notes", notes);
+            clipboardManager.setPrimaryClip(clipData);
+        }
+    }
+
+
     @Override
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
@@ -200,6 +214,11 @@ public class MainActivity extends BaseActivity implements SavingListener {
         if (operation.equals(SavingOperation.DELETE)) {
             int savingID = savings.get(position).getID();
             showDeleteSavingDialog(savingID);
+        }
+
+        if (operation.equals(SavingOperation.COPY_NOTES)) {
+            Saving selectedSaving = savings.get(position);
+            copySavingNotes(selectedSaving.getNotes());
         }
     }
 }
