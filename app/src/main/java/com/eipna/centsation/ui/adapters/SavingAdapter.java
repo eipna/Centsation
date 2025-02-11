@@ -32,7 +32,8 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
     @SuppressLint("NotifyDataSetChanged")
     public void update(ArrayList<Saving> updatedSavings) {
-        savings = updatedSavings;
+        savings.clear();
+        savings.addAll(updatedSavings);
         notifyDataSetChanged();
     }
 
