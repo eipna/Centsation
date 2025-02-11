@@ -57,8 +57,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         MaterialTextView name, amount, goal, percent;
-        MaterialButton update, history, archive, delete;
-        Chip copyNotes;
+        MaterialButton update, history, archive, delete, copyNotes;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -80,33 +80,14 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/saving_copy_notes"
-                    android:text="@string/chip_copy_notes"
-                    android:textColor="?attr/colorOnSecondaryContainer"
-                    app:chipIcon="@drawable/ic_copy"
-                    app:chipIconTint="?attr/colorOnSecondaryContainer"
-                    app:chipBackgroundColor="?attr/colorSecondaryContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
@@ -121,6 +102,14 @@
                     android:id="@+id/saving_history"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_history"
+                    app:iconTint="?attr/colorTertiary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/saving_copy_notes"
+                    style="?attr/materialIconButtonStyle"
+                    app:icon="@drawable/ic_copy"
                     app:iconTint="?attr/colorTertiary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -141,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
-        </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
