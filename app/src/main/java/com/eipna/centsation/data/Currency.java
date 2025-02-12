@@ -173,10 +173,33 @@ public enum Currency {
         this.SYMBOL = symbol;
     }
 
+    public static boolean isRTLCurrency(String code) {
+        String[] rtlCurrencies = {
+                "ILS", "SAR", "AED", "EGP", "IRR", "IQD","JOD",
+                "KWD", "LBP", "OMR", "QAR", "SYP", "YER", "PKR"
+        };
+
+        for (String rtlCurrency : rtlCurrencies) {
+            if (rtlCurrency.equals(code)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static String getName(String code) {
         for (Currency currency : currencies) {
             if (currency.CODE.equals(code)) {
                 return currency.NAME;
+            }
+        }
+        return null;
+    }
+
+    public static String getSymbol(String code) {
+        for (Currency currency : currencies) {
+            if (currency.CODE.equals(code)) {
+                return currency.SYMBOL;
             }
         }
         return null;

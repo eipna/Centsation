@@ -5,14 +5,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
+import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
@@ -23,12 +26,14 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
     private final Context context;
     private final SavingListener savingListener;
+    private final PreferenceUtil preferences;
     private final ArrayList<Saving> savings;
 
     public SavingAdapter(Context context, SavingListener savingListener, ArrayList<Saving> savings) {
         this.context = context;
         this.savingListener = savingListener;
         this.savings = savings;
+        this.preferences = new PreferenceUtil(context);
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -48,7 +53,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Saving currentSaving = savings.get(position);
-        holder.bind(currentSaving);
+        holder.bind(currentSaving, preferences);
 
         holder.itemView.setOnClickListener(view -> savingListener.OnClick(position));
         holder.delete.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.DELETE, position));
@@ -67,6 +72,8 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         MaterialTextView name, value, goal, percent;
         MaterialButton update, history, archive, delete, copyNotes;
 
+        LinearLayout description;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.saving_parent);
@@ -74,6 +81,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             value = itemView.findViewById(R.id.saving_value);
             goal = itemView.findViewById(R.id.saving_goal);
             percent = itemView.findViewById(R.id.saving_percent);
+            description = itemView.findViewById(R.id.saving_description);
 
             update = itemView.findViewById(R.id.saving_update);
             history = itemView.findViewById(R.id.saving_history);
@@ -83,12 +91,24 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             copyNotes = itemView.findViewById(R.id.saving_copy_notes);
         }
 
-        public void bind(Saving currentSaving) {
+        public void bind(Saving currentSaving, PreferenceUtil preferences) {
+            String currencySymbol = Currency.getSymbol(preferences.getCurrency());
+
+            if (Currency.isRTLCurrency(preferences.getCurrency())) {
+                description.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+                value.setTextDirection(View.TEXT_DIRECTION_RTL);
+                goal.setTextDirection(View.TEXT_DIRECTION_RTL);
+            } else {
+                description.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                value.setTextDirection(View.TEXT_DIRECTION_LTR);
+                goal.setTextDirection(View.TEXT_DIRECTION_LTR);
+            }
+
             parent.setChecked(currentSaving.getValue() >= currentSaving.getGoal());
             name.setText(currentSaving.getName());
-            value.setText(String.valueOf(currentSaving.getValue()));
-            goal.setText(String.valueOf(currentSaving.getGoal()));
             percent.setText(getPercent(currentSaving.getValue(), currentSaving.getGoal()));
+            value.setText(String.format("%s%s", currencySymbol, currentSaving.getValue()));
+            goal.setText(String.format("%s%s", currencySymbol, currentSaving.getGoal()));
         }
 
         public String getPercent(double value, double goal) {
