@@ -197,13 +197,9 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void copySavingNotes(String notes) {
-        if (notes.isEmpty()) {
-            Toast.makeText(this, getString(R.string.toast_saving_empty_notes), Toast.LENGTH_SHORT).show();
-        } else {
-            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText("notes", notes);
-            clipboardManager.setPrimaryClip(clipData);
-        }
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("notes", notes);
+        clipboardManager.setPrimaryClip(clipData);
     }
 
     private void showUpdateSavingValueDialog(Saving selectedSaving) {

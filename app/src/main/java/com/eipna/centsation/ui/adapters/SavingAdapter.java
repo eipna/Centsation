@@ -104,6 +104,10 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 goal.setTextDirection(View.TEXT_DIRECTION_LTR);
             }
 
+            if (currentSaving.getNotes().isEmpty()) {
+                copyNotes.setVisibility(View.GONE);
+            }
+
             parent.setChecked(currentSaving.getValue() >= currentSaving.getGoal());
             name.setText(currentSaving.getName());
             percent.setText(getPercent(currentSaving.getValue(), currentSaving.getGoal()));
