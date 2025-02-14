@@ -53,13 +53,11 @@ public class SavingRepository extends Database {
     }
 
     @SuppressLint("Range")
-    public ArrayList<Saving> getSavings(boolean isArchive) {
+    public ArrayList<Saving> getSavings(int isArchive) {
         ArrayList<Saving> list = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
-
-        int isArchiveValue = isArchive ? 1 : 0;
         String query = "SELECT * FROM " + TABLE_SAVING + " WHERE " + COLUMN_SAVING_IS_ARCHIVED + " = ?";
-        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(isArchiveValue)});
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(isArchive)});
 
         if (cursor.moveToFirst()) {
             do {

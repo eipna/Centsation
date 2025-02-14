@@ -5,6 +5,7 @@ public enum SavingOperation {
     HISTORY,
     COPY_NOTES,
     ARCHIVE,
+    UNARCHIVE,
     DELETE;
 
     private static SavingOperation[] operations;
