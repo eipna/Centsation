@@ -196,10 +196,14 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
-    private void copySavingNotes(String notes) {
-        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText("notes", notes);
-        clipboardManager.setPrimaryClip(clipData);
+    private void shareSavingNotes(String notes) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, notes);
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 
     private void showUpdateSavingValueDialog(Saving selectedSaving) {
@@ -236,7 +240,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     public void OnOperationClick(SavingOperation operation, int position) {
         Saving selectedSaving = savings.get(position);
         if (operation.equals(SavingOperation.DELETE)) showDeleteSavingDialog(selectedSaving.getID());
-        if (operation.equals(SavingOperation.COPY_NOTES)) copySavingNotes(selectedSaving.getNotes());
+        if (operation.equals(SavingOperation.SHARE)) shareSavingNotes(selectedSaving.getNotes());
         if (operation.equals(SavingOperation.UPDATE)) showUpdateSavingValueDialog(selectedSaving);
         if (operation.equals(SavingOperation.ARCHIVE)) archiveSaving(selectedSaving);
     }

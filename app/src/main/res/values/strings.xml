@@ -42,7 +42,7 @@
 
     <string name="toast_saving_empty_notes">This saving has no notes</string>
 
-    <string name="tooltip_copy_notes">Copy Notes</string>
+    <string name="tooltip_share">Share Notes</string>
     <string name="tooltip_update">Update Amount</string>
     <string name="tooltip_history">History</string>
     <string name="tooltip_archive">Archive</string>

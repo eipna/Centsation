@@ -112,9 +112,9 @@
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/saving_copy_notes"
+                    android:id="@+id/saving_share"
                     style="?attr/materialIconButtonStyle"
-                    app:icon="@drawable/ic_copy"
+                    app:icon="@drawable/ic_share"
                     app:iconTint="?attr/colorTertiary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

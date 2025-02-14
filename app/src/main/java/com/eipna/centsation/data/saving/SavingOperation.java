@@ -3,7 +3,7 @@ package com.eipna.centsation.data.saving;
 public enum SavingOperation {
     UPDATE,
     HISTORY,
-    COPY_NOTES,
+    SHARE,
     ARCHIVE,
     UNARCHIVE,
     DELETE;

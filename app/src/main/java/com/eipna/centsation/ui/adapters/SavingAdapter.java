@@ -57,7 +57,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
         holder.itemView.setOnClickListener(view -> savingListener.OnClick(position));
         holder.delete.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.DELETE, position));
-        holder.copyNotes.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.COPY_NOTES, position));
+        holder.share.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.SHARE, position));
         holder.update.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.UPDATE, position));
         holder.archive.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.ARCHIVE, position));
         holder.unarchive.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.UNARCHIVE, position));
@@ -72,7 +72,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
         MaterialCardView parent;
         MaterialTextView name, value, goal, percent;
-        MaterialButton update, history, archive, unarchive, delete, copyNotes;
+        MaterialButton update, history, archive, unarchive, delete, share;
 
         LinearLayout description;
 
@@ -90,7 +90,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             archive = itemView.findViewById(R.id.saving_archive);
             unarchive = itemView.findViewById(R.id.saving_unarchive);
             delete = itemView.findViewById(R.id.saving_delete);
-            copyNotes = itemView.findViewById(R.id.saving_copy_notes);
+            share = itemView.findViewById(R.id.saving_share);
         }
 
         public void bind(Saving currentSaving, PreferenceUtil preferences) {
@@ -107,7 +107,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             }
 
             if (currentSaving.getNotes().isEmpty()) {
-                copyNotes.setVisibility(View.GONE);
+                share.setVisibility(View.GONE);
             }
 
             if (currentSaving.getIsArchived() == Saving.ARCHIVE_TRUE) {
