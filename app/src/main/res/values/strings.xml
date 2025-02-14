@@ -27,7 +27,7 @@
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_add">Add</string>
     <string name="dialog_button_close">Close</string>
-    <string name="dialog_button_edit">Edit</string>
+    <string name="dialog_button_edit">Save</string>
     <string name="dialog_button_delete">Delete</string>
 
     <string name="menu_item_archive">Archive</string>
