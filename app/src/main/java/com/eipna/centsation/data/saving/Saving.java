@@ -8,7 +8,10 @@ public class Saving {
     private double value;
     private double goal;
     private String notes;
-    private boolean isArchived;
+    private int isArchived;
+
+    public static int ARCHIVE_TRUE = 1;
+    public static int ARCHIVE_FALSE = 0;
 
     public Saving() {
         this.ID = -1;
@@ -16,7 +19,7 @@ public class Saving {
         this.value = 0.0;
         this.goal = 0.0;
         this.notes = null;
-        this.isArchived = false;
+        this.isArchived = 0;
     }
 
     public int getID() {
@@ -51,12 +54,12 @@ public class Saving {
         this.goal = goal;
     }
 
-    public boolean isArchived() {
+    public int getIsArchived() {
         return isArchived;
     }
 
-    public void setArchived(boolean archived) {
-        isArchived = archived;
+    public void setIsArchived(int isArchived) {
+        this.isArchived = isArchived;
     }
 
     public void setNotes(String notes) {

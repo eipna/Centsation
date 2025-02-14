@@ -145,7 +145,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         createdSaving.setValue(amount);
         createdSaving.setGoal(goal);
         createdSaving.setNotes(notes);
-        createdSaving.setArchived(false);
+        createdSaving.setIsArchived(Saving.ARCHIVE_FALSE);
 
         savingRepository.create(createdSaving);
         updateSavingsList();
@@ -221,7 +221,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void archiveSaving(Saving selectedSaving) {
-        selectedSaving.setArchived(true);
+        selectedSaving.setIsArchived(Saving.ARCHIVE_TRUE);
         savingRepository.update(selectedSaving);
         updateSavingsList();
     }
