@@ -132,6 +132,15 @@
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/saving_unarchive"
+                    style="?attr/materialIconButtonStyle"
+                    app:icon="@drawable/ic_unarchive"
+                    app:iconTint="?attr/colorTertiary"
+                    android:tooltipText="@string/tooltip_unarchive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/saving_delete"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_delete"

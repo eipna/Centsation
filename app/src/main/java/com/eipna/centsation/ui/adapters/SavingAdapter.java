@@ -71,7 +71,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
         MaterialCardView parent;
         MaterialTextView name, value, goal, percent;
-        MaterialButton update, history, archive, delete, copyNotes;
+        MaterialButton update, history, archive, unarchive, delete, copyNotes;
 
         LinearLayout description;
 
@@ -87,6 +87,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             update = itemView.findViewById(R.id.saving_update);
             history = itemView.findViewById(R.id.saving_history);
             archive = itemView.findViewById(R.id.saving_archive);
+            unarchive = itemView.findViewById(R.id.saving_unarchive);
             delete = itemView.findViewById(R.id.saving_delete);
             copyNotes = itemView.findViewById(R.id.saving_copy_notes);
         }
@@ -106,6 +107,12 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
             if (currentSaving.getNotes().isEmpty()) {
                 copyNotes.setVisibility(View.GONE);
+            }
+
+            if (currentSaving.getIsArchived() == Saving.ARCHIVE_TRUE) {
+                archive.setVisibility(View.GONE);
+            } else {
+                unarchive.setVisibility(View.GONE);
             }
 
             parent.setChecked(currentSaving.getValue() >= currentSaving.getGoal());

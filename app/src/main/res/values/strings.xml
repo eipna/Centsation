@@ -46,6 +46,7 @@
     <string name="tooltip_update">Update Amount</string>
     <string name="tooltip_history">History</string>
     <string name="tooltip_archive">Archive</string>
+    <string name="tooltip_unarchive">Unarchive</string>
     <string name="tooltip_delete">Delete</string>
 
     <!-- App Preference Category -->
