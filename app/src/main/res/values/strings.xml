@@ -7,8 +7,7 @@
     <string name="link_app_source_code">https://github.com/eipna/Centsation</string>
     <string name="link_app_author">https://github.com/eipna</string>
 
-    <string name="toolbar_settings">Settings</string>
-    <string name="toolbar_archive">Archive</string>
+    <string name="toolbar_main">All Savings</string>
 
     <string name="empty_indicator_main">No savings found</string>
     <string name="empty_indicator_archive">No archived savings</string>
