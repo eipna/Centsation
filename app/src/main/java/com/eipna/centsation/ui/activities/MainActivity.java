@@ -220,6 +220,12 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
+    private void archiveSaving(Saving selectedSaving) {
+        selectedSaving.setArchived(true);
+        savingRepository.update(selectedSaving);
+        updateSavingsList();
+    }
+
     @Override
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
@@ -232,5 +238,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         if (operation.equals(SavingOperation.DELETE)) showDeleteSavingDialog(selectedSaving.getID());
         if (operation.equals(SavingOperation.COPY_NOTES)) copySavingNotes(selectedSaving.getNotes());
         if (operation.equals(SavingOperation.UPDATE)) showUpdateSavingValueDialog(selectedSaving);
+        if (operation.equals(SavingOperation.ARCHIVE)) archiveSaving(selectedSaving);
     }
 }

@@ -59,6 +59,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         holder.delete.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.DELETE, position));
         holder.copyNotes.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.COPY_NOTES, position));
         holder.update.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.UPDATE, position));
+        holder.archive.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.ARCHIVE, position));
     }
 
     @Override
@@ -85,9 +86,8 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
             update = itemView.findViewById(R.id.saving_update);
             history = itemView.findViewById(R.id.saving_history);
-            archive = itemView.findViewById(R.id.archive);
+            archive = itemView.findViewById(R.id.saving_archive);
             delete = itemView.findViewById(R.id.saving_delete);
-
             copyNotes = itemView.findViewById(R.id.saving_copy_notes);
         }
 
