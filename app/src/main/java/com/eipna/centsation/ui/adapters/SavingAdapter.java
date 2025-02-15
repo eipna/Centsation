@@ -122,7 +122,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             parent.setChecked(currentSaving.getValue() >= currentSaving.getGoal());
             value.setText(String.format("%s%s", currencySymbol, currentSaving.getValue()));
             goal.setText(String.format("%s%s", currencySymbol, currentSaving.getGoal()));
-            progress.setProgressCompat(percentValue, false);
+            progress.setProgress(percentValue, true);
         }
     }
 }
