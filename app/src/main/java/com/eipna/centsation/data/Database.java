@@ -20,7 +20,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_SAVING_IS_ARCHIVED = "is_archived";
 
     public static final String TABLE_TRANSACTIONS = "transactions";
-    public static final String COLUMN_TRANSACTION_ID = "history_id";
+    public static final String COLUMN_TRANSACTION_ID = "transaction_id";
     public static final String COLUMN_TRANSACTION_SAVING_ID = "saving_id";
     public static final String COLUMN_TRANSACTION_AMOUNT = "amount";
     public static final String COLUMN_TRANSACTION_TYPE = "type";
