@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showAddDialog() {
-        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
+        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_add_edit, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
@@ -150,7 +150,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showHistoryDialog(Saving selectedSaving) {
-        View transactionDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
+        View transactionDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_history, null, false);
 
         ArrayList<Transaction> transactions = transactionRepository.getTransactions(selectedSaving.getID());
         TransactionAdapter adapter = new TransactionAdapter(this, transactions);
@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showEditDialog(Saving selectedSaving) {
-        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
+        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_add_edit, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
@@ -272,7 +272,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showUpdateDialog(Saving selectedSaving) {
-        View updateSavingValue = LayoutInflater.from(this).inflate(R.layout.dialog_saving_update, null, false);
+        View updateSavingValue = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
 
         TextInputLayout savingValueLayout = updateSavingValue.findViewById(R.id.field_saving_update_layout);
         TextInputEditText savingValueInput = updateSavingValue.findViewById(R.id.field_saving_update_text);

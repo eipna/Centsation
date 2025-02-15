@@ -79,7 +79,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     }
 
     private void showEditSavingDialog(Saving selectedSaving) {
-        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
+        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_add_edit, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
