@@ -19,6 +19,7 @@ import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.data.transaction.Transaction;
 import com.eipna.centsation.data.transaction.TransactionRepository;
+import com.eipna.centsation.data.transaction.TransactionType;
 import com.eipna.centsation.databinding.ActivityArchiveBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.eipna.centsation.ui.adapters.TransactionAdapter;
@@ -28,6 +29,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ArchiveActivity extends BaseActivity implements SavingListener {
 
@@ -131,16 +133,15 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     @Override
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
-        showEditSavingDialog(selectedSaving);
+        showEditDialog(selectedSaving);
     }
 
-    private void showEditSavingDialog(Saving selectedSaving) {
+    private void showEditDialog(Saving selectedSaving) {
         View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_add_edit, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
         TextInputLayout savingGoalLayout = savingDialog.findViewById(R.id.field_saving_goal_layout);
-        TextInputLayout savingNotesLayout = savingDialog.findViewById(R.id.field_saving_notes_layout);
 
         TextInputEditText savingNameInput = savingDialog.findViewById(R.id.field_saving_name_text);
         TextInputEditText savingValueInput = savingDialog.findViewById(R.id.field_saving_value_text);
@@ -159,6 +160,53 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
             savingValueInput.setText(String.valueOf(selectedSaving.getValue()));
             savingGoalInput.setText(String.valueOf(selectedSaving.getGoal()));
             savingNotesInput.setText(selectedSaving.getNotes());
+
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
+                String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
+                String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
+                String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
+                String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
+
+                if (!savingNameString.isEmpty() && !savingValueString.isEmpty() && !savingGoalString.isEmpty()) {
+                    double savingValue = Double.parseDouble(savingValueString);
+                    double savingGoal = Double.parseDouble(savingGoalString);
+
+                    if (savingValue > savingGoal) {
+                        savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
+                        return;
+                    }
+
+                    if (savingValue != selectedSaving.getValue()) {
+                        Transaction transaction = new Transaction();
+                        transaction.setSavingID(selectedSaving.getID());
+                        transaction.setAmount(Math.abs(savingValue - selectedSaving.getValue()));
+
+                        if (savingValue > selectedSaving.getValue()) {
+                            transaction.setType(TransactionType.DEPOSIT.VALUE);
+                        }
+
+                        if (savingValue < selectedSaving.getValue()) {
+                            transaction.setType(TransactionType.WITHDRAW.VALUE);
+                        }
+                        transactionRepository.create(transaction);
+                    }
+
+                    Saving editedSaving = new Saving();
+                    editedSaving.setID(selectedSaving.getID());
+                    editedSaving.setName(savingNameString);
+                    editedSaving.setValue(savingValue);
+                    editedSaving.setGoal(savingGoal);
+                    editedSaving.setNotes(savingNotesString);
+                    editedSaving.setIsArchived(selectedSaving.getIsArchived());
+                    savingRepository.update(editedSaving);
+                    updateSavingsList();
+                    dialog.dismiss();
+                }
+
+                savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
+                savingValueLayout.setError(savingValueString.isEmpty() ? getString(R.string.field_error_required) : null);
+                savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
+            });
         });
         dialog.show();
     }
