@@ -48,13 +48,12 @@
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
 
         <!-- Styles -->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered</item>
         <item name="alertDialogTheme">@style/Theme.Centsation.AlertDialog</item>
         <item name="popupTheme">@style/Widget.Material3.PopupMenu</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
     </style>
 
-    <style name="Theme.Centsation.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
+    <style name="Theme.Centsation.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="backgroundTint">?attr/colorSurfaceContainerHigh</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="dialogCornerRadius">28dp</item>

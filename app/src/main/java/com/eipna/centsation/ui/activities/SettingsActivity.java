@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -147,7 +146,6 @@ public class SettingsActivity extends BaseActivity {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.preference_app_license)
                     .setMessage(readLicenseFromAssets())
-                    .setIcon(R.drawable.ic_license)
                     .setPositiveButton(R.string.dialog_button_close, null);
 
             Dialog dialog = builder.create();

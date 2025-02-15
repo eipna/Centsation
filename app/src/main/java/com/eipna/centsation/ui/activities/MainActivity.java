@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -112,7 +111,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_add_saving)
-                .setIcon(R.drawable.ic_add)
                 .setView(savingDialog)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_add, null);
@@ -164,7 +162,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_history_saving)
                 .setView(transactionDialog)
-                .setIcon(R.drawable.ic_history)
                 .setPositiveButton(R.string.dialog_button_close, null);
 
         AlertDialog dialog = builder.create();
@@ -185,7 +182,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_edit_saving)
-                .setIcon(R.drawable.ic_edit)
                 .setView(savingDialog)
                 .setPositiveButton(R.string.dialog_button_edit, null)
                 .setNegativeButton(R.string.dialog_button_cancel, null);
@@ -251,7 +247,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_delete_saving)
                 .setMessage(R.string.dialog_message_delete_saving)
-                .setIcon(R.drawable.ic_warning_outline)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
                     savingRepository.delete(savingID);
@@ -287,7 +282,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_update_value)
-                .setIcon(R.drawable.ic_update)
                 .setView(updateSavingValue);
 
         AlertDialog dialog = builder.create();
