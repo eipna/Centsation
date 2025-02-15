@@ -10,14 +10,18 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.data.saving.SavingRepository;
+import com.eipna.centsation.data.transaction.Transaction;
+import com.eipna.centsation.data.transaction.TransactionRepository;
 import com.eipna.centsation.databinding.ActivityArchiveBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
+import com.eipna.centsation.ui.adapters.TransactionAdapter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,6 +33,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
     private ActivityArchiveBinding binding;
     private SavingRepository savingRepository;
+    private TransactionRepository transactionRepository;
     private SavingAdapter savingAdapter;
     private ArrayList<Saving> savings;
 
@@ -48,6 +53,8 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         }
 
         savingRepository = new SavingRepository(this);
+        transactionRepository = new TransactionRepository(this);
+
         savings = new ArrayList<>(savingRepository.getSavings(1));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
@@ -85,6 +92,25 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
                     savingRepository.delete(savingID);
                     updateSavingsList();
                 });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showHistoryDialog(Saving selectedSaving) {
+        View transactionDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_history, null, false);
+
+        ArrayList<Transaction> transactions = transactionRepository.getTransactions(selectedSaving.getID());
+        TransactionAdapter adapter = new TransactionAdapter(this, transactions);
+
+        RecyclerView transactionList = transactionDialog.findViewById(R.id.transaction_list);
+        transactionList.setLayoutManager(new LinearLayoutManager(this));
+        transactionList.setAdapter(adapter);
+
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.dialog_title_history_saving)
+                .setView(transactionDialog)
+                .setPositiveButton(R.string.dialog_button_close, null);
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -143,5 +169,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         if (operation.equals(SavingOperation.UNARCHIVE)) unarchiveSaving(selectedSaving);
         if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
         if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
+        if (operation.equals(SavingOperation.HISTORY)) showHistoryDialog(selectedSaving);
     }
 }
