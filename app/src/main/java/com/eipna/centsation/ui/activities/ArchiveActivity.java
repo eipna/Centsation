@@ -76,6 +76,20 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         }
     }
 
+    private void showDeleteDialog(int savingID) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.dialog_title_delete_saving)
+                .setMessage(R.string.dialog_message_delete_saving)
+                .setNegativeButton(R.string.dialog_button_cancel, null)
+                .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
+                    savingRepository.delete(savingID);
+                    updateSavingsList();
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void updateSavingsList() {
         savings = new ArrayList<>(savingRepository.getSavings(1));
         savingAdapter.update(savings);
@@ -128,5 +142,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         Saving selectedSaving = savings.get(position);
         if (operation.equals(SavingOperation.UNARCHIVE)) unarchiveSaving(selectedSaving);
         if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
+        if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
     }
 }
