@@ -247,6 +247,40 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 .setView(updateSavingValue);
 
         AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(dialogInterface -> {
+            addButton.setOnClickListener(view -> {
+                String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
+                if (savingValueString.isEmpty()) {
+                    savingValueLayout.setError(getString(R.string.field_error_empty_value));
+                    return;
+                }
+
+                double addedValue = selectedSaving.getValue() + Double.parseDouble(savingValueString);
+                selectedSaving.setValue(addedValue);
+                savingRepository.update(selectedSaving);
+                updateSavingsList();
+                dialog.dismiss();
+            });
+
+            deductButton.setOnClickListener(view -> {
+                String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
+                if (savingValueString.isEmpty()) {
+                    savingValueLayout.setError(getString(R.string.field_error_empty_value));
+                    return;
+                }
+
+                double deductedValue = selectedSaving.getValue() - Double.parseDouble(savingValueString);
+                if (deductedValue < 0) {
+                    savingValueLayout.setError(getString(R.string.field_error_negative_value));
+                    return;
+                }
+
+                selectedSaving.setValue(deductedValue);
+                savingRepository.update(selectedSaving);
+                updateSavingsList();
+                dialog.dismiss();
+            });
+        });
         dialog.show();
     }
 

@@ -14,6 +14,8 @@
 
     <string name="field_error_required">*required</string>
     <string name="field_error_lower_goal">Goal cannot be lower</string>
+    <string name="field_error_empty_value">Please enter a value</string>
+    <string name="field_error_negative_value">Value cannot be negative</string>
     <string name="field_saving_name">Name</string>
     <string name="field_saving_value">Value</string>
     <string name="field_saving_goal">Goal</string>
