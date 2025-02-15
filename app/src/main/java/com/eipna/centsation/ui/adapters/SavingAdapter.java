@@ -18,6 +18,7 @@ import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         MaterialButton update, history, archive, unarchive, delete, share;
 
         LinearLayout description;
+        LinearProgressIndicator progress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,6 +86,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             goal = itemView.findViewById(R.id.saving_goal);
             percent = itemView.findViewById(R.id.saving_percent);
             description = itemView.findViewById(R.id.saving_description);
+            progress = itemView.findViewById(R.id.saving_progress);
 
             update = itemView.findViewById(R.id.saving_update);
             history = itemView.findViewById(R.id.saving_history);
@@ -95,6 +98,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
         public void bind(Saving currentSaving, PreferenceUtil preferences) {
             String currencySymbol = Currency.getSymbol(preferences.getCurrency());
+            int percentValue = (int) ((currentSaving.getValue() / currentSaving.getGoal()) * 100);
 
             if (Currency.isRTLCurrency(preferences.getCurrency())) {
                 description.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -116,16 +120,12 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 unarchive.setVisibility(View.GONE);
             }
 
-            parent.setChecked(currentSaving.getValue() >= currentSaving.getGoal());
             name.setText(currentSaving.getName());
-            percent.setText(getPercent(currentSaving.getValue(), currentSaving.getGoal()));
+            percent.setText(String.format("%s%c", percentValue, '%'));
+            parent.setChecked(currentSaving.getValue() >= currentSaving.getGoal());
             value.setText(String.format("%s%s", currencySymbol, currentSaving.getValue()));
             goal.setText(String.format("%s%s", currencySymbol, currentSaving.getGoal()));
-        }
-
-        public String getPercent(double value, double goal) {
-            double percent = (value / goal) * 100;
-            return String.format(" (%s%c)", (int) percent, '%');
+            progress.setProgressCompat(percentValue, false);
         }
     }
 }

@@ -149,6 +149,7 @@
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/saving_progress"
         android:layout_gravity="bottom"
+        android:max="100"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </com.google.android.material.card.MaterialCardView>
