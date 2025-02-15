@@ -1,6 +1,11 @@
 package com.eipna.centsation.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.transaction.Transaction;
+import com.eipna.centsation.data.transaction.TransactionType;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -54,7 +60,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(Transaction currentTransaction) {
             type.setText(currentTransaction.getType());
-            amount.setText(String.valueOf(currentTransaction.getAmount()));
+
+            if (currentTransaction.getType().equals(TransactionType.DEPOSIT.VALUE)) {
+                amount.setTextColor(Color.parseColor("#21b90a"));
+                amount.setText(String.format("%c%s", '+', currentTransaction.getAmount()));
+            }
+
+            if (currentTransaction.getType().equals(TransactionType.WITHDRAW.VALUE)) {
+                amount.setTextColor(Color.parseColor("#f00f1f"));
+                amount.setText(String.format("%c%s", '-', currentTransaction.getAmount()));
+            }
         }
     }
 }
