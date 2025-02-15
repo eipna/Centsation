@@ -16,6 +16,7 @@
     <string name="field_error_lower_goal">Goal cannot be lower</string>
     <string name="field_error_empty_value">Please enter a value</string>
     <string name="field_error_negative_value">Value cannot be negative</string>
+
     <string name="field_saving_name">Name</string>
     <string name="field_saving_value">Value</string>
     <string name="field_saving_goal">Goal</string>
@@ -25,6 +26,7 @@
     <string name="dialog_title_edit_saving">Edit Saving</string>
     <string name="dialog_title_delete_saving">Delete Saving</string>
     <string name="dialog_title_update_value">Update Value</string>
+    <string name="dialog_title_history_saving">History</string>
     <string name="dialog_message_delete_saving">You are about to delete this saving. Do you want to proceed?</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_add">Add</string>

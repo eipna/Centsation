@@ -142,6 +142,16 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
+    private void showHistoryDialog(Saving selectedSaving) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.dialog_title_history_saving)
+                .setIcon(R.drawable.ic_history)
+                .setPositiveButton(R.string.dialog_button_close, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void showEditDialog(Saving selectedSaving) {
         View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
 
@@ -303,5 +313,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
         if (operation.equals(SavingOperation.UPDATE)) showUpdateDialog(selectedSaving);
         if (operation.equals(SavingOperation.ARCHIVE)) archiveSaving(selectedSaving);
+        if (operation.equals(SavingOperation.HISTORY)) showHistoryDialog(selectedSaving);
     }
 }
