@@ -56,14 +56,14 @@
         android:id="@+id/field_saving_notes_layout"
         android:hint="@string/field_saving_notes"
         app:counterEnabled="true"
-        app:counterMaxLength="100"
+        app:counterMaxLength="200"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/field_saving_notes_text"
             android:inputType="textAutoComplete|textMultiLine"
-            android:maxLength="100"
+            android:maxLength="200"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
