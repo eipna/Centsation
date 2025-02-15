@@ -218,11 +218,11 @@ public class MainActivity extends BaseActivity implements SavingListener {
                         transaction.setAmount(Math.abs(savingValue - selectedSaving.getValue()));
 
                         if (savingValue > selectedSaving.getValue()) {
-                            transaction.setType(TransactionType.ADD.VALUE);
+                            transaction.setType(TransactionType.DEPOSIT.VALUE);
                         }
 
                         if (savingValue < selectedSaving.getValue()) {
-                            transaction.setType(TransactionType.DEDUCT.VALUE);
+                            transaction.setType(TransactionType.WITHDRAW.VALUE);
                         }
                         transactionRepository.create(transaction);
                     }
@@ -303,7 +303,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 Transaction transaction = new Transaction();
                 transaction.setSavingID(selectedSaving.getID());
                 transaction.setAmount(Math.abs(addedValue - selectedSaving.getValue()));
-                transaction.setType(TransactionType.ADD.VALUE);
+                transaction.setType(TransactionType.DEPOSIT.VALUE);
                 transactionRepository.create(transaction);
 
                 selectedSaving.setValue(addedValue);
@@ -328,7 +328,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 Transaction transaction = new Transaction();
                 transaction.setSavingID(selectedSaving.getID());
                 transaction.setAmount(Math.abs(deductedValue - selectedSaving.getValue()));
-                transaction.setType(TransactionType.DEDUCT.VALUE);
+                transaction.setType(TransactionType.WITHDRAW.VALUE);
                 transactionRepository.create(transaction);
 
                 selectedSaving.setValue(deductedValue);

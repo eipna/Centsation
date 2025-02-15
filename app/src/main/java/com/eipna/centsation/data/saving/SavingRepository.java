@@ -37,7 +37,7 @@ public class SavingRepository extends Database {
         Transaction initialTransaction = new Transaction();
         initialTransaction.setSavingID((int) database.insert(TABLE_SAVING, null, values));
         initialTransaction.setAmount(createdSaving.getValue());
-        initialTransaction.setType(TransactionType.ADD.VALUE);
+        initialTransaction.setType(TransactionType.DEPOSIT.VALUE);
         transactionRepository.create(initialTransaction);
         database.close();
     }

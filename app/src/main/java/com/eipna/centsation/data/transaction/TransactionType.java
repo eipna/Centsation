@@ -1,8 +1,8 @@
 package com.eipna.centsation.data.transaction;
 
 public enum TransactionType {
-    ADD("Add"),
-    DEDUCT("Deduct");
+    DEPOSIT("Deposit"),
+    WITHDRAW("Withdraw");
 
     private static final TransactionType[] types;
     public final String VALUE;
