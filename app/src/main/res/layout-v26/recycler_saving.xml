@@ -98,7 +98,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/saving_update"
                     style="?attr/materialIconButtonStyle"
-                    app:icon="@drawable/ic_update"
+                    app:icon="@drawable/ic_add_circle"
                     app:iconTint="?attr/colorTertiary"
                     android:tooltipText="@string/tooltip_update"
                     android:layout_width="wrap_content"
