@@ -27,7 +27,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @NonNull
     @Override
     public TransactionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View transactionView = LayoutInflater.from(context).inflate(R.layout.dialog_saving_history, parent, false);
+        View transactionView = LayoutInflater.from(context).inflate(R.layout.recycler_transaction, parent, false);
         return new ViewHolder(transactionView);
     }
 
@@ -54,7 +54,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(Transaction currentTransaction) {
             type.setText(currentTransaction.getType());
-            type.setText(String.valueOf(currentTransaction.getAmount()));
+            amount.setText(String.valueOf(currentTransaction.getAmount()));
         }
     }
 }

@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.saving.Saving;
@@ -26,6 +28,7 @@ import com.eipna.centsation.data.transaction.TransactionRepository;
 import com.eipna.centsation.data.transaction.TransactionType;
 import com.eipna.centsation.databinding.ActivityMainBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
+import com.eipna.centsation.ui.adapters.TransactionAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
@@ -149,8 +152,18 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showHistoryDialog(Saving selectedSaving) {
+        View transactionDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
+
+        ArrayList<Transaction> transactions = transactionRepository.getTransactions(selectedSaving.getID());
+        TransactionAdapter adapter = new TransactionAdapter(this, transactions);
+
+        RecyclerView transactionList = transactionDialog.findViewById(R.id.transaction_list);
+        transactionList.setLayoutManager(new LinearLayoutManager(this));
+        transactionList.setAdapter(adapter);
+
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_history_saving)
+                .setView(transactionDialog)
                 .setIcon(R.drawable.ic_history)
                 .setPositiveButton(R.string.dialog_button_close, null);
 
