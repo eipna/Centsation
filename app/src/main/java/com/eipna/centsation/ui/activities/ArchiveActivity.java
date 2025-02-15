@@ -1,9 +1,11 @@
 package com.eipna.centsation.ui.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -60,6 +62,20 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         updateSavingsList();
     }
 
+    private void showShareIntent(String notes) {
+        if (notes.isEmpty()) {
+            Toast.makeText(this, getString(R.string.toast_saving_empty_notes), Toast.LENGTH_SHORT).show();
+        } else {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, notes);
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+        }
+    }
+
     private void updateSavingsList() {
         savings = new ArrayList<>(savingRepository.getSavings(1));
         savingAdapter.update(savings);
@@ -111,5 +127,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     public void OnOperationClick(SavingOperation operation, int position) {
         Saving selectedSaving = savings.get(position);
         if (operation.equals(SavingOperation.UNARCHIVE)) unarchiveSaving(selectedSaving);
+        if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
     }
 }
