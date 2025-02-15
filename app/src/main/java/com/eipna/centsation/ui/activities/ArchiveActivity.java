@@ -46,7 +46,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         }
 
         savingRepository = new SavingRepository(this);
-        savings = new ArrayList<>(savingRepository.getSavings(Saving.ARCHIVE_TRUE));
+        savings = new ArrayList<>(savingRepository.getSavings(1));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
         savingAdapter = new SavingAdapter(this, this, savings);
@@ -55,13 +55,13 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     }
 
     private void unarchiveSaving(Saving selectedSaving) {
-        selectedSaving.setIsArchived(Saving.ARCHIVE_FALSE);
+        selectedSaving.setIsArchived(1);
         savingRepository.update(selectedSaving);
         updateSavingsList();
     }
 
     private void updateSavingsList() {
-        savings = new ArrayList<>(savingRepository.getSavings(Saving.ARCHIVE_TRUE));
+        savings = new ArrayList<>(savingRepository.getSavings(1));
         savingAdapter.update(savings);
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }

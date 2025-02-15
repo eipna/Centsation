@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
         savingRepository = new SavingRepository(this);
         savings = new ArrayList<>();
-        savings.addAll(savingRepository.getSavings(Saving.ARCHIVE_FALSE));
+        savings.addAll(savingRepository.getSavings(0));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
         savingAdapter = new SavingAdapter(this, this, savings);
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void updateSavingsList() {
-        savings = new ArrayList<>(savingRepository.getSavings(Saving.ARCHIVE_FALSE));
+        savings = new ArrayList<>(savingRepository.getSavings(0));
         savingAdapter.update(savings);
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }
@@ -129,7 +129,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 createdSaving.setValue(savingValue);
                 createdSaving.setGoal(savingGoal);
                 createdSaving.setNotes(savingNotesString);
-                createdSaving.setIsArchived(Saving.ARCHIVE_FALSE);
+                createdSaving.setIsArchived(0);
                 createSaving(createdSaving);
                 dialog.dismiss();
             }
@@ -145,6 +145,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         savingRepository.create(createdSaving);
         updateSavingsList();
     }
+
 
     private void showEditDialog(Saving selectedSaving) {
         View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
@@ -234,7 +235,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void archiveSaving(Saving selectedSaving) {
-        selectedSaving.setIsArchived(Saving.ARCHIVE_TRUE);
+        selectedSaving.setIsArchived(0);
         savingRepository.update(selectedSaving);
         updateSavingsList();
     }
