@@ -335,7 +335,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void archiveSaving(Saving selectedSaving) {
-        selectedSaving.setIsArchived(0);
+        selectedSaving.setIsArchived(1);
         savingRepository.update(selectedSaving);
         updateSavingsList();
     }
