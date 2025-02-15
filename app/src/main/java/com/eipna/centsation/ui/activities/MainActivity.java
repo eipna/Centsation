@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -217,14 +218,18 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
-    private void shareSavingNotes(String notes) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.setType("text/plain");
-        sendIntent.putExtra(Intent.EXTRA_TEXT, notes);
+    private void showShareIntent(String notes) {
+        if (notes.isEmpty()) {
+            Toast.makeText(this, getString(R.string.toast_saving_empty_notes), Toast.LENGTH_SHORT).show();
+        } else {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, notes);
 
-        Intent shareIntent = Intent.createChooser(sendIntent, null);
-        startActivity(shareIntent);
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+        }
     }
 
     private void showUpdateDialog(Saving selectedSaving) {
@@ -261,7 +266,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     public void OnOperationClick(SavingOperation operation, int position) {
         Saving selectedSaving = savings.get(position);
         if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
-        if (operation.equals(SavingOperation.SHARE)) shareSavingNotes(selectedSaving.getNotes());
+        if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
         if (operation.equals(SavingOperation.UPDATE)) showUpdateDialog(selectedSaving);
         if (operation.equals(SavingOperation.ARCHIVE)) archiveSaving(selectedSaving);
     }
