@@ -108,7 +108,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 .setPositiveButton(R.string.dialog_button_add, null);
 
         AlertDialog dialog = builder.create();
-
         dialog.setOnShowListener(dialogInterface -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
             String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
             String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
@@ -130,22 +129,17 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 createdSaving.setGoal(savingGoal);
                 createdSaving.setNotes(savingNotesString);
                 createdSaving.setIsArchived(0);
-                createSaving(createdSaving);
+                savingRepository.create(createdSaving);
+                updateSavingsList();
                 dialog.dismiss();
             }
 
             savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
-            savingValueLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_lower_goal) : null);
+            savingValueLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
             savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
         }));
         dialog.show();
     }
-
-    private void createSaving(Saving createdSaving) {
-        savingRepository.create(createdSaving);
-        updateSavingsList();
-    }
-
 
     private void showEditDialog(Saving selectedSaving) {
         View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
@@ -168,25 +162,42 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
-            String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
-            String savingCurrentAmountString = Objects.requireNonNull(savingValueInput.getText()).toString();
-            String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
-            String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
+            savingNameInput.setText(selectedSaving.getName());
+            savingValueInput.setText(String.valueOf(selectedSaving.getValue()));
+            savingGoalInput.setText(String.valueOf(selectedSaving.getGoal()));
+            savingNotesInput.setText(selectedSaving.getNotes());
 
-            if (!savingNameString.isEmpty() && !savingCurrentAmountString.isEmpty() && !savingGoalString.isEmpty()) {
-                double savingCurrentAmount = Double.parseDouble(savingCurrentAmountString);
-                double savingGoal = Double.parseDouble(savingGoalString);
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
+                String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
+                String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
+                String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
+                String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
 
-                if (savingCurrentAmount > savingGoal) {
-                    savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
-                    return;
+                if (!savingNameString.isEmpty() && !savingValueString.isEmpty() && !savingGoalString.isEmpty()) {
+                    double savingValue = Double.parseDouble(savingValueString);
+                    double savingGoal = Double.parseDouble(savingGoalString);
+
+                    if (savingValue > savingGoal) {
+                        savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
+                        return;
+                    }
+
+                    Saving editedSaving = new Saving();
+                    editedSaving.setID(selectedSaving.getID());
+                    editedSaving.setName(savingNameString);
+                    editedSaving.setValue(savingValue);
+                    editedSaving.setGoal(savingGoal);
+                    editedSaving.setNotes(savingNotesString);
+                    editedSaving.setIsArchived(selectedSaving.getIsArchived());
+                    savingRepository.update(editedSaving);
+                    updateSavingsList();
+                    dialog.dismiss();
                 }
-                dialog.dismiss();
-            }
 
-            savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
-            savingValueLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_lower_goal) : null);
-            savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
+                savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
+                savingValueLayout.setError(savingValueString.isEmpty() ? getString(R.string.field_error_required) : null);
+                savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
+            });
         });
         dialog.show();
     }

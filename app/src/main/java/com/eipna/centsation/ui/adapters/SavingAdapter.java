@@ -114,7 +114,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 share.setVisibility(View.GONE);
             }
 
-            if (currentSaving.getIsArchived() == Saving.ARCHIVE_TRUE) {
+            if (currentSaving.getIsArchived() == 1) {
                 archive.setVisibility(View.GONE);
             } else {
                 unarchive.setVisibility(View.GONE);
