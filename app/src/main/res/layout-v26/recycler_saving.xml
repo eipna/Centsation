@@ -144,7 +144,7 @@
                     android:id="@+id/saving_delete"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_delete"
-                    app:iconTint="?attr/colorTertiary"
+                    app:iconTint="?attr/colorError"
                     android:tooltipText="@string/tooltip_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
