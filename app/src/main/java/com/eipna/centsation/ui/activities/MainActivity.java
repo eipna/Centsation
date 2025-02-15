@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         transactionRepository = new TransactionRepository(this);
 
         savings = new ArrayList<>();
-        savings.addAll(savingRepository.getSavings(0));
+        savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
         savingAdapter = new SavingAdapter(this, this, savings);
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void updateSavingsList() {
-        savings = new ArrayList<>(savingRepository.getSavings(0));
+        savings = new ArrayList<>(savingRepository.getSavings(Saving.NOT_ARCHIVE));
         savingAdapter.update(savings);
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }

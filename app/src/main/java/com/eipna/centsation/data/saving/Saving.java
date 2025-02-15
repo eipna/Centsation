@@ -10,6 +10,9 @@ public class Saving {
     private String notes;
     private int isArchived;
 
+    public static int IS_ARCHIVE = 1;
+    public static int NOT_ARCHIVE = 0;
+
     public Saving() {
         this.ID = -1;
         this.name = null;

@@ -111,7 +111,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 goal.setTextDirection(View.TEXT_DIRECTION_LTR);
             }
 
-            if (currentSaving.getIsArchived() == 1) {
+            if (currentSaving.getIsArchived() == Saving.IS_ARCHIVE) {
                 archive.setVisibility(View.GONE);
             } else {
                 unarchive.setVisibility(View.GONE);
