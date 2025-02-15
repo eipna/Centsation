@@ -27,11 +27,11 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createSavingTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SAVING + "(" +
                 COLUMN_SAVING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_SAVING_NAME + " TEXT, " +
-                COLUMN_SAVING_VALUE + " REAL, " +
-                COLUMN_SAVING_GOAL + " REAL, " +
+                COLUMN_SAVING_NAME + " TEXT NOT NULL, " +
+                COLUMN_SAVING_VALUE + " REAL NOT NULL, " +
+                COLUMN_SAVING_GOAL + " REAL NOT NULL, " +
                 COLUMN_SAVING_NOTES + " TEXT, " +
-                COLUMN_SAVING_IS_ARCHIVED + " INTEGER)";
+                COLUMN_SAVING_IS_ARCHIVED + " INTEGER NOT NULL)";
         sqLiteDatabase.execSQL(createSavingTable);
     }
 
