@@ -22,7 +22,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String TABLE_TRANSACTIONS = "transactions";
     public static final String COLUMN_TRANSACTION_ID = "history_id";
     public static final String COLUMN_TRANSACTION_SAVING_ID = "saving_id";
-    public static final String COLUMN_TRANSACTION_UPDATED_VALUE = "updated_value";
+    public static final String COLUMN_TRANSACTION_AMOUNT = "amount";
     public static final String COLUMN_TRANSACTION_TYPE = "type";
 
     public Database(@Nullable Context context) {
@@ -42,7 +42,7 @@ public class Database extends SQLiteOpenHelper {
         String createHistoryTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTIONS + "(" +
                 COLUMN_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TRANSACTION_SAVING_ID + "INTEGER NOT NULL, " +
-                COLUMN_TRANSACTION_UPDATED_VALUE + " REAL NOT NULL, " +
+                COLUMN_TRANSACTION_AMOUNT + " REAL NOT NULL, " +
                 COLUMN_TRANSACTION_TYPE + " TEXT NOT NULL," +
                 "FOREIGN KEY (" + COLUMN_TRANSACTION_SAVING_ID + ") REFERENCES " + TABLE_SAVING + "(" + COLUMN_SAVING_ID + ") ON DELETE CASCADE)";
 
