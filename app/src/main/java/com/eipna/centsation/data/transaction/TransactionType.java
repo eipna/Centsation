@@ -5,13 +5,13 @@ public enum TransactionType {
     DEDUCT("Deduct");
 
     private static final TransactionType[] types;
-    private final String TYPE;
+    public final String VALUE;
 
     static {
         types = values();
     }
 
-    TransactionType(String type) {
-        this.TYPE = type;
+    TransactionType(String value) {
+        this.VALUE = value;
     }
 }

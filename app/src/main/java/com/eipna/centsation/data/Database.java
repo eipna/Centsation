@@ -41,7 +41,7 @@ public class Database extends SQLiteOpenHelper {
 
         String createHistoryTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTIONS + "(" +
                 COLUMN_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_TRANSACTION_SAVING_ID + "INTEGER NOT NULL, " +
+                COLUMN_TRANSACTION_SAVING_ID + " INTEGER NOT NULL, " +
                 COLUMN_TRANSACTION_AMOUNT + " REAL NOT NULL, " +
                 COLUMN_TRANSACTION_TYPE + " TEXT NOT NULL," +
                 "FOREIGN KEY (" + COLUMN_TRANSACTION_SAVING_ID + ") REFERENCES " + TABLE_SAVING + "(" + COLUMN_SAVING_ID + ") ON DELETE CASCADE)";

@@ -9,13 +9,19 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.Nullable;
 
 import com.eipna.centsation.data.Database;
+import com.eipna.centsation.data.transaction.Transaction;
+import com.eipna.centsation.data.transaction.TransactionRepository;
+import com.eipna.centsation.data.transaction.TransactionType;
 
 import java.util.ArrayList;
 
 public class SavingRepository extends Database {
 
+    private final TransactionRepository transactionRepository;
+
     public SavingRepository(@Nullable Context context) {
         super(context);
+        transactionRepository = new TransactionRepository(context);
     }
 
     public void create(Saving createdSaving) {
@@ -28,7 +34,11 @@ public class SavingRepository extends Database {
         values.put(COLUMN_SAVING_NOTES, createdSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, createdSaving.getIsArchived());
 
-        database.insert(TABLE_SAVING, null, values);
+        Transaction initialTransaction = new Transaction();
+        initialTransaction.setSavingID((int) database.insert(TABLE_SAVING, null, values));
+        initialTransaction.setAmount(createdSaving.getValue());
+        initialTransaction.setType(TransactionType.ADD.VALUE);
+        transactionRepository.create(initialTransaction);
         database.close();
     }
 
