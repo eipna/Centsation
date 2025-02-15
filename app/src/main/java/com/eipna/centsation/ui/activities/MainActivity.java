@@ -94,7 +94,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
         TextInputLayout savingGoalLayout = savingDialog.findViewById(R.id.field_saving_goal_layout);
-        TextInputLayout savingNotesLayout = savingDialog.findViewById(R.id.field_saving_notes_layout);
 
         TextInputEditText savingNameInput = savingDialog.findViewById(R.id.field_saving_name_text);
         TextInputEditText savingValueInput = savingDialog.findViewById(R.id.field_saving_value_text);
@@ -112,19 +111,26 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
         dialog.setOnShowListener(dialogInterface -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
             String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
-            String savingCurrentAmountString = Objects.requireNonNull(savingValueInput.getText()).toString();
+            String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
             String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
             String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
 
-            if (!savingNameString.isEmpty() && !savingCurrentAmountString.isEmpty() && !savingGoalString.isEmpty()) {
-                double savingCurrentAmount = Double.parseDouble(savingCurrentAmountString);
+            if (!savingNameString.isEmpty() && !savingValueString.isEmpty() && !savingGoalString.isEmpty()) {
+                double savingValue = Double.parseDouble(savingValueString);
                 double savingGoal = Double.parseDouble(savingGoalString);
 
-                if (savingCurrentAmount > savingGoal) {
+                if (savingValue > savingGoal) {
                     savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
                     return;
                 }
-                createSaving(savingNameString, savingCurrentAmount, savingGoal, savingNotesString);
+
+                Saving createdSaving = new Saving();
+                createdSaving.setName(savingNameString);
+                createdSaving.setValue(savingValue);
+                createdSaving.setGoal(savingGoal);
+                createdSaving.setNotes(savingNotesString);
+                createdSaving.setIsArchived(Saving.ARCHIVE_FALSE);
+                createSaving(createdSaving);
                 dialog.dismiss();
             }
 
@@ -135,14 +141,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
-    private void createSaving(String name, double amount, double goal, String notes) {
-        Saving createdSaving = new Saving();
-        createdSaving.setName(name);
-        createdSaving.setValue(amount);
-        createdSaving.setGoal(goal);
-        createdSaving.setNotes(notes);
-        createdSaving.setIsArchived(Saving.ARCHIVE_FALSE);
-
+    private void createSaving(Saving createdSaving) {
         savingRepository.create(createdSaving);
         updateSavingsList();
     }
@@ -153,7 +152,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
         TextInputLayout savingGoalLayout = savingDialog.findViewById(R.id.field_saving_goal_layout);
-        TextInputLayout savingNotesLayout = savingDialog.findViewById(R.id.field_saving_notes_layout);
 
         TextInputEditText savingNameInput = savingDialog.findViewById(R.id.field_saving_name_text);
         TextInputEditText savingValueInput = savingDialog.findViewById(R.id.field_saving_value_text);
@@ -169,10 +167,25 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
-            savingNameInput.setText(selectedSaving.getName());
-            savingValueInput.setText(String.valueOf(selectedSaving.getValue()));
-            savingGoalInput.setText(String.valueOf(selectedSaving.getGoal()));
-            savingNotesInput.setText(selectedSaving.getNotes());
+            String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
+            String savingCurrentAmountString = Objects.requireNonNull(savingValueInput.getText()).toString();
+            String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
+            String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
+
+            if (!savingNameString.isEmpty() && !savingCurrentAmountString.isEmpty() && !savingGoalString.isEmpty()) {
+                double savingCurrentAmount = Double.parseDouble(savingCurrentAmountString);
+                double savingGoal = Double.parseDouble(savingGoalString);
+
+                if (savingCurrentAmount > savingGoal) {
+                    savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
+                    return;
+                }
+                dialog.dismiss();
+            }
+
+            savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
+            savingValueLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_lower_goal) : null);
+            savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
         });
         dialog.show();
     }
