@@ -44,7 +44,7 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_TRANSACTION_SAVING_ID + " INTEGER NOT NULL, " +
                 COLUMN_TRANSACTION_AMOUNT + " REAL NOT NULL, " +
                 COLUMN_TRANSACTION_TYPE + " TEXT NOT NULL," +
-                "FOREIGN KEY (" + COLUMN_TRANSACTION_SAVING_ID + ") REFERENCES " + TABLE_SAVING + "(" + COLUMN_SAVING_ID + ") ON DELETE CASCADE)";
+                "FOREIGN KEY (" + COLUMN_TRANSACTION_SAVING_ID + ") REFERENCES " + TABLE_SAVING + "(" + COLUMN_SAVING_ID + "))";
 
         sqLiteDatabase.execSQL(createSavingTable);
         sqLiteDatabase.execSQL(createHistoryTable);

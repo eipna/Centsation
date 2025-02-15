@@ -58,6 +58,7 @@ public class SavingRepository extends Database {
 
     public void delete(int savingID) {
         SQLiteDatabase database = getWritableDatabase();
+        transactionRepository.clear(savingID);
         database.delete(TABLE_SAVING, COLUMN_SAVING_ID + " = ?", new String[]{String.valueOf(savingID)});
         database.close();
     }

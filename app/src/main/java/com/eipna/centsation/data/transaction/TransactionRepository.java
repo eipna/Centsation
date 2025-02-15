@@ -48,4 +48,10 @@ public class TransactionRepository extends Database {
         database.close();
         return list;
     }
+
+    public void clear(int savingID) {
+        SQLiteDatabase database = getReadableDatabase();
+        database.delete(TABLE_TRANSACTIONS, COLUMN_TRANSACTION_SAVING_ID + " = ?", new String[]{String.valueOf(savingID)});
+        database.close();
+    }
 }
