@@ -1,8 +1,5 @@
 package com.eipna.centsation.ui.activities;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -62,7 +58,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
 
-        binding.addSaving.setOnClickListener(view -> showAddSavingDialog());
+        binding.addSaving.setOnClickListener(view -> showAddDialog());
     }
 
     @Override
@@ -92,7 +88,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         return true;
     }
 
-    private void showAddSavingDialog() {
+    private void showAddDialog() {
         View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
@@ -151,7 +147,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         updateSavingsList();
     }
 
-    private void showEditSavingDialog(Saving selectedSaving) {
+    private void showEditDialog(Saving selectedSaving) {
         View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
@@ -181,7 +177,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
-    private void showDeleteSavingDialog(int savingID) {
+    private void showDeleteDialog(int savingID) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_delete_saving)
                 .setMessage(R.string.dialog_message_delete_saving)
@@ -206,7 +202,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         startActivity(shareIntent);
     }
 
-    private void showUpdateSavingValueDialog(Saving selectedSaving) {
+    private void showUpdateDialog(Saving selectedSaving) {
         View updateSavingValue = LayoutInflater.from(this).inflate(R.layout.dialog_saving_update, null, false);
 
         TextInputLayout savingValueLayout = updateSavingValue.findViewById(R.id.field_saving_update_layout);
@@ -233,15 +229,15 @@ public class MainActivity extends BaseActivity implements SavingListener {
     @Override
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
-        showEditSavingDialog(selectedSaving);
+        showEditDialog(selectedSaving);
     }
 
     @Override
     public void OnOperationClick(SavingOperation operation, int position) {
         Saving selectedSaving = savings.get(position);
-        if (operation.equals(SavingOperation.DELETE)) showDeleteSavingDialog(selectedSaving.getID());
+        if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
         if (operation.equals(SavingOperation.SHARE)) shareSavingNotes(selectedSaving.getNotes());
-        if (operation.equals(SavingOperation.UPDATE)) showUpdateSavingValueDialog(selectedSaving);
+        if (operation.equals(SavingOperation.UPDATE)) showUpdateDialog(selectedSaving);
         if (operation.equals(SavingOperation.ARCHIVE)) archiveSaving(selectedSaving);
     }
 }
