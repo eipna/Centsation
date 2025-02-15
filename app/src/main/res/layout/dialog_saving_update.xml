@@ -30,7 +30,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_saving_deduct"
-            android:text="Deduct"
+            android:text="@string/dialog_button_deduct"
             android:layout_weight="1"
             android:layout_marginEnd="4dp"
             android:layout_marginStart="4dp"
@@ -41,8 +41,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_saving_add"
-            android:text="Add"
-            android:textColor="?attr/colorOnPrimary"
+            android:text="@string/dialog_button_add"
+            android:textColor="?attr/colorOnSecondary"
+            android:backgroundTint="?attr/colorSecondary"
             android:layout_weight="1"
             android:layout_marginEnd="4dp"
             android:layout_marginStart="4dp"

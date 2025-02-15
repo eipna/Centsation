@@ -29,6 +29,7 @@
     <string name="dialog_button_close">Close</string>
     <string name="dialog_button_edit">Save</string>
     <string name="dialog_button_delete">Delete</string>
+    <string name="dialog_button_deduct">Deduct</string>
 
     <string name="menu_item_archive">Archive</string>
     <string name="menu_item_settings">Settings</string>
