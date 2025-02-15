@@ -93,7 +93,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_edit_saving)
-                .setIcon(R.drawable.ic_edit)
                 .setView(savingDialog)
                 .setPositiveButton(R.string.dialog_button_edit, null)
                 .setNegativeButton(R.string.dialog_button_cancel, null);

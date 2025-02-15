@@ -277,16 +277,16 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputLayout savingValueLayout = updateSavingValue.findViewById(R.id.field_saving_update_layout);
         TextInputEditText savingValueInput = updateSavingValue.findViewById(R.id.field_saving_update_text);
 
-        MaterialButton addButton = updateSavingValue.findViewById(R.id.button_saving_add);
-        MaterialButton deductButton = updateSavingValue.findViewById(R.id.button_saving_deduct);
+        MaterialButton depositButton = updateSavingValue.findViewById(R.id.button_saving_deposit);
+        MaterialButton withdrawButton = updateSavingValue.findViewById(R.id.button_saving_withdraw);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_title_update_value)
+                .setTitle(R.string.dialog_title_add_transaction)
                 .setView(updateSavingValue);
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
-            addButton.setOnClickListener(view -> {
+            depositButton.setOnClickListener(view -> {
                 String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
                 if (savingValueString.isEmpty()) {
                     savingValueLayout.setError(getString(R.string.field_error_empty_value));
@@ -306,7 +306,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 dialog.dismiss();
             });
 
-            deductButton.setOnClickListener(view -> {
+            withdrawButton.setOnClickListener(view -> {
                 String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
                 if (savingValueString.isEmpty()) {
                     savingValueLayout.setError(getString(R.string.field_error_empty_value));
