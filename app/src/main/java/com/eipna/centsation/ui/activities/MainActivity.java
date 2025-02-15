@@ -21,6 +21,9 @@ import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.data.saving.SavingRepository;
+import com.eipna.centsation.data.transaction.Transaction;
+import com.eipna.centsation.data.transaction.TransactionRepository;
+import com.eipna.centsation.data.transaction.TransactionType;
 import com.eipna.centsation.databinding.ActivityMainBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.google.android.material.button.MaterialButton;
@@ -36,6 +39,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     private ActivityMainBinding binding;
     private SavingRepository savingRepository;
+    private TransactionRepository transactionRepository;
     private SavingAdapter savingAdapter;
     private ArrayList<Saving> savings;
 
@@ -51,6 +55,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
         setSupportActionBar(binding.toolbar);
 
         savingRepository = new SavingRepository(this);
+        transactionRepository = new TransactionRepository(this);
+
         savings = new ArrayList<>();
         savings.addAll(savingRepository.getSavings(0));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
@@ -193,6 +199,21 @@ public class MainActivity extends BaseActivity implements SavingListener {
                         return;
                     }
 
+                    if (savingValue != selectedSaving.getValue()) {
+                        Transaction transaction = new Transaction();
+                        transaction.setSavingID(selectedSaving.getID());
+                        transaction.setAmount(Math.abs(savingValue - selectedSaving.getValue()));
+
+                        if (savingValue > selectedSaving.getValue()) {
+                            transaction.setType(TransactionType.ADD.VALUE);
+                        }
+
+                        if (savingValue < selectedSaving.getValue()) {
+                            transaction.setType(TransactionType.DEDUCT.VALUE);
+                        }
+                        transactionRepository.create(transaction);
+                    }
+
                     Saving editedSaving = new Saving();
                     editedSaving.setID(selectedSaving.getID());
                     editedSaving.setName(savingNameString);
@@ -266,6 +287,12 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 }
 
                 double addedValue = selectedSaving.getValue() + Double.parseDouble(savingValueString);
+                Transaction transaction = new Transaction();
+                transaction.setSavingID(selectedSaving.getID());
+                transaction.setAmount(Math.abs(addedValue - selectedSaving.getValue()));
+                transaction.setType(TransactionType.ADD.VALUE);
+                transactionRepository.create(transaction);
+
                 selectedSaving.setValue(addedValue);
                 savingRepository.update(selectedSaving);
                 updateSavingsList();
@@ -284,6 +311,12 @@ public class MainActivity extends BaseActivity implements SavingListener {
                     savingValueLayout.setError(getString(R.string.field_error_negative_value));
                     return;
                 }
+
+                Transaction transaction = new Transaction();
+                transaction.setSavingID(selectedSaving.getID());
+                transaction.setAmount(Math.abs(deductedValue - selectedSaving.getValue()));
+                transaction.setType(TransactionType.DEDUCT.VALUE);
+                transactionRepository.create(transaction);
 
                 selectedSaving.setValue(deductedValue);
                 savingRepository.update(selectedSaving);
