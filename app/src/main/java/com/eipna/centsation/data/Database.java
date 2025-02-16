@@ -152,27 +152,35 @@ public class Database extends SQLiteOpenHelper {
             JSONArray savingArray = importData.getJSONArray(TABLE_SAVING);
             JSONArray transactionArray = importData.getJSONArray(TABLE_TRANSACTIONS);
 
-            for (int i = 0; i < savingArray.length(); i++) {
-                JSONObject savingObject = savingArray.getJSONObject(i);
-                ContentValues values = new ContentValues();
-                values.put(COLUMN_SAVING_NAME, savingObject.getString(COLUMN_SAVING_NAME));
-                values.put(COLUMN_SAVING_VALUE, savingObject.getDouble(COLUMN_SAVING_VALUE));
-                values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
-                values.put(COLUMN_SAVING_NOTES, savingObject.getString(COLUMN_SAVING_NOTES));
-                values.put(COLUMN_SAVING_IS_ARCHIVED, savingObject.getInt(COLUMN_SAVING_IS_ARCHIVED));
-                database.insert(TABLE_SAVING, null, values);
-            }
+            database.beginTransaction();
+            try {
+                for (int i = 0; i < savingArray.length(); i++) {
+                    JSONObject savingObject = savingArray.getJSONObject(i);
+                    ContentValues values = new ContentValues();
+                    values.put(COLUMN_SAVING_NAME, savingObject.getString(COLUMN_SAVING_NAME));
+                    values.put(COLUMN_SAVING_VALUE, savingObject.getDouble(COLUMN_SAVING_VALUE));
+                    values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
+                    values.put(COLUMN_SAVING_NOTES, savingObject.getString(COLUMN_SAVING_NOTES));
+                    values.put(COLUMN_SAVING_IS_ARCHIVED, savingObject.getInt(COLUMN_SAVING_IS_ARCHIVED));
+                    database.insert(TABLE_SAVING, null, values);
+                }
 
-            for (int i = 0; i < transactionArray.length(); i++) {
-                JSONObject transactionObject = transactionArray.getJSONObject(i);
-                ContentValues values = new ContentValues();
-                values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getInt(COLUMN_TRANSACTION_SAVING_ID));
-                values.put(COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(COLUMN_TRANSACTION_AMOUNT));
-                values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
-                database.insert(TABLE_TRANSACTIONS, null, values);
+                for (int i = 0; i < transactionArray.length(); i++) {
+                    JSONObject transactionObject = transactionArray.getJSONObject(i);
+                    ContentValues values = new ContentValues();
+                    values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getInt(COLUMN_TRANSACTION_SAVING_ID));
+                    values.put(COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(COLUMN_TRANSACTION_AMOUNT));
+                    values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
+                    database.insert(TABLE_TRANSACTIONS, null, values);
+                }
+                database.setTransactionSuccessful();
+            } catch (Exception e) {
+                Log.e("Import", "Error importing data");
+            } finally {
+                database.endTransaction();
             }
         } catch (Exception e) {
-            Log.e("Import", "Something went wrong when importing");
+            Log.e("Import", "Error reading JSON file");
         } finally {
             database.close();
         }
