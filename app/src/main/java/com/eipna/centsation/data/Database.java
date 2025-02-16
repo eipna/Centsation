@@ -8,8 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.eipna.centsation.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -124,6 +127,8 @@ public class Database extends SQLiteOpenHelper {
             assert outputStream != null;
             outputStream.write(exportData.toString().getBytes());
             outputStream.close();
+
+            Toast.makeText(context, context.getString(R.string.toast_export_successful), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.e("Export", "Something went wrong when exporting data");
         } finally {
@@ -173,7 +178,9 @@ public class Database extends SQLiteOpenHelper {
                     values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
                     database.insert(TABLE_TRANSACTIONS, null, values);
                 }
+                
                 database.setTransactionSuccessful();
+                Toast.makeText(context, context.getString(R.string.toast_import_successful), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Log.e("Import", "Error importing data");
             } finally {

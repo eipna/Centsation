@@ -47,6 +47,8 @@
     <string name="menu_item_sort_descending">Descending</string>
 
     <string name="toast_saving_empty_notes">This saving has no notes</string>
+    <string name="toast_export_successful">Export successful</string>
+    <string name="toast_import_successful">Import successful</string>
 
     <string name="tooltip_share">Share Notes</string>
     <string name="tooltip_update">New Transaction</string>
