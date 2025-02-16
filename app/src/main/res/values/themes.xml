@@ -53,7 +53,7 @@
         <item name="alertDialogTheme">@style/Theme.Centsation.AlertDialog</item>
     </style>
 
-    <style name="Theme.Centsation.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+    <style name="Theme.Centsation.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
         <item name="backgroundTint">?attr/colorSurfaceContainerHigh</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="dialogCornerRadius">28dp</item>
