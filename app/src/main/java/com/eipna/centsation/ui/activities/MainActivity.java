@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     private TransactionRepository transactionRepository;
     private SavingAdapter savingAdapter;
     private ArrayList<Saving> savings;
+    private SavingSort savingSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +58,13 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding.appBar.setStatusBarForeground(drawable);
         setSupportActionBar(binding.toolbar);
 
+        savingSort = SavingSort.fromName(preferences.getSavingSort());
         savingRepository = new SavingRepository(this);
         transactionRepository = new TransactionRepository(this);
 
         savings = new ArrayList<>();
         savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
+        savings.sort(savingSort.SORT);
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
         savingAdapter = new SavingAdapter(this, this, savings);
@@ -87,7 +90,9 @@ public class MainActivity extends BaseActivity implements SavingListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        MenuCompat.setGroupDividerEnabled(menu, true);
+
+        MenuItem selectedSort = menu.findItem(SavingSort.getMenuItem(savingSort));
+        selectedSort.setChecked(true);
         return true;
     }
 

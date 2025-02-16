@@ -1,6 +1,10 @@
 package com.eipna.centsation.data.saving;
 
 
+import android.view.MenuItem;
+
+import com.eipna.centsation.R;
+
 import java.util.Comparator;
 
 public enum SavingSort {
@@ -23,5 +27,31 @@ public enum SavingSort {
     SavingSort(String name, Comparator<Saving> sort) {
         this.NAME = name;
         this.SORT = sort;
+    }
+
+    public static SavingSort fromName(String name) {
+        for (SavingSort savingSort : sorts) {
+            if (name.equals(savingSort.NAME)) {
+                return savingSort;
+            }
+        }
+        return null;
+    }
+
+    public static int getMenuItem(SavingSort savingSort) {
+        if (savingSort.equals(SavingSort.NAME_ASCENDING)) {
+            return R.id.saving_sort_name_ascending;
+        } else if (savingSort.equals(SavingSort.NAME_DESCENDING)) {
+            return R.id.saving_sort_name_descending;
+        } else if (savingSort.equals(SavingSort.VALUE_LOWEST)) {
+            return R.id.saving_sort_value_lowest;
+        } else if (savingSort.equals(SavingSort.VALUE_HIGHEST)) {
+            return R.id.saving_sort_value_highest;
+        } else if (savingSort.equals(SavingSort.GOAL_LOWEST)) {
+            return R.id.saving_sort_goal_lowest;
+        } else if (savingSort.equals(SavingSort.GOAL_HIGHEST)) {
+            return R.id.saving_sort_goal_highest;
+        }
+        return -1;
     }
 }
