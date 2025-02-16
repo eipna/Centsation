@@ -31,18 +31,18 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_saving_withdraw"
             android:text="@string/dialog_button_withdraw"
+            android:textColor="?attr/colorOnTertiary"
             android:layout_weight="1"
             android:layout_marginEnd="4dp"
-            android:backgroundTint="?attr/colorError"
-            android:textColor="?attr/colorOnError"
+            android:backgroundTint="?attr/colorTertiary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_saving_deposit"
             android:text="@string/dialog_button_deposit"
-            android:textColor="?attr/colorOnSecondary"
-            android:backgroundTint="?attr/colorSecondary"
+            android:textColor="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_weight="1"
             android:layout_marginStart="4dp"
