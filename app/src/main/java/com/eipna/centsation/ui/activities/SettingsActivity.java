@@ -21,6 +21,7 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
+import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
 import com.eipna.centsation.util.PreferenceUtil;
@@ -69,7 +70,8 @@ public class SettingsActivity extends BaseActivity {
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
-        PreferenceUtil preferences;
+        private PreferenceUtil preferences;
+        private Database database;
 
         private ListPreference listTheme;
         private ListPreference listCurrency;
@@ -84,17 +86,13 @@ public class SettingsActivity extends BaseActivity {
         private int easterEggCounter;
 
         private final ActivityResultLauncher<Intent> exportDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result != null) {
-                assert result.getData() != null;
-                Uri uri = result.getData().getData();
-            }
+            assert result.getData() != null;
+            Uri uri = result.getData().getData();
+            database.exportJSON(uri);
         });
 
         private final ActivityResultLauncher<Intent> importDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result != null) {
-                assert result.getData() != null;
-                Uri uri = result.getData().getData();
-            }
+
         });
 
         @Override
@@ -181,6 +179,8 @@ public class SettingsActivity extends BaseActivity {
 
         private void setPreferences() {
             preferences = new PreferenceUtil(requireContext());
+            database = new Database(requireContext());
+
             listCurrency = findPreference("currency");
             listTheme = findPreference("theme");
             switchDynamicColors = findPreference("dynamic_colors");
