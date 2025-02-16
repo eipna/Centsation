@@ -64,6 +64,13 @@
     <string name="preference_switch_dynamic_colors_title">Dynamic Colors</string>
     <string name="preference_switch_dynamic_colors_summary">Apply colors from your wallpaper to the application theme</string>
 
+    <!-- Backup Preference Category -->
+    <string name="preference_category_backup">Backup</string>
+    <string name="preference_import_title">Import</string>
+    <string name="preference_import_summary">Import back your savings</string>
+    <string name="preference_export_title">Export</string>
+    <string name="preference_export_summary">Export your savings</string>
+
     <!--About Preference Category -->
     <string name="preference_category_about">About</string>
     <string name="preference_app_version">Version</string>

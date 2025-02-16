@@ -25,6 +25,24 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/preference_category_backup"
+        app:allowDividerBelow="true">
+
+        <Preference
+            app:key="import"
+            app:title="@string/preference_import_title"
+            app:summary="@string/preference_import_summary"
+            app:iconSpaceReserved="false"/>
+
+        <Preference
+            app:key="export"
+            app:title="@string/preference_export_title"
+            app:summary="@string/preference_export_summary"
+            app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/preference_category_about"
         app:iconSpaceReserved="false">
 
