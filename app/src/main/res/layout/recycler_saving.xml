@@ -27,7 +27,7 @@
             android:id="@+id/saving_name"
             android:text="Saving Name"
             android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="?attr/colorPrimary"
             android:ellipsize="end"
             android:maxLines="1"
             android:layout_width="match_parent"
