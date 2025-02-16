@@ -26,7 +26,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/saving_name"
             android:text="Saving Name"
-            android:textSize="24sp"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
             android:ellipsize="end"
             android:textColor="?attr/colorSecondary"
             android:maxLines="1"
@@ -46,8 +46,7 @@
                 android:id="@+id/saving_value"
                 android:text="1000.0"
                 android:textColor="?attr/colorOnSurfaceVariant"
-                android:textSize="16sp"
-                app:fontFamily="sans-serif-medium"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
@@ -55,10 +54,9 @@
             <com.google.android.material.textview.MaterialTextView
                 android:text="out of"
                 android:textColor="?attr/colorOnSurfaceVariant"
-                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:layout_marginEnd="4dp"
                 android:layout_marginStart="4dp"
-                app:fontFamily="sans-serif-medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
@@ -67,9 +65,8 @@
                 android:id="@+id/saving_goal"
                 android:text="1000.0"
                 android:textColor="?attr/colorOnSurfaceVariant"
-                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:layout_marginEnd="4dp"
-                app:fontFamily="sans-serif-medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
@@ -77,9 +74,8 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/saving_percent"
                 android:text="(100.0%)"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:textColor="?attr/colorOnSurfaceVariant"
-                android:textSize="16sp"
-                app:fontFamily="sans-serif-medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
@@ -99,7 +95,7 @@
                     android:id="@+id/saving_update"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_add_circle"
-                    app:iconTint="?attr/colorTertiary"
+                    app:iconTint="?attr/colorSecondary"
                     android:tooltipText="@string/tooltip_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -108,7 +104,7 @@
                     android:id="@+id/saving_history"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_history"
-                    app:iconTint="?attr/colorTertiary"
+                    app:iconTint="?attr/colorSecondary"
                     android:tooltipText="@string/tooltip_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -117,7 +113,7 @@
                     android:id="@+id/saving_share"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_share"
-                    app:iconTint="?attr/colorTertiary"
+                    app:iconTint="?attr/colorSecondary"
                     android:tooltipText="@string/tooltip_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -126,7 +122,7 @@
                     android:id="@+id/saving_archive"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_archive"
-                    app:iconTint="?attr/colorTertiary"
+                    app:iconTint="?attr/colorSecondary"
                     android:tooltipText="@string/tooltip_archive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -135,7 +131,7 @@
                     android:id="@+id/saving_unarchive"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_unarchive"
-                    app:iconTint="?attr/colorTertiary"
+                    app:iconTint="?attr/colorSecondary"
                     android:tooltipText="@string/tooltip_unarchive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -144,7 +140,7 @@
                     android:id="@+id/saving_delete"
                     style="?attr/materialIconButtonStyle"
                     app:icon="@drawable/ic_delete"
-                    app:iconTint="?attr/colorError"
+                    app:iconTint="?attr/colorTertiary"
                     android:tooltipText="@string/tooltip_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
