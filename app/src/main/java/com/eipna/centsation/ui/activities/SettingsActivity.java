@@ -92,7 +92,9 @@ public class SettingsActivity extends BaseActivity {
         });
 
         private final ActivityResultLauncher<Intent> importDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-
+            assert result.getData() != null;
+            Uri uri = result.getData().getData();
+            database.importJSON(uri);
         });
 
         @Override

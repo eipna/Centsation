@@ -90,7 +90,7 @@ public class Database extends SQLiteOpenHelper {
                     savingObject.put(COLUMN_SAVING_VALUE, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_VALUE)));
                     savingObject.put(COLUMN_SAVING_GOAL, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_GOAL)));
                     savingObject.put(COLUMN_SAVING_NOTES, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NOTES)));
-                    savingObject.put(COLUMN_SAVING_IS_ARCHIVED, savingArray.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));
+                    savingObject.put(COLUMN_SAVING_IS_ARCHIVED, savingCursor.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));
                     savingArray.put(savingObject);
                 } while (savingCursor.moveToNext());
             }
@@ -120,6 +120,7 @@ public class Database extends SQLiteOpenHelper {
 
             assert context != null;
             OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
+
             assert outputStream != null;
             outputStream.write(exportData.toString().getBytes());
             outputStream.close();
@@ -154,7 +155,6 @@ public class Database extends SQLiteOpenHelper {
             for (int i = 0; i < savingArray.length(); i++) {
                 JSONObject savingObject = savingArray.getJSONObject(i);
                 ContentValues values = new ContentValues();
-                values.put(COLUMN_SAVING_ID, savingObject.getInt(COLUMN_SAVING_ID));
                 values.put(COLUMN_SAVING_NAME, savingObject.getString(COLUMN_SAVING_NAME));
                 values.put(COLUMN_SAVING_VALUE, savingObject.getDouble(COLUMN_SAVING_VALUE));
                 values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
@@ -166,7 +166,6 @@ public class Database extends SQLiteOpenHelper {
             for (int i = 0; i < transactionArray.length(); i++) {
                 JSONObject transactionObject = transactionArray.getJSONObject(i);
                 ContentValues values = new ContentValues();
-                values.put(COLUMN_TRANSACTION_ID, transactionObject.getInt(COLUMN_TRANSACTION_ID));
                 values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getInt(COLUMN_TRANSACTION_SAVING_ID));
                 values.put(COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(COLUMN_TRANSACTION_AMOUNT));
                 values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
