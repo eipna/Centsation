@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 
 import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.Theme;
+import com.eipna.centsation.data.saving.SavingSort;
 
 public class PreferenceUtil {
 
@@ -38,5 +39,13 @@ public class PreferenceUtil {
 
     public void setCurrency(String value) {
         sharedPreferences.edit().putString("currency", value).apply();
+    }
+
+    public void setSavingSort(String value) {
+        sharedPreferences.edit().putString("saving_sort", value).apply();
+    }
+
+    public String getSavingSort() {
+        return sharedPreferences.getString("saving_sort", SavingSort.NAME_ASCENDING.NAME);
     }
 }
