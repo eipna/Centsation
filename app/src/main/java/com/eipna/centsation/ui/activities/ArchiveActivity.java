@@ -67,7 +67,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     }
 
     private void unarchiveSaving(Saving selectedSaving) {
-        selectedSaving.setIsArchived(0);
+        selectedSaving.setIsArchived(Saving.NOT_ARCHIVE);
         savingRepository.update(selectedSaving);
         updateSavingsList();
     }
