@@ -1,11 +1,6 @@
 package com.eipna.centsation.ui.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,12 +57,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             type.setText(currentTransaction.getType());
 
             if (currentTransaction.getType().equals(TransactionType.DEPOSIT.VALUE)) {
-                amount.setTextColor(Color.parseColor("#21b90a"));
+                amount.setTextColor(itemView.getContext().getResources().getColor(R.color.md_theme_secondary, itemView.getContext().getTheme()));
                 amount.setText(String.format("%c%s", '+', currentTransaction.getAmount()));
             }
 
             if (currentTransaction.getType().equals(TransactionType.WITHDRAW.VALUE)) {
-                amount.setTextColor(Color.parseColor("#f00f1f"));
+                amount.setTextColor(itemView.getContext().getResources().getColor(R.color.md_theme_error, itemView.getContext().getTheme()));
                 amount.setText(String.format("%c%s", '-', currentTransaction.getAmount()));
             }
         }
