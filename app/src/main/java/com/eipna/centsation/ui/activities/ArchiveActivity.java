@@ -89,6 +89,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     private void showDeleteDialog(int savingID) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_delete_saving)
+                .setIcon(R.drawable.ic_delete_forever)
                 .setMessage(R.string.dialog_message_delete_saving)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
@@ -112,6 +113,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_history_saving)
+                .setIcon(R.drawable.ic_history)
                 .setView(transactionDialog)
                 .setPositiveButton(R.string.dialog_button_close, null);
 
@@ -148,6 +150,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_add_transaction)
+                .setIcon(R.drawable.ic_add_circle)
                 .setView(updateSavingValue);
 
         AlertDialog dialog = builder.create();
@@ -214,6 +217,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_edit_saving)
+                .setIcon(R.drawable.ic_edit)
                 .setView(savingDialog)
                 .setPositiveButton(R.string.dialog_button_edit, null)
                 .setNegativeButton(R.string.dialog_button_cancel, null);
