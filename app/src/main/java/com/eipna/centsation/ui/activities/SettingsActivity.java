@@ -1,14 +1,19 @@
 package com.eipna.centsation.ui.activities;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -73,13 +78,39 @@ public class SettingsActivity extends BaseActivity {
 
         private Preference appVersion;
         private Preference appLicense;
+        private Preference exportSavings;
+        private Preference importSavings;
 
         private int easterEggCounter;
+
+        private final ActivityResultLauncher<Intent> exportDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result != null) {
+                assert result.getData() != null;
+                Uri uri = result.getData().getData();
+            }
+        });
+
+        private final ActivityResultLauncher<Intent> importDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result != null) {
+                assert result.getData() != null;
+                Uri uri = result.getData().getData();
+            }
+        });
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences_main, rootKey);
             setPreferences();
+
+            exportSavings.setOnPreferenceClickListener(preference -> {
+                exportData();
+                return true;
+            });
+
+            importSavings.setOnPreferenceClickListener(preference -> {
+                importData();
+                return true;
+            });
 
             listCurrency.setEntries(Currency.getNames());
             listCurrency.setEntryValues(Currency.getCodes());
@@ -133,6 +164,21 @@ public class SettingsActivity extends BaseActivity {
             });
         }
 
+        private void exportData() {
+            Intent exportIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            exportIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            exportIntent.setType("application/json");
+            exportIntent.putExtra(Intent.EXTRA_TITLE, "exported_savings.json");
+            exportDataLauncher.launch(exportIntent);
+        }
+
+        private void importData() {
+            Intent importIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            importIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            importIntent.setType("application/json");
+            importDataLauncher.launch(importIntent);
+        }
+
         private void setPreferences() {
             preferences = new PreferenceUtil(requireContext());
             listCurrency = findPreference("currency");
@@ -140,6 +186,8 @@ public class SettingsActivity extends BaseActivity {
             switchDynamicColors = findPreference("dynamic_colors");
             appVersion = findPreference("app_version");
             appLicense = findPreference("app_license");
+            exportSavings = findPreference("export");
+            importSavings = findPreference("import");
         }
 
         private void showLicenseDialog() {
