@@ -48,6 +48,7 @@
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
 
         <!-- Styles -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog.Centered</item>
         <item name="popupTheme">@style/Widget.Material3.PopupMenu</item>
         <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
         <item name="alertDialogTheme">@style/Theme.Centsation.AlertDialog</item>
