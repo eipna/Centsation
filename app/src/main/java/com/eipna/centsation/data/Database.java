@@ -1,12 +1,23 @@
 package com.eipna.centsation.data;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.OutputStream;
+
 public class Database extends SQLiteOpenHelper {
+
+    private final Context context;
 
     private static final String DATABASE_NAME = "centsation.db";
     private static final int DATABASE_VERSION = 1;
@@ -27,6 +38,7 @@ public class Database extends SQLiteOpenHelper {
 
     public Database(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -54,5 +66,69 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVING);
         onCreate(sqLiteDatabase);
+    }
+
+    @SuppressLint("Range")
+    public void exportJSON(Uri uri) {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor savingCursor = database.rawQuery("SELECT * FROM " + TABLE_SAVING, null);
+        Cursor transactionCursor = database.rawQuery("SELECT * FROM " + TABLE_TRANSACTIONS, null);
+
+        JSONArray savingArray = new JSONArray();
+        JSONArray transactionArray = new JSONArray();
+
+        try {
+            if (savingCursor.moveToFirst()) {
+                do {
+                    JSONObject savingObject = new JSONObject();
+                    savingObject.put(COLUMN_SAVING_ID, savingCursor.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_ID)));
+                    savingObject.put(COLUMN_SAVING_NAME, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NAME)));
+                    savingObject.put(COLUMN_SAVING_VALUE, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_VALUE)));
+                    savingObject.put(COLUMN_SAVING_GOAL, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_GOAL)));
+                    savingObject.put(COLUMN_SAVING_NOTES, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NOTES)));
+                    savingObject.put(COLUMN_SAVING_IS_ARCHIVED, savingArray.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));
+                    savingArray.put(savingObject);
+                } while (savingCursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("Export", "Something went wrong when collecting savings");
+        }
+
+        try {
+            if (transactionCursor.moveToFirst()) {
+                do {
+                    JSONObject transactionObject = new JSONObject();
+                    transactionObject.put(COLUMN_TRANSACTION_ID, transactionCursor.getInt(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_ID)));
+                    transactionObject.put(COLUMN_TRANSACTION_SAVING_ID, transactionCursor.getInt(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_SAVING_ID)));
+                    transactionObject.put(COLUMN_TRANSACTION_AMOUNT, transactionCursor.getDouble(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_AMOUNT)));
+                    transactionObject.put(COLUMN_TRANSACTION_TYPE, transactionCursor.getString(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_TYPE)));
+                    transactionArray.put(transactionObject);
+                } while (transactionCursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("Export", "Something went wrong when collecting transactions");
+        }
+
+        try {
+            JSONObject exportData = new JSONObject();
+            exportData.put(TABLE_SAVING, savingArray);
+            exportData.put(TABLE_TRANSACTIONS, transactionArray);
+
+            assert context != null;
+            OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
+            assert outputStream != null;
+            outputStream.write(exportData.toString().getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            Log.e("Export", "Something went wrong when exporting data");
+        } finally {
+            savingCursor.close();
+            transactionCursor.close();
+            database.close();
+        }
+    }
+
+    public void importJSON() {
+
     }
 }
