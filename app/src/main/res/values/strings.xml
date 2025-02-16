@@ -22,16 +22,16 @@
     <string name="field_saving_goal">Goal</string>
     <string name="field_saving_notes">Notes (Optional)</string>
 
-    <string name="dialog_title_add_saving">New Saving</string>
-    <string name="dialog_title_edit_saving">Edit Saving</string>
-    <string name="dialog_title_delete_saving">Delete Saving</string>
-    <string name="dialog_title_add_transaction">New Transaction</string>
+    <string name="dialog_title_add_saving">Create new saving</string>
+    <string name="dialog_title_edit_saving">Editing saving</string>
+    <string name="dialog_title_delete_saving">Delete saving</string>
+    <string name="dialog_title_add_transaction">Create transaction</string>
     <string name="dialog_title_history_saving">History</string>
 
     <string name="dialog_message_delete_saving">You are about to delete this saving. Do you want to proceed?</string>
 
     <string name="dialog_button_cancel">Cancel</string>
-    <string name="dialog_button_add">Add</string>
+    <string name="dialog_button_create">Create</string>
     <string name="dialog_button_close">Close</string>
     <string name="dialog_button_edit">Save</string>
     <string name="dialog_button_delete">Delete</string>

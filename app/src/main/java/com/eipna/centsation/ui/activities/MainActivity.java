@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 .setIcon(R.drawable.ic_add_circle)
                 .setView(savingDialog)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
-                .setPositiveButton(R.string.dialog_button_add, null);
+                .setPositiveButton(R.string.dialog_button_create, null);
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
