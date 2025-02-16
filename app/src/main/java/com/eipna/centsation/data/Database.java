@@ -1,6 +1,7 @@
 package com.eipna.centsation.data;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,9 @@ import androidx.annotation.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public class Database extends SQLiteOpenHelper {
@@ -128,7 +132,50 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void importJSON() {
+    public void importJSON(Uri uri) {
+        SQLiteDatabase database = getWritableDatabase();
+        StringBuilder jsonBuilder = new StringBuilder();
 
+        try {
+            assert context != null;
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                jsonBuilder.append(line);
+            }
+            bufferedReader.close();
+
+            JSONObject importData = new JSONObject(jsonBuilder.toString());
+            JSONArray savingArray = importData.getJSONArray(TABLE_SAVING);
+            JSONArray transactionArray = importData.getJSONArray(TABLE_TRANSACTIONS);
+
+            for (int i = 0; i < savingArray.length(); i++) {
+                JSONObject savingObject = savingArray.getJSONObject(i);
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_SAVING_ID, savingObject.getInt(COLUMN_SAVING_ID));
+                values.put(COLUMN_SAVING_NAME, savingObject.getString(COLUMN_SAVING_NAME));
+                values.put(COLUMN_SAVING_VALUE, savingObject.getDouble(COLUMN_SAVING_VALUE));
+                values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
+                values.put(COLUMN_SAVING_NOTES, savingObject.getString(COLUMN_SAVING_NOTES));
+                values.put(COLUMN_SAVING_IS_ARCHIVED, savingObject.getInt(COLUMN_SAVING_IS_ARCHIVED));
+                database.insert(TABLE_SAVING, null, values);
+            }
+
+            for (int i = 0; i < transactionArray.length(); i++) {
+                JSONObject transactionObject = transactionArray.getJSONObject(i);
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_TRANSACTION_ID, transactionObject.getInt(COLUMN_TRANSACTION_ID));
+                values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getInt(COLUMN_TRANSACTION_SAVING_ID));
+                values.put(COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(COLUMN_TRANSACTION_AMOUNT));
+                values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
+                database.insert(TABLE_TRANSACTIONS, null, values);
+            }
+        } catch (Exception e) {
+            Log.e("Import", "Something went wrong when importing");
+        } finally {
+            database.close();
+        }
     }
 }
