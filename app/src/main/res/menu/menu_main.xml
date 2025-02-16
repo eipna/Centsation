@@ -12,31 +12,35 @@
             <group
                 android:id="@+id/group1"
                 android:checkableBehavior="single">
+                <item
+                    android:id="@+id/saving_sort_name_ascending"
+                    android:title="@string/menu_item_sort_name_ascending"
+                    app:showAsAction="never"/>
 
                 <item
-                    android:id="@+id/sort_name"
-                    android:title="@string/menu_item_sort_name" />
+                    android:id="@+id/saving_sort_name_descending"
+                    android:title="@string/menu_item_sort_name_descending"
+                    app:showAsAction="never"/>
 
                 <item
-                    android:id="@+id/sort_value"
-                    android:title="@string/menu_item_sort_value" />
+                    android:id="@+id/saving_sort_value_lowest"
+                    android:title="@string/menu_item_sort_value_lowest"
+                    app:showAsAction="never"/>
 
                 <item
-                    android:id="@+id/sort_goal"
-                    android:title="@string/menu_item_sort_goal" />
-            </group>
-
-            <group
-                android:id="@+id/group2"
-                android:checkableBehavior="single">
+                    android:id="@+id/saving_sort_value_highest"
+                    android:title="@string/menu_item_sort_value_highest"
+                    app:showAsAction="never"/>
 
                 <item
-                    android:id="@+id/ascending"
-                    android:title="@string/menu_item_sort_ascending"/>
+                    android:id="@+id/saving_sort_goal_lowest"
+                    android:title="@string/menu_item_sort_goal_lowest"
+                    app:showAsAction="never"/>
 
                 <item
-                    android:id="@+id/descending"
-                    android:title="@string/menu_item_sort_descending"/>
+                    android:id="@+id/saving_sort_goal_highest"
+                    android:title="@string/menu_item_sort_goal_highest"
+                    app:showAsAction="never"/>
             </group>
         </menu>
     </item>
@@ -47,12 +51,14 @@
         android:icon="@drawable/ic_more_vertical"
         app:showAsAction="always">
 
-        <item
-            android:id="@+id/archive"
-            android:title="@string/menu_item_archive"/>
+        <menu>
+            <item
+                android:id="@+id/archive"
+                android:title="@string/menu_item_archive"/>
 
-        <item
-            android:id="@+id/settings"
-            android:title="@string/menu_item_settings"/>
+            <item
+                android:id="@+id/settings"
+                android:title="@string/menu_item_settings"/>
+        </menu>
     </item>
 </menu>
