@@ -56,7 +56,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         public void bind(Transaction currentTransaction) {
             type.setText(currentTransaction.getType());
 
-            if (currentTransaction.getType().equals(TransactionType.DEPOSIT.VALUE)) {
+            if (currentTransaction.getType().equals(TransactionType.DEPOSIT.VALUE) || currentTransaction.getType().equals(TransactionType.CREATED.VALUE)) {
                 amount.setTextColor(itemView.getContext().getResources().getColor(R.color.md_theme_secondary, itemView.getContext().getTheme()));
                 amount.setText(String.format("%c%s", '+', currentTransaction.getAmount()));
             }

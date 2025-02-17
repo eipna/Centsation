@@ -1,6 +1,8 @@
 package com.eipna.centsation.data.transaction;
 
 public enum TransactionType {
+
+    CREATED("Created"),
     DEPOSIT("Deposit"),
     WITHDRAW("Withdraw");
 
