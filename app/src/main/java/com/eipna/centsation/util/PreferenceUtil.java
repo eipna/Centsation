@@ -49,11 +49,11 @@ public class PreferenceUtil {
         return sharedPreferences.getString("sort_criteria", SavingSort.NAME.SORT);
     }
 
-    public void setSortOrder(String value) {
-        sharedPreferences.edit().putString("sort_order", value).apply();
+    public void setSortOrder(boolean value) {
+        sharedPreferences.edit().putBoolean("sort_order", value).apply();
     }
 
-    public String getSortOrder() {
-        return sharedPreferences.getString("sort_order", SavingSort.ASCENDING.SORT);
+    public boolean getSortOrder() {
+        return sharedPreferences.getBoolean("sort_order", true);
     }
 }
