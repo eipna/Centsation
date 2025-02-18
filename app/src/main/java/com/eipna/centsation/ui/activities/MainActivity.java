@@ -36,6 +36,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements SavingListener {
@@ -45,6 +47,9 @@ public class MainActivity extends BaseActivity implements SavingListener {
     private TransactionRepository transactionRepository;
     private SavingAdapter savingAdapter;
     private ArrayList<Saving> savings;
+
+    private String sortCriteria;
+    private boolean isSortAscending;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +65,15 @@ public class MainActivity extends BaseActivity implements SavingListener {
         savingRepository = new SavingRepository(this);
         transactionRepository = new TransactionRepository(this);
 
+        sortCriteria = preferences.getSortCriteria();
+        isSortAscending = preferences.getSortOrder();
+
         savings = new ArrayList<>();
         savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
-        binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
-
         savingAdapter = new SavingAdapter(this, this, savings);
+        sortSavings(sortCriteria);
+
+        binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
 
@@ -87,15 +96,88 @@ public class MainActivity extends BaseActivity implements SavingListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+
         MenuCompat.setGroupDividerEnabled(menu, true);
+        loadSortingConfiguration(menu);
         return true;
+    }
+
+    private void loadSortingConfiguration(Menu menu) {
+        if (sortCriteria.equals(SavingSort.NAME.SORT)) {
+            menu.findItem(R.id.sort_name).setChecked(true);
+        } else if (sortCriteria.equals(SavingSort.VALUE.SORT)) {
+            menu.findItem(R.id.sort_value).setChecked(true);
+        } else if (sortCriteria.equals(SavingSort.GOAL.SORT)) {
+            menu.findItem(R.id.sort_goal).setChecked(true);
+        }
+
+        if (isSortAscending) {
+            menu.findItem(R.id.sort_ascending).setChecked(true);
+        } else {
+            menu.findItem(R.id.sort_descending).setChecked(true);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.archive) startActivity(new Intent(this, ArchiveActivity.class));
         if (item.getItemId() == R.id.settings) startActivity(new Intent(this, SettingsActivity.class));
+
+        if (item.getItemId() == R.id.sort_name) {
+            sortCriteria = SavingSort.NAME.SORT;
+            item.setChecked(true);
+            sortSavings(sortCriteria);
+        }
+
+        if (item.getItemId() == R.id.sort_value) {
+            sortCriteria = SavingSort.VALUE.SORT;
+            item.setChecked(true);
+            sortSavings(sortCriteria);
+        }
+
+        if (item.getItemId() == R.id.sort_goal) {
+            sortCriteria = SavingSort.GOAL.SORT;
+            item.setChecked(true);
+            sortSavings(sortCriteria);
+        }
+
+        if (item.getItemId() == R.id.sort_ascending) {
+            isSortAscending = true;
+            item.setChecked(true);
+            sortSavings(sortCriteria);
+        }
+
+        if (item.getItemId() == R.id.sort_descending) {
+            isSortAscending = false;
+            item.setChecked(true);
+            sortSavings(sortCriteria);
+        }
         return true;
+    }
+
+    private void sortSavings(String criteria) {
+        Comparator<Saving> savingComparator = null;
+
+        if (criteria.equals(SavingSort.NAME.SORT)) {
+            savingComparator = Saving.SORT_NAME;
+        } else if (criteria.equals(SavingSort.VALUE.SORT)) {
+            savingComparator = Saving.SORT_VALUE;
+        } else if (criteria.equals(SavingSort.GOAL.SORT)) {
+            savingComparator = Saving.SORT_GOAL;
+        }
+
+        if (savingComparator != null) {
+            if (!isSortAscending) {
+                savingComparator = savingComparator.reversed();
+            }
+        }
+
+        ArrayList<Saving> sortedSavings = new ArrayList<>(savings);
+        sortedSavings.sort(savingComparator);
+        savingAdapter.update(sortedSavings);
+
+        preferences.setSortCriteria(sortCriteria);
+        preferences.setSortOrder(isSortAscending);
     }
 
     private void showAddDialog() {
