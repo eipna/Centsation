@@ -10,36 +10,36 @@
 
         <menu>
             <group
-                android:id="@+id/group1"
+                android:id="@+id/group_criteria"
                 android:checkableBehavior="single">
+
                 <item
-                    android:id="@+id/saving_sort_name_ascending"
-                    android:title="@string/menu_item_sort_name_ascending"
+                    android:id="@+id/sort_name"
+                    android:title="@string/menu_item_sort_name"
                     app:showAsAction="never"/>
 
                 <item
-                    android:id="@+id/saving_sort_name_descending"
-                    android:title="@string/menu_item_sort_name_descending"
+                    android:id="@+id/sort_value"
+                    android:title="@string/menu_item_sort_value"
                     app:showAsAction="never"/>
 
                 <item
-                    android:id="@+id/saving_sort_value_lowest"
-                    android:title="@string/menu_item_sort_value_lowest"
+                    android:id="@+id/sort_goal"
+                    android:title="@string/menu_item_sort_goal"
+                    app:showAsAction="never"/>
+            </group>
+            <group
+                android:id="@+id/group_order"
+                android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/sort_ascending"
+                    android:title="@string/menu_item_sort_ascending"
                     app:showAsAction="never"/>
 
                 <item
-                    android:id="@+id/saving_sort_value_highest"
-                    android:title="@string/menu_item_sort_value_highest"
-                    app:showAsAction="never"/>
-
-                <item
-                    android:id="@+id/saving_sort_goal_lowest"
-                    android:title="@string/menu_item_sort_goal_lowest"
-                    app:showAsAction="never"/>
-
-                <item
-                    android:id="@+id/saving_sort_goal_highest"
-                    android:title="@string/menu_item_sort_goal_highest"
+                    android:id="@+id/sort_descending"
+                    android:title="@string/menu_item_sort_descending"
                     app:showAsAction="never"/>
             </group>
         </menu>

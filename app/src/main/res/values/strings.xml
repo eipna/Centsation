@@ -44,12 +44,11 @@
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_overflow">More Options</string>
     <string name="menu_item_sort">Sort By</string>
-    <string name="menu_item_sort_name_ascending">Name (A - Z)</string>
-    <string name="menu_item_sort_name_descending">Name (Z - A)</string>
-    <string name="menu_item_sort_value_lowest">Value (Lowest)</string>
-    <string name="menu_item_sort_value_highest">Value (Highest)</string>
-    <string name="menu_item_sort_goal_lowest">Goal (Lowest)</string>
-    <string name="menu_item_sort_goal_highest">Goal (Highest)</string>
+    <string name="menu_item_sort_name">Name</string>
+    <string name="menu_item_sort_value">Value</string>
+    <string name="menu_item_sort_goal">Goal</string>
+    <string name="menu_item_sort_ascending">Ascending</string>
+    <string name="menu_item_sort_descending">Descending</string>
 
     <string name="toast_saving_empty_notes">This saving has no notes</string>
     <string name="toast_export_successful">Export successful</string>

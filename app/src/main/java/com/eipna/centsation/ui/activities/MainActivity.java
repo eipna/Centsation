@@ -99,13 +99,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.archive) startActivity(new Intent(this, ArchiveActivity.class));
         if (item.getItemId() == R.id.settings) startActivity(new Intent(this, SettingsActivity.class));
-
-        if (item.getItemId() == R.id.saving_sort_name_ascending) sortSavings(item, SavingSort.NAME_ASCENDING);
-        if (item.getItemId() == R.id.saving_sort_name_descending) sortSavings(item, SavingSort.NAME_DESCENDING);
-        if (item.getItemId() == R.id.saving_sort_value_lowest) sortSavings(item, SavingSort.VALUE_LOWEST);
-        if (item.getItemId() == R.id.saving_sort_value_highest) sortSavings(item, SavingSort.VALUE_HIGHEST);
-        if (item.getItemId() == R.id.saving_sort_goal_lowest) sortSavings(item, SavingSort.GOAL_LOWEST);
-        if (item.getItemId() == R.id.saving_sort_goal_highest) sortSavings(item, SavingSort.GOAL_HIGHEST);
         return true;
     }
 
