@@ -42,7 +42,7 @@ public class PreferenceUtil {
     }
 
     public void setSortCriteria(String value) {
-        sharedPreferences.edit().putString("sort_criteria", SavingSort.NAME.SORT).apply();
+        sharedPreferences.edit().putString("sort_criteria", value).apply();
     }
 
     public String getSortCriteria() {
@@ -50,7 +50,7 @@ public class PreferenceUtil {
     }
 
     public void setSortOrder(String value) {
-        sharedPreferences.edit().putString("sort_order", SavingSort.ASCENDING.SORT).apply();
+        sharedPreferences.edit().putString("sort_order", value).apply();
     }
 
     public String getSortOrder() {
