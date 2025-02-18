@@ -41,7 +41,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:text="@string/empty_indicator_main"
-            android:textSize="18sp"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
             app:fontFamily="sans-serif-medium"
             android:alpha="0.8"
             android:textColor="?attr/colorOnSurfaceVariant"
