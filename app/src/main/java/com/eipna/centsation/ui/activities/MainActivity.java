@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,7 +45,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
     private TransactionRepository transactionRepository;
     private SavingAdapter savingAdapter;
     private ArrayList<Saving> savings;
-    private SavingSort savingSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +57,11 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding.appBar.setStatusBarForeground(drawable);
         setSupportActionBar(binding.toolbar);
 
-        savingSort = SavingSort.fromName(preferences.getSavingSort());
         savingRepository = new SavingRepository(this);
         transactionRepository = new TransactionRepository(this);
 
         savings = new ArrayList<>();
         savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
-        savings.sort(savingSort.SORT);
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
         savingAdapter = new SavingAdapter(this, this, savings);
@@ -89,9 +87,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-
-        MenuItem selectedSort = menu.findItem(SavingSort.getMenuItem(savingSort));
-        selectedSort.setChecked(true);
+        MenuCompat.setGroupDividerEnabled(menu, true);
         return true;
     }
 
@@ -100,15 +96,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         if (item.getItemId() == R.id.archive) startActivity(new Intent(this, ArchiveActivity.class));
         if (item.getItemId() == R.id.settings) startActivity(new Intent(this, SettingsActivity.class));
         return true;
-    }
-
-    private void sortSavings(MenuItem sortMenuItem, SavingSort savingSort) {
-        ArrayList<Saving> sortedSavings = new ArrayList<>(savings);
-        sortedSavings.sort(savingSort.SORT);
-        savingAdapter.update(sortedSavings);
-
-        sortMenuItem.setChecked(true);
-        preferences.setSavingSort(savingSort.NAME);
     }
 
     private void showAddDialog() {
