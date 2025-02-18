@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -120,7 +119,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showAddDialog() {
-        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_add_edit, null, false);
+        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_info, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
@@ -193,7 +192,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showEditDialog(Saving selectedSaving) {
-        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_add_edit, null, false);
+        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_info, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
         TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
