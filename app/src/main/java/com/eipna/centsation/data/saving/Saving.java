@@ -24,17 +24,11 @@ public class Saving {
         this.isArchived = 0;
     }
 
-    public static final Comparator<Saving> SORT_NAME_ASCENDING = Comparator.comparing(firstSaving -> firstSaving.getName().toLowerCase());
+    private final Comparator<Saving> SORT_NAME = Comparator.comparing(firstSaving -> firstSaving.getName().toLowerCase());
 
-    public static final Comparator<Saving> SORT_NAME_DESCENDING = (firstSaving, secondSaving) -> secondSaving.getName().toLowerCase().compareTo(firstSaving.getName().toLowerCase());
+    private final Comparator<Saving> SORT_VALUE = Comparator.comparingDouble(Saving::getValue);
 
-    public static final Comparator<Saving> SORT_VALUE_LOWEST = Comparator.comparingDouble(Saving::getValue);
-
-    public static final Comparator<Saving> SORT_VALUE_HIGHEST = (firstSaving, secondSaving) -> Double.compare(secondSaving.getValue(), firstSaving.getValue());
-
-    public static final Comparator<Saving> SORT_GOAL_LOWEST = Comparator.comparingDouble(Saving::getGoal);
-
-    public static final Comparator<Saving> SORT_GOAL_HIGHEST = (firstSaving, secondSaving) -> Double.compare(secondSaving.getGoal(), firstSaving.getGoal());
+    private final Comparator<Saving> SORT_GOAL = Comparator.comparingDouble(Saving::getGoal);
 
     public int getID() {
         return ID;
