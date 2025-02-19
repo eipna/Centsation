@@ -207,14 +207,12 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     }
 
     private void showEditDialog(Saving selectedSaving) {
-        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_info, null, false);
+        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_edit, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
-        TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
         TextInputLayout savingGoalLayout = savingDialog.findViewById(R.id.field_saving_goal_layout);
 
         TextInputEditText savingNameInput = savingDialog.findViewById(R.id.field_saving_name_text);
-        TextInputEditText savingValueInput = savingDialog.findViewById(R.id.field_saving_value_text);
         TextInputEditText savingGoalInput = savingDialog.findViewById(R.id.field_saving_goal_text);
         TextInputEditText savingNotesInput = savingDialog.findViewById(R.id.field_saving_notes_text);
 
@@ -228,55 +226,30 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
             savingNameInput.setText(selectedSaving.getName());
-            savingValueInput.setText(String.valueOf(selectedSaving.getValue()));
             savingGoalInput.setText(String.valueOf(selectedSaving.getGoal()));
             savingNotesInput.setText(selectedSaving.getNotes());
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
                 String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
-                String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
                 String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
                 String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
 
-                if (!savingNameString.isEmpty() && !savingValueString.isEmpty() && !savingGoalString.isEmpty()) {
-                    double savingValue = Double.parseDouble(savingValueString);
+                if (!savingNameString.isEmpty() && !savingGoalString.isEmpty()) {
                     double savingGoal = Double.parseDouble(savingGoalString);
-
-                    if (savingValue > savingGoal) {
-                        savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
-                        return;
-                    }
-
-                    if (savingValue != selectedSaving.getValue()) {
-                        Transaction transaction = new Transaction();
-                        transaction.setSavingID(selectedSaving.getID());
-                        transaction.setAmount(Math.abs(savingValue - selectedSaving.getValue()));
-
-                        if (savingValue > selectedSaving.getValue()) {
-                            transaction.setType(TransactionType.DEPOSIT.VALUE);
-                        }
-
-                        if (savingValue < selectedSaving.getValue()) {
-                            transaction.setType(TransactionType.WITHDRAW.VALUE);
-                        }
-                        transactionRepository.create(transaction);
-                    }
 
                     Saving editedSaving = new Saving();
                     editedSaving.setID(selectedSaving.getID());
                     editedSaving.setName(savingNameString);
-                    editedSaving.setValue(savingValue);
                     editedSaving.setGoal(savingGoal);
                     editedSaving.setNotes(savingNotesString);
                     editedSaving.setIsArchived(selectedSaving.getIsArchived());
-                    savingRepository.update(editedSaving);
 
+                    savingRepository.update(editedSaving);
                     refreshList();
                     dialog.dismiss();
                 }
 
                 savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
-                savingValueLayout.setError(savingValueString.isEmpty() ? getString(R.string.field_error_required) : null);
                 savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
             });
         });
