@@ -37,7 +37,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     private ActivityArchiveBinding binding;
     private SavingRepository savingRepository;
     private TransactionRepository transactionRepository;
-    private SavingAdapter savingAdapter;
     private ArrayList<Saving> savings;
 
     @Override
@@ -61,7 +60,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         savings = new ArrayList<>(savingRepository.getSavings(Saving.IS_ARCHIVE));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
-        savingAdapter = new SavingAdapter(this, this, savings);
+        SavingAdapter savingAdapter = new SavingAdapter(this, this, savings);
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
     }
@@ -69,7 +68,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     private void unarchiveSaving(Saving selectedSaving) {
         selectedSaving.setIsArchived(Saving.NOT_ARCHIVE);
         savingRepository.update(selectedSaving);
-        updateSavingsList();
+        refreshList();
     }
 
     private void showShareIntent(String notes) {
@@ -94,7 +93,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
                     savingRepository.delete(savingID);
-                    updateSavingsList();
+                    refreshList();
                 });
 
         AlertDialog dialog = builder.create();
@@ -121,9 +120,9 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
-    private void updateSavingsList() {
-        savings = new ArrayList<>(savingRepository.getSavings(Saving.IS_ARCHIVE));
-        savingAdapter.update(savings);
+    private void refreshList() {
+        savings.clear();
+        savings.addAll(savingRepository.getSavings(Saving.IS_ARCHIVE));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
@@ -171,7 +170,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
                 selectedSaving.setValue(addedValue);
                 savingRepository.update(selectedSaving);
-                updateSavingsList();
+                refreshList();
                 dialog.dismiss();
             });
 
@@ -196,7 +195,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
                 selectedSaving.setValue(deductedValue);
                 savingRepository.update(selectedSaving);
-                updateSavingsList();
+                refreshList();
                 dialog.dismiss();
             });
         });
@@ -267,7 +266,8 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
                     editedSaving.setNotes(savingNotesString);
                     editedSaving.setIsArchived(selectedSaving.getIsArchived());
                     savingRepository.update(editedSaving);
-                    updateSavingsList();
+
+                    refreshList();
                     dialog.dismiss();
                 }
 

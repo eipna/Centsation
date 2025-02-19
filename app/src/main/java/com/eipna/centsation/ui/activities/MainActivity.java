@@ -1,11 +1,11 @@
 package com.eipna.centsation.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -36,7 +36,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -86,17 +85,15 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding = null;
     }
 
-    private void updateSavingsList() {
-        savings = new ArrayList<>(savingRepository.getSavings(Saving.NOT_ARCHIVE));
-        savingAdapter.update(savings);
+    private void refreshList() {
+        savings.clear();
+        savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuCompat.setGroupDividerEnabled(menu, true);
         loadSortingConfiguration(menu);
         return true;
@@ -155,6 +152,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         return true;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void sortSavings(String criteria) {
         Comparator<Saving> savingComparator = null;
 
@@ -172,9 +170,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
             }
         }
 
-        ArrayList<Saving> sortedSavings = new ArrayList<>(savings);
-        sortedSavings.sort(savingComparator);
-        savingAdapter.update(sortedSavings);
+        savings.sort(savingComparator);
+        savingAdapter.notifyDataSetChanged();
 
         preferences.setSortCriteria(sortCriteria);
         preferences.setSortOrder(isSortAscending);
@@ -222,7 +219,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 createdSaving.setNotes(savingNotesString);
                 createdSaving.setIsArchived(0);
                 savingRepository.create(createdSaving);
-                updateSavingsList();
+
+                refreshList();
                 dialog.dismiss();
             }
 
@@ -317,7 +315,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                     editedSaving.setNotes(savingNotesString);
                     editedSaving.setIsArchived(selectedSaving.getIsArchived());
                     savingRepository.update(editedSaving);
-                    updateSavingsList();
+                    refreshList();
                     dialog.dismiss();
                 }
 
@@ -337,7 +335,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
                     savingRepository.delete(savingID);
-                    updateSavingsList();
+                    refreshList();
                 });
 
         AlertDialog dialog = builder.create();
@@ -390,7 +388,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
                 selectedSaving.setValue(addedValue);
                 savingRepository.update(selectedSaving);
-                updateSavingsList();
+                refreshList();
                 dialog.dismiss();
             });
 
@@ -415,7 +413,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
                 selectedSaving.setValue(deductedValue);
                 savingRepository.update(selectedSaving);
-                updateSavingsList();
+                refreshList();
                 dialog.dismiss();
             });
         });
@@ -425,7 +423,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     private void archiveSaving(Saving selectedSaving) {
         selectedSaving.setIsArchived(Saving.IS_ARCHIVE);
         savingRepository.update(selectedSaving);
-        updateSavingsList();
+        refreshList();
     }
 
     @Override
