@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -89,19 +90,22 @@ public class MainActivity extends BaseActivity implements SavingListener {
     private void refreshList() {
         savings.clear();
         savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
-        savingAdapter.notifyDataSetChanged();
+        sortSavings(sortCriteria);
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
+        savingAdapter.notifyDataSetChanged();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
         MenuCompat.setGroupDividerEnabled(menu, true);
-        loadSortingConfiguration(menu);
+
+        loadSortingMenu(menu);
         return true;
     }
 
-    private void loadSortingConfiguration(Menu menu) {
+    private void loadSortingMenu(Menu menu) {
         if (sortCriteria.equals(SavingSort.NAME.SORT)) {
             menu.findItem(R.id.sort_name).setChecked(true);
         } else if (sortCriteria.equals(SavingSort.VALUE.SORT)) {
@@ -316,6 +320,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                     editedSaving.setGoal(savingGoal);
                     editedSaving.setNotes(savingNotesString);
                     editedSaving.setIsArchived(selectedSaving.getIsArchived());
+
                     savingRepository.update(editedSaving);
                     refreshList();
                     dialog.dismiss();
