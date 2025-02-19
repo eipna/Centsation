@@ -1,5 +1,6 @@
 package com.eipna.centsation.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     private ActivityArchiveBinding binding;
     private SavingRepository savingRepository;
     private TransactionRepository transactionRepository;
+    private SavingAdapter savingAdapter;
     private ArrayList<Saving> savings;
 
     @Override
@@ -60,7 +62,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         savings = new ArrayList<>(savingRepository.getSavings(Saving.IS_ARCHIVE));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
-        SavingAdapter savingAdapter = new SavingAdapter(this, this, savings);
+        savingAdapter = new SavingAdapter(this, this, savings);
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
     }
@@ -120,9 +122,11 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void refreshList() {
         savings.clear();
         savings.addAll(savingRepository.getSavings(Saving.IS_ARCHIVE));
+        savingAdapter.notifyDataSetChanged();
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
