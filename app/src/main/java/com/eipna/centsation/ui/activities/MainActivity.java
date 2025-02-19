@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputEditText savingNotesInput = savingDialog.findViewById(R.id.field_saving_notes_text);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_title_add_saving)
+                .setTitle(R.string.dialog_title_delete_saving)
                 .setIcon(R.drawable.ic_add_circle)
                 .setView(savingDialog)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
@@ -347,7 +347,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         MaterialButton withdrawButton = updateSavingValue.findViewById(R.id.button_saving_withdraw);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_title_add_transaction)
+                .setTitle(R.string.dialog_title_create_transaction)
                 .setIcon(R.drawable.ic_add_circle)
                 .setView(updateSavingValue);
 

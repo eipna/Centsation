@@ -152,7 +152,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         MaterialButton withdrawButton = updateSavingValue.findViewById(R.id.button_saving_withdraw);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_title_add_transaction)
+                .setTitle(R.string.dialog_title_create_transaction)
                 .setIcon(R.drawable.ic_add_circle)
                 .setView(updateSavingValue);
 
