@@ -1,5 +1,6 @@
 package com.eipna.centsation.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,17 +54,18 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             amount = itemView.findViewById(R.id.transaction_amount);
         }
 
+        @SuppressLint("DefaultLocale")
         public void bind(Transaction currentTransaction) {
             type.setText(currentTransaction.getType());
 
             if (currentTransaction.getType().equals(TransactionType.DEPOSIT.VALUE) || currentTransaction.getType().equals(TransactionType.CREATED.VALUE)) {
                 amount.setTextColor(itemView.getContext().getResources().getColor(R.color.md_theme_secondary, itemView.getContext().getTheme()));
-                amount.setText(String.format("%c%s", '+', currentTransaction.getAmount()));
+                amount.setText(String.format("%c%.2f", '+', currentTransaction.getAmount()));
             }
 
             if (currentTransaction.getType().equals(TransactionType.WITHDRAW.VALUE)) {
                 amount.setTextColor(itemView.getContext().getResources().getColor(R.color.md_theme_error, itemView.getContext().getTheme()));
-                amount.setText(String.format("%c%s", '-', currentTransaction.getAmount()));
+                amount.setText(String.format("%c%.2f", '-', currentTransaction.getAmount()));
             }
         }
     }
