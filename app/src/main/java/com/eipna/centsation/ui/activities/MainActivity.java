@@ -257,6 +257,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
+    @SuppressLint("DefaultLocale")
     private void showEditDialog(Saving selectedSaving) {
         View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_edit, null, false);
 
@@ -277,7 +278,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
             savingNameInput.setText(selectedSaving.getName());
-            savingGoalInput.setText(String.valueOf(selectedSaving.getGoal()));
+            savingGoalInput.setText(String.format("%.2f", selectedSaving.getGoal()));
             savingNotesInput.setText(selectedSaving.getNotes());
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
