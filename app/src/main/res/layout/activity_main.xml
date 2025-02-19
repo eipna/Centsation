@@ -58,7 +58,7 @@
         android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_saving"
+        android:id="@+id/create_saving"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_add"
         android:layout_marginBottom="16dp"

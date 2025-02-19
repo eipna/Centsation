@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
 
-        binding.addSaving.setOnClickListener(view -> showAddDialog());
+        binding.createSaving.setOnClickListener(view -> showCreateDialog());
     }
 
     @Override
@@ -183,7 +183,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         preferences.setSortOrder(isSortAscending);
     }
 
-    private void showAddDialog() {
+    private void showCreateDialog() {
         View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_create, null, false);
 
         TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputEditText savingNotesInput = savingDialog.findViewById(R.id.field_saving_notes_text);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_title_delete_saving)
+                .setTitle(R.string.dialog_title_create_saving)
                 .setIcon(R.drawable.ic_add_circle)
                 .setView(savingDialog)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
