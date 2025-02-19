@@ -85,9 +85,11 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding = null;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void refreshList() {
         savings.clear();
         savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
+        savingAdapter.notifyDataSetChanged();
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
