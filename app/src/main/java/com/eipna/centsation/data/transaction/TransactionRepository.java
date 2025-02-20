@@ -23,7 +23,7 @@ public class TransactionRepository extends Database {
         values.put(COLUMN_TRANSACTION_SAVING_ID, createdTransaction.getSavingID());
         values.put(COLUMN_TRANSACTION_AMOUNT, createdTransaction.getAmount());
         values.put(COLUMN_TRANSACTION_TYPE, createdTransaction.getType());
-        database.insert(TABLE_TRANSACTIONS, null, values);
+        database.insert(TABLE_TRANSACTION, null, values);
         database.close();
     }
 
@@ -31,7 +31,7 @@ public class TransactionRepository extends Database {
     public ArrayList<Transaction> getTransactions(int savingId) {
         ArrayList<Transaction> list = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
-        String query = "SELECT * FROM " + TABLE_TRANSACTIONS + " WHERE " + COLUMN_TRANSACTION_SAVING_ID + " = ?";
+        String query = "SELECT * FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_TRANSACTION_SAVING_ID + " = ?";
         Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(savingId)});
 
         if (cursor.moveToFirst()) {
@@ -51,7 +51,7 @@ public class TransactionRepository extends Database {
 
     public void clear(int savingID) {
         SQLiteDatabase database = getReadableDatabase();
-        database.delete(TABLE_TRANSACTIONS, COLUMN_TRANSACTION_SAVING_ID + " = ?", new String[]{String.valueOf(savingID)});
+        database.delete(TABLE_TRANSACTION, COLUMN_TRANSACTION_SAVING_ID + " = ?", new String[]{String.valueOf(savingID)});
         database.close();
     }
 }
