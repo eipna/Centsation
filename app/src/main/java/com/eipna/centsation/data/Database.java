@@ -30,7 +30,7 @@ public class Database extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_SAVING = "savings";
-    public static final String COLUMN_SAVING_ID = "saving_id";
+    public static final String COLUMN_SAVING_ID = "id";
     public static final String COLUMN_SAVING_NAME = "name";
     public static final String COLUMN_SAVING_VALUE = "value";
     public static final String COLUMN_SAVING_GOAL = "goal";
@@ -38,7 +38,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_SAVING_IS_ARCHIVED = "is_archived";
 
     public static final String TABLE_TRANSACTION = "transactions";
-    public static final String COLUMN_TRANSACTION_ID = "transaction_id";
+    public static final String COLUMN_TRANSACTION_ID = "id";
     public static final String COLUMN_TRANSACTION_SAVING_ID = "saving_id";
     public static final String COLUMN_TRANSACTION_AMOUNT = "amount";
     public static final String COLUMN_TRANSACTION_TYPE = "type";
