@@ -37,7 +37,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_SAVING_NOTES = "notes";
     public static final String COLUMN_SAVING_IS_ARCHIVED = "is_archived";
 
-    public static final String TABLE_TRANSACTIONS = "transactions";
+    public static final String TABLE_TRANSACTION = "transactions";
     public static final String COLUMN_TRANSACTION_ID = "transaction_id";
     public static final String COLUMN_TRANSACTION_SAVING_ID = "saving_id";
     public static final String COLUMN_TRANSACTION_AMOUNT = "amount";
@@ -58,7 +58,7 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_SAVING_NOTES + " TEXT, " +
                 COLUMN_SAVING_IS_ARCHIVED + " INTEGER NOT NULL)";
 
-        String createHistoryTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTIONS + "(" +
+        String createHistoryTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTION + "(" +
                 COLUMN_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TRANSACTION_SAVING_ID + " INTEGER NOT NULL, " +
                 COLUMN_TRANSACTION_AMOUNT + " REAL NOT NULL, " +
@@ -79,7 +79,7 @@ public class Database extends SQLiteOpenHelper {
     public void exportJSON(Uri uri) {
         SQLiteDatabase database = getReadableDatabase();
         Cursor savingCursor = database.rawQuery("SELECT * FROM " + TABLE_SAVING, null);
-        Cursor transactionCursor = database.rawQuery("SELECT * FROM " + TABLE_TRANSACTIONS, null);
+        Cursor transactionCursor = database.rawQuery("SELECT * FROM " + TABLE_TRANSACTION, null);
 
         JSONArray savingArray = new JSONArray();
         JSONArray transactionArray = new JSONArray();
@@ -119,7 +119,7 @@ public class Database extends SQLiteOpenHelper {
         try {
             JSONObject exportData = new JSONObject();
             exportData.put(TABLE_SAVING, savingArray);
-            exportData.put(TABLE_TRANSACTIONS, transactionArray);
+            exportData.put(TABLE_TRANSACTION, transactionArray);
 
             assert context != null;
             OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
@@ -155,7 +155,7 @@ public class Database extends SQLiteOpenHelper {
 
             JSONObject importData = new JSONObject(jsonBuilder.toString());
             JSONArray savingArray = importData.getJSONArray(TABLE_SAVING);
-            JSONArray transactionArray = importData.getJSONArray(TABLE_TRANSACTIONS);
+            JSONArray transactionArray = importData.getJSONArray(TABLE_TRANSACTION);
 
             database.beginTransaction();
             try {
@@ -176,7 +176,7 @@ public class Database extends SQLiteOpenHelper {
                     values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getInt(COLUMN_TRANSACTION_SAVING_ID));
                     values.put(COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(COLUMN_TRANSACTION_AMOUNT));
                     values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
-                    database.insert(TABLE_TRANSACTIONS, null, values);
+                    database.insert(TABLE_TRANSACTION, null, values);
                 }
                 
                 database.setTransactionSuccessful();
