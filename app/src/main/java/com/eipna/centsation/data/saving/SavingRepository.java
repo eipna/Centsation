@@ -33,9 +33,10 @@ public class SavingRepository extends Database {
         values.put(COLUMN_SAVING_GOAL, createdSaving.getGoal());
         values.put(COLUMN_SAVING_NOTES, createdSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, createdSaving.getIsArchived());
+        long createdSavingID = database.insert(TABLE_SAVING, null, values);
 
         Transaction initialTransaction = new Transaction();
-        initialTransaction.setSavingID((int) database.insert(TABLE_SAVING, null, values));
+        initialTransaction.setSavingID((int) createdSavingID);
         initialTransaction.setAmount(createdSaving.getValue());
         initialTransaction.setType(TransactionType.CREATED.VALUE);
         transactionRepository.create(initialTransaction);
