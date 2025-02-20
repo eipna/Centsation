@@ -56,22 +56,29 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_SAVING_VALUE + " REAL NOT NULL, " +
                 COLUMN_SAVING_GOAL + " REAL NOT NULL, " +
                 COLUMN_SAVING_NOTES + " TEXT, " +
-                COLUMN_SAVING_IS_ARCHIVED + " INTEGER NOT NULL)";
+                COLUMN_SAVING_IS_ARCHIVED + " INTEGER NOT NULL);";
 
-        String createHistoryTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTION + "(" +
+        String createTransactionTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTION + "(" +
                 COLUMN_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TRANSACTION_SAVING_ID + " INTEGER NOT NULL, " +
                 COLUMN_TRANSACTION_AMOUNT + " REAL NOT NULL, " +
                 COLUMN_TRANSACTION_TYPE + " TEXT NOT NULL," +
-                "FOREIGN KEY (" + COLUMN_TRANSACTION_SAVING_ID + ") REFERENCES " + TABLE_SAVING + "(" + COLUMN_SAVING_ID + "))";
+                "FOREIGN KEY (" + COLUMN_TRANSACTION_SAVING_ID + ") REFERENCES " + TABLE_SAVING + "(" + COLUMN_SAVING_ID + ") ON DELETE CASCADE);";
 
         sqLiteDatabase.execSQL(createSavingTable);
-        sqLiteDatabase.execSQL(createHistoryTable);
+        sqLiteDatabase.execSQL(createTransactionTable);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase sqLiteDatabase) {
+        super.onOpen(sqLiteDatabase);
+        sqLiteDatabase.setForeignKeyConstraintsEnabled(true);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVING);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTION);
         onCreate(sqLiteDatabase);
     }
 
