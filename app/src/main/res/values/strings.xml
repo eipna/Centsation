@@ -26,11 +26,11 @@
 
     <string name="dialog_title_create_saving">Create saving</string>
     <string name="dialog_title_edit_saving">Edit saving</string>
-    <string name="dialog_title_delete_saving">Delete saving</string>
+    <string name="dialog_title_delete_saving">Delete saving?</string>
     <string name="dialog_title_create_transaction">Create transaction</string>
     <string name="dialog_title_history_saving">History</string>
 
-    <string name="dialog_message_delete_saving">You are about to delete this saving. Do you want to proceed?</string>
+    <string name="dialog_message_delete_saving">You are about to delete this saving, this action cannot be undone.</string>
 
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_create">Create</string>
