@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -74,17 +73,13 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     }
 
     private void showShareIntent(String notes) {
-        if (notes.isEmpty()) {
-            Toast.makeText(this, getString(R.string.toast_saving_empty_notes), Toast.LENGTH_SHORT).show();
-        } else {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.setType("text/plain");
-            sendIntent.putExtra(Intent.EXTRA_TEXT, notes);
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, notes);
 
-            Intent shareIntent = Intent.createChooser(sendIntent, null);
-            startActivity(shareIntent);
-        }
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 
     private void showDeleteDialog(int savingID) {
@@ -240,6 +235,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
                     Saving editedSaving = new Saving();
                     editedSaving.setID(selectedSaving.getID());
                     editedSaving.setName(savingNameString);
+                    editedSaving.setValue(selectedSaving.getValue());
                     editedSaving.setGoal(savingGoal);
                     editedSaving.setNotes(savingNotesString);
                     editedSaving.setIsArchived(selectedSaving.getIsArchived());

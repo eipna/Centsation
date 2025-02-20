@@ -111,6 +111,12 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 unarchive.setVisibility(View.GONE);
             }
 
+            if (currentSaving.getNotes().isEmpty()) {
+                share.setVisibility(View.GONE);
+            } else {
+                share.setVisibility(View.VISIBLE);
+            }
+
             name.setText(currentSaving.getName());
             percent.setText(String.format("(%s%c)", percentValue, '%'));
             parent.setChecked(currentSaving.getValue() >= currentSaving.getGoal());
