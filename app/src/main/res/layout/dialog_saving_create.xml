@@ -23,14 +23,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/field_saving_value_layout"
+        android:id="@+id/field_saving_current_saving_layout"
         android:hint="@string/field_saving_current_saving"
         android:layout_marginVertical="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/field_saving_value_text"
+            android:id="@+id/field_saving_current_saving_text"
             android:maxLines="1"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"

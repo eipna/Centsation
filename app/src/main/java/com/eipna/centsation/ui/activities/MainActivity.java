@@ -186,11 +186,11 @@ public class MainActivity extends BaseActivity implements SavingListener {
         View createDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_create, null, false);
 
         TextInputLayout nameLayout = createDialogView.findViewById(R.id.field_saving_name_layout);
-        TextInputLayout currentSavingLayout = createDialogView.findViewById(R.id.field_saving_value_layout);
+        TextInputLayout currentSavingLayout = createDialogView.findViewById(R.id.field_saving_current_saving_layout);
         TextInputLayout goalLayout = createDialogView.findViewById(R.id.field_saving_goal_layout);
 
         TextInputEditText nameInput = createDialogView.findViewById(R.id.field_saving_name_text);
-        TextInputEditText currentSavingInput = createDialogView.findViewById(R.id.field_saving_value_text);
+        TextInputEditText currentSavingInput = createDialogView.findViewById(R.id.field_saving_current_saving_text);
         TextInputEditText goalInput = createDialogView.findViewById(R.id.field_saving_goal_text);
         TextInputEditText notesInput = createDialogView.findViewById(R.id.field_saving_notes_text);
 
@@ -336,8 +336,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
     private void showTransactionDialog(Saving selectedSaving) {
         View transactionDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
 
-        TextInputLayout currentSavingLayout = transactionDialogView.findViewById(R.id.field_saving_update_layout);
-        TextInputEditText currentSavingInput = transactionDialogView.findViewById(R.id.field_saving_update_text);
+        TextInputLayout currentSavingLayout = transactionDialogView.findViewById(R.id.field_saving_amount_layout);
+        TextInputEditText currentSavingInput = transactionDialogView.findViewById(R.id.field_saving_amount_text);
 
         MaterialButton depositButton = transactionDialogView.findViewById(R.id.button_saving_deposit);
         MaterialButton withdrawButton = transactionDialogView.findViewById(R.id.button_saving_withdraw);

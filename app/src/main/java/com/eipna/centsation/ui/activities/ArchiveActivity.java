@@ -140,8 +140,8 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     private void showTransactionDialog(Saving selectedSaving) {
         View transactionDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
 
-        TextInputLayout currentSavingLayout = transactionDialogView.findViewById(R.id.field_saving_update_layout);
-        TextInputEditText currentSavingInput = transactionDialogView.findViewById(R.id.field_saving_update_text);
+        TextInputLayout currentSavingLayout = transactionDialogView.findViewById(R.id.field_saving_amount_layout);
+        TextInputEditText currentSavingInput = transactionDialogView.findViewById(R.id.field_saving_amount_text);
 
         MaterialButton depositButton = transactionDialogView.findViewById(R.id.button_saving_deposit);
         MaterialButton withdrawButton = transactionDialogView.findViewById(R.id.button_saving_withdraw);

@@ -10,13 +10,13 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/field_saving_update_layout"
+        android:id="@+id/field_saving_amount_layout"
         android:hint="@string/field_saving_transaction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/field_saving_update_text"
+            android:id="@+id/field_saving_amount_text"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
