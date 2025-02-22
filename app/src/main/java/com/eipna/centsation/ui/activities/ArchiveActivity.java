@@ -162,14 +162,9 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
                 }
 
                 double addedSaving = selectedSaving.getCurrentSaving() + Double.parseDouble(currentSavingText);
-                Transaction transaction = new Transaction();
-                transaction.setSavingID(selectedSaving.getID());
-                transaction.setAmount(Math.abs(addedSaving- selectedSaving.getCurrentSaving()));
-                transaction.setType(TransactionType.DEPOSIT.VALUE);
-                transactionRepository.create(transaction);
-
                 selectedSaving.setCurrentSaving(addedSaving);
-                savingRepository.update(selectedSaving);
+                savingRepository.makeTransaction(selectedSaving, addedSaving, TransactionType.DEPOSIT);
+
                 refreshList();
                 dialog.dismiss();
             });
@@ -188,14 +183,9 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
                     return;
                 }
 
-                Transaction transaction = new Transaction();
-                transaction.setSavingID(selectedSaving.getID());
-                transaction.setAmount(Math.abs(deductedSaving - selectedSaving.getCurrentSaving()));
-                transaction.setType(TransactionType.WITHDRAW.VALUE);
-                transactionRepository.create(transaction);
-
                 selectedSaving.setCurrentSaving(deductedSaving);
-                savingRepository.update(selectedSaving);
+                savingRepository.makeTransaction(selectedSaving, deductedSaving, TransactionType.WITHDRAW);
+
                 refreshList();
                 dialog.dismiss();
             });

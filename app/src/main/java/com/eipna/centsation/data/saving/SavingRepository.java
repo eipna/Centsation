@@ -63,6 +63,22 @@ public class SavingRepository extends Database {
         database.close();
     }
 
+    public void makeTransaction(Saving updatedSaving, double amount, TransactionType type) {
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_SAVING_CURRENT_SAVING, updatedSaving.getCurrentSaving());
+        database.update(TABLE_SAVING, values, COLUMN_SAVING_ID + " = ?", new String[]{String.valueOf(updatedSaving.getID())});
+
+        Transaction transaction = new Transaction();
+        transaction.setSavingID(updatedSaving.getID());
+        transaction.setAmount(Math.abs(amount));
+        transaction.setType(type.VALUE);
+        transaction.setDate(System.currentTimeMillis());
+        transactionRepository.create(transaction);
+        database.close();
+    }
+
     @SuppressLint("Range")
     public ArrayList<Saving> getSavings(int isArchive) {
         ArrayList<Saving> list = new ArrayList<>();
