@@ -52,7 +52,7 @@
                 tools:ignore="HardcodedText" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:text="out of"
+                android:text="/"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:layout_marginEnd="4dp"
