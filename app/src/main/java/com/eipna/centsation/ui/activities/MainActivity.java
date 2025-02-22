@@ -357,14 +357,14 @@ public class MainActivity extends BaseActivity implements SavingListener {
                     return;
                 }
 
-                double addedValue = selectedSaving.getCurrentSaving() + Double.parseDouble(currentSavingText);
+                double addedSaving = selectedSaving.getCurrentSaving() + Double.parseDouble(currentSavingText);
                 Transaction transaction = new Transaction();
                 transaction.setSavingID(selectedSaving.getID());
-                transaction.setAmount(Math.abs(addedValue - selectedSaving.getCurrentSaving()));
+                transaction.setAmount(Math.abs(addedSaving - selectedSaving.getCurrentSaving()));
                 transaction.setType(TransactionType.DEPOSIT.VALUE);
                 transactionRepository.create(transaction);
 
-                selectedSaving.setCurrentSaving(addedValue);
+                selectedSaving.setCurrentSaving(addedSaving);
                 savingRepository.update(selectedSaving);
                 refreshList();
                 dialog.dismiss();
@@ -378,19 +378,19 @@ public class MainActivity extends BaseActivity implements SavingListener {
                     return;
                 }
 
-                double deductedValue = selectedSaving.getCurrentSaving() - Double.parseDouble(currentSavingText);
-                if (deductedValue < 0) {
+                double deductedSaving = selectedSaving.getCurrentSaving() - Double.parseDouble(currentSavingText);
+                if (deductedSaving < 0) {
                     currentSavingLayout.setError(getString(R.string.field_error_negative_saving));
                     return;
                 }
 
                 Transaction transaction = new Transaction();
                 transaction.setSavingID(selectedSaving.getID());
-                transaction.setAmount(Math.abs(deductedValue - selectedSaving.getCurrentSaving()));
+                transaction.setAmount(Math.abs(deductedSaving - selectedSaving.getCurrentSaving()));
                 transaction.setType(TransactionType.WITHDRAW.VALUE);
                 transactionRepository.create(transaction);
 
-                selectedSaving.setCurrentSaving(deductedValue);
+                selectedSaving.setCurrentSaving(deductedSaving);
                 savingRepository.update(selectedSaving);
                 refreshList();
                 dialog.dismiss();
