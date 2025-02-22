@@ -28,7 +28,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/transaction_date"
-                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textAppearance="?attr/textAppearanceBodySmall"
                 android:layout_marginTop="4dp"
                 android:text="02/22/25 4:08 PM"
                 app:fontFamily="sans-serif"
