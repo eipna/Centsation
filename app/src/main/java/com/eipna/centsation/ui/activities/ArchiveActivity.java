@@ -156,18 +156,18 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
             depositButton.setOnClickListener(view -> {
                 String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
                 if (savingValueString.isEmpty()) {
-                    savingValueLayout.setError(getString(R.string.field_error_empty_value));
+                    savingValueLayout.setError(getString(R.string.field_error_empty_saving));
                     return;
                 }
 
-                double addedValue = selectedSaving.getValue() + Double.parseDouble(savingValueString);
+                double addedValue = selectedSaving.getCurrentSaving() + Double.parseDouble(savingValueString);
                 Transaction transaction = new Transaction();
                 transaction.setSavingID(selectedSaving.getID());
-                transaction.setAmount(Math.abs(addedValue - selectedSaving.getValue()));
+                transaction.setAmount(Math.abs(addedValue - selectedSaving.getCurrentSaving()));
                 transaction.setType(TransactionType.DEPOSIT.VALUE);
                 transactionRepository.create(transaction);
 
-                selectedSaving.setValue(addedValue);
+                selectedSaving.setCurrentSaving(addedValue);
                 savingRepository.update(selectedSaving);
                 refreshList();
                 dialog.dismiss();
@@ -176,23 +176,23 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
             withdrawButton.setOnClickListener(view -> {
                 String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
                 if (savingValueString.isEmpty()) {
-                    savingValueLayout.setError(getString(R.string.field_error_empty_value));
+                    savingValueLayout.setError(getString(R.string.field_error_empty_saving));
                     return;
                 }
 
-                double deductedValue = selectedSaving.getValue() - Double.parseDouble(savingValueString);
+                double deductedValue = selectedSaving.getCurrentSaving() - Double.parseDouble(savingValueString);
                 if (deductedValue < 0) {
-                    savingValueLayout.setError(getString(R.string.field_error_negative_value));
+                    savingValueLayout.setError(getString(R.string.field_error_negative_saving));
                     return;
                 }
 
                 Transaction transaction = new Transaction();
                 transaction.setSavingID(selectedSaving.getID());
-                transaction.setAmount(Math.abs(deductedValue - selectedSaving.getValue()));
+                transaction.setAmount(Math.abs(deductedValue - selectedSaving.getCurrentSaving()));
                 transaction.setType(TransactionType.WITHDRAW.VALUE);
                 transactionRepository.create(transaction);
 
-                selectedSaving.setValue(deductedValue);
+                selectedSaving.setCurrentSaving(deductedValue);
                 savingRepository.update(selectedSaving);
                 refreshList();
                 dialog.dismiss();
@@ -235,7 +235,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
                     Saving editedSaving = new Saving();
                     editedSaving.setID(selectedSaving.getID());
                     editedSaving.setName(savingNameString);
-                    editedSaving.setValue(selectedSaving.getValue());
+                    editedSaving.setCurrentSaving(selectedSaving.getCurrentSaving());
                     editedSaving.setGoal(savingGoal);
                     editedSaving.setNotes(savingNotesString);
                     editedSaving.setIsArchived(selectedSaving.getIsArchived());

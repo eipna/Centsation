@@ -7,7 +7,7 @@ public class Saving {
 
     private int ID;
     private String name;
-    private double value;
+    private double currentSaving;
     private double goal;
     private String notes;
     private int isArchived;
@@ -18,7 +18,7 @@ public class Saving {
     public Saving() {
         this.ID = -1;
         this.name = null;
-        this.value = 0.0;
+        this.currentSaving = 0.0;
         this.goal = 0.0;
         this.notes = null;
         this.isArchived = 0;
@@ -26,7 +26,7 @@ public class Saving {
 
     public static final Comparator<Saving> SORT_NAME = Comparator.comparing(firstSaving -> firstSaving.getName().toLowerCase());
 
-    public static final Comparator<Saving> SORT_VALUE = Comparator.comparingDouble(Saving::getValue);
+    public static final Comparator<Saving> SORT_VALUE = Comparator.comparingDouble(Saving::getCurrentSaving);
 
     public static final Comparator<Saving> SORT_GOAL = Comparator.comparingDouble(Saving::getGoal);
 
@@ -46,12 +46,12 @@ public class Saving {
         this.name = name;
     }
 
-    public double getValue() {
-        return value;
+    public double getCurrentSaving() {
+        return currentSaving;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setCurrentSaving(double currentSaving) {
+        this.currentSaving = currentSaving;
     }
 
     public double getGoal() {

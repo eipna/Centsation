@@ -32,7 +32,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String TABLE_SAVING = "savings";
     public static final String COLUMN_SAVING_ID = "id";
     public static final String COLUMN_SAVING_NAME = "name";
-    public static final String COLUMN_SAVING_VALUE = "value";
+    public static final String COLUMN_SAVING_CURRENT_SAVING = "current_saving";
     public static final String COLUMN_SAVING_GOAL = "goal";
     public static final String COLUMN_SAVING_NOTES = "notes";
     public static final String COLUMN_SAVING_IS_ARCHIVED = "is_archived";
@@ -54,7 +54,7 @@ public class Database extends SQLiteOpenHelper {
         String createSavingTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SAVING + "(" +
                 COLUMN_SAVING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_SAVING_NAME + " TEXT NOT NULL, " +
-                COLUMN_SAVING_VALUE + " REAL NOT NULL, " +
+                COLUMN_SAVING_CURRENT_SAVING+ " REAL NOT NULL, " +
                 COLUMN_SAVING_GOAL + " REAL NOT NULL, " +
                 COLUMN_SAVING_NOTES + " TEXT, " +
                 COLUMN_SAVING_IS_ARCHIVED + " INTEGER NOT NULL);";
@@ -99,7 +99,7 @@ public class Database extends SQLiteOpenHelper {
                     JSONObject savingObject = new JSONObject();
                     savingObject.put(COLUMN_SAVING_ID, savingCursor.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_ID)));
                     savingObject.put(COLUMN_SAVING_NAME, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NAME)));
-                    savingObject.put(COLUMN_SAVING_VALUE, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_VALUE)));
+                    savingObject.put(COLUMN_SAVING_CURRENT_SAVING, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_CURRENT_SAVING)));
                     savingObject.put(COLUMN_SAVING_GOAL, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_GOAL)));
                     savingObject.put(COLUMN_SAVING_NOTES, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NOTES)));
                     savingObject.put(COLUMN_SAVING_IS_ARCHIVED, savingCursor.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));
@@ -172,7 +172,7 @@ public class Database extends SQLiteOpenHelper {
                     JSONObject savingObject = savingArray.getJSONObject(i);
                     ContentValues values = new ContentValues();
                     values.put(COLUMN_SAVING_NAME, savingObject.getString(COLUMN_SAVING_NAME));
-                    values.put(COLUMN_SAVING_VALUE, savingObject.getDouble(COLUMN_SAVING_VALUE));
+                    values.put(COLUMN_SAVING_CURRENT_SAVING, savingObject.getDouble(COLUMN_SAVING_CURRENT_SAVING));
                     values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
                     values.put(COLUMN_SAVING_NOTES, savingObject.getString(COLUMN_SAVING_NOTES));
                     values.put(COLUMN_SAVING_IS_ARCHIVED, savingObject.getInt(COLUMN_SAVING_IS_ARCHIVED));

@@ -29,7 +29,7 @@ public class SavingRepository extends Database {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_SAVING_NAME, createdSaving.getName());
-        values.put(COLUMN_SAVING_VALUE, createdSaving.getValue());
+        values.put(COLUMN_SAVING_CURRENT_SAVING, createdSaving.getCurrentSaving());
         values.put(COLUMN_SAVING_GOAL, createdSaving.getGoal());
         values.put(COLUMN_SAVING_NOTES, createdSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, createdSaving.getIsArchived());
@@ -37,7 +37,7 @@ public class SavingRepository extends Database {
 
         Transaction initialTransaction = new Transaction();
         initialTransaction.setSavingID((int) createdSavingID);
-        initialTransaction.setAmount(createdSaving.getValue());
+        initialTransaction.setAmount(createdSaving.getCurrentSaving());
         initialTransaction.setType(TransactionType.CREATED.VALUE);
         transactionRepository.create(initialTransaction);
         database.close();
@@ -48,7 +48,7 @@ public class SavingRepository extends Database {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_SAVING_NAME, updatedSaving.getName());
-        values.put(COLUMN_SAVING_VALUE, updatedSaving.getValue());
+        values.put(COLUMN_SAVING_CURRENT_SAVING, updatedSaving.getCurrentSaving());
         values.put(COLUMN_SAVING_GOAL, updatedSaving.getGoal());
         values.put(COLUMN_SAVING_NOTES, updatedSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, updatedSaving.getIsArchived());
@@ -75,7 +75,7 @@ public class SavingRepository extends Database {
                 Saving queriedSaving = new Saving();
                 queriedSaving.setID(cursor.getInt(cursor.getColumnIndex(COLUMN_SAVING_ID)));
                 queriedSaving.setName(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_NAME)));
-                queriedSaving.setValue(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_VALUE)));
+                queriedSaving.setCurrentSaving(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_CURRENT_SAVING)));
                 queriedSaving.setGoal(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_GOAL)));
                 queriedSaving.setNotes(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_NOTES)));
                 queriedSaving.setIsArchived(cursor.getInt(cursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));

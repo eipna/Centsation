@@ -93,7 +93,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         @SuppressLint("DefaultLocale")
         public void bind(Saving currentSaving, PreferenceUtil preferences) {
             String currencySymbol = Currency.getSymbol(preferences.getCurrency());
-            int percentValue = (int) ((currentSaving.getValue() / currentSaving.getGoal()) * 100);
+            int percentValue = (int) ((currentSaving.getCurrentSaving() / currentSaving.getGoal()) * 100);
 
             if (Currency.isRTLCurrency(preferences.getCurrency())) {
                 description.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -119,8 +119,8 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
             name.setText(currentSaving.getName());
             percent.setText(String.format("(%s%c)", percentValue, '%'));
-            parent.setChecked(currentSaving.getValue() >= currentSaving.getGoal());
-            value.setText(String.format("%s%.2f", currencySymbol, currentSaving.getValue()));
+            parent.setChecked(currentSaving.getCurrentSaving() >= currentSaving.getGoal());
+            value.setText(String.format("%s%.2f", currencySymbol, currentSaving.getCurrentSaving()));
             goal.setText(String.format("%s%.2f", currencySymbol, currentSaving.getGoal()));
             progress.setProgress(percentValue, true);
         }
