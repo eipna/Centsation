@@ -42,6 +42,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_TRANSACTION_SAVING_ID = "saving_id";
     public static final String COLUMN_TRANSACTION_AMOUNT = "amount";
     public static final String COLUMN_TRANSACTION_TYPE = "type";
+    public static final String COLUMN_TRANSACTION_DATE = "date";
 
     public Database(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -63,6 +64,7 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_TRANSACTION_SAVING_ID + " INTEGER NOT NULL, " +
                 COLUMN_TRANSACTION_AMOUNT + " REAL NOT NULL, " +
                 COLUMN_TRANSACTION_TYPE + " TEXT NOT NULL," +
+                COLUMN_TRANSACTION_DATE + " LONG NOT NULL, " +
                 "FOREIGN KEY (" + COLUMN_TRANSACTION_SAVING_ID + ") REFERENCES " + TABLE_SAVING + "(" + COLUMN_SAVING_ID + ") ON DELETE CASCADE);";
 
         sqLiteDatabase.execSQL(createSavingTable);
