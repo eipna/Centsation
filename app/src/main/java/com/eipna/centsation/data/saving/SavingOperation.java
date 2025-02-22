@@ -1,7 +1,7 @@
 package com.eipna.centsation.data.saving;
 
 public enum SavingOperation {
-    UPDATE,
+    TRANSACTION,
     HISTORY,
     SHARE,
     ARCHIVE,

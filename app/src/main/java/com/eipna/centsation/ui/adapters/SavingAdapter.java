@@ -52,7 +52,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         holder.itemView.setOnClickListener(view -> savingListener.OnClick(position));
         holder.delete.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.DELETE, position));
         holder.share.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.SHARE, position));
-        holder.update.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.UPDATE, position));
+        holder.update.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.TRANSACTION, position));
         holder.archive.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.ARCHIVE, position));
         holder.unarchive.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.UNARCHIVE, position));
         holder.history.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.HISTORY, position));

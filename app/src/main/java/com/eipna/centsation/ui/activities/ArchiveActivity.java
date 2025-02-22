@@ -261,6 +261,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
         if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
         if (operation.equals(SavingOperation.HISTORY)) showHistoryDialog(selectedSaving);
-        if (operation.equals(SavingOperation.UPDATE)) showTransactionDialog(selectedSaving);
+        if (operation.equals(SavingOperation.TRANSACTION)) showTransactionDialog(selectedSaving);
     }
 }

@@ -416,7 +416,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         Saving selectedSaving = savings.get(position);
         if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
         if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
-        if (operation.equals(SavingOperation.UPDATE)) showTransactionDialog(selectedSaving);
+        if (operation.equals(SavingOperation.TRANSACTION)) showTransactionDialog(selectedSaving);
         if (operation.equals(SavingOperation.ARCHIVE)) archiveSaving(selectedSaving);
         if (operation.equals(SavingOperation.HISTORY)) showHistoryDialog(selectedSaving);
     }
