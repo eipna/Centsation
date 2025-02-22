@@ -183,45 +183,45 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void showCreateDialog() {
-        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_create, null, false);
+        View createDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_create, null, false);
 
-        TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
-        TextInputLayout savingValueLayout = savingDialog.findViewById(R.id.field_saving_value_layout);
-        TextInputLayout savingGoalLayout = savingDialog.findViewById(R.id.field_saving_goal_layout);
+        TextInputLayout nameLayout = createDialogView.findViewById(R.id.field_saving_name_layout);
+        TextInputLayout currentSavingLayout = createDialogView.findViewById(R.id.field_saving_value_layout);
+        TextInputLayout goalLayout = createDialogView.findViewById(R.id.field_saving_goal_layout);
 
-        TextInputEditText savingNameInput = savingDialog.findViewById(R.id.field_saving_name_text);
-        TextInputEditText savingValueInput = savingDialog.findViewById(R.id.field_saving_value_text);
-        TextInputEditText savingGoalInput = savingDialog.findViewById(R.id.field_saving_goal_text);
-        TextInputEditText savingNotesInput = savingDialog.findViewById(R.id.field_saving_notes_text);
+        TextInputEditText nameInput = createDialogView.findViewById(R.id.field_saving_name_text);
+        TextInputEditText currentSavingInput = createDialogView.findViewById(R.id.field_saving_value_text);
+        TextInputEditText goalInput = createDialogView.findViewById(R.id.field_saving_goal_text);
+        TextInputEditText notesInput = createDialogView.findViewById(R.id.field_saving_notes_text);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_create_saving)
                 .setIcon(R.drawable.ic_add_circle)
-                .setView(savingDialog)
+                .setView(createDialogView)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_create, null);
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
-            String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
-            String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
-            String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
-            String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
+            String nameText = Objects.requireNonNull(nameInput.getText()).toString();
+            String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString();
+            String goalText = Objects.requireNonNull(goalInput.getText()).toString();
+            String notesText = Objects.requireNonNull(notesInput.getText()).toString();
 
-            if (!savingNameString.isEmpty() && !savingValueString.isEmpty() && !savingGoalString.isEmpty()) {
-                double savingValue = Double.parseDouble(savingValueString);
-                double savingGoal = Double.parseDouble(savingGoalString);
+            if (!nameText.isEmpty() && !currentSavingText.isEmpty() && !goalText.isEmpty()) {
+                double currentSaving = Double.parseDouble(currentSavingText);
+                double goal = Double.parseDouble(goalText);
 
-                if (savingValue > savingGoal) {
-                    savingGoalLayout.setError(getString(R.string.field_error_lower_goal));
+                if (currentSaving > goal) {
+                    goalLayout.setError(getString(R.string.field_error_lower_goal));
                     return;
                 }
 
                 Saving createdSaving = new Saving();
-                createdSaving.setName(savingNameString);
-                createdSaving.setCurrentSaving(savingValue);
-                createdSaving.setGoal(savingGoal);
-                createdSaving.setNotes(savingNotesString);
+                createdSaving.setName(nameText);
+                createdSaving.setCurrentSaving(currentSaving);
+                createdSaving.setGoal(goal);
+                createdSaving.setNotes(notesText);
                 createdSaving.setIsArchived(0);
 
                 savingRepository.create(createdSaving);
@@ -229,27 +229,27 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 dialog.dismiss();
             }
 
-            savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
-            savingValueLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
-            savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
+            nameLayout.setError(nameText.isEmpty() ? getString(R.string.field_error_required) : null);
+            currentSavingLayout.setError(currentSavingText.isEmpty() ? getString(R.string.field_error_required) : null);
+            goalLayout.setError(goalText.isEmpty() ? getString(R.string.field_error_required) : null);
         }));
         dialog.show();
     }
 
     private void showHistoryDialog(Saving selectedSaving) {
-        View transactionDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_history, null, false);
+        View historyDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_history, null, false);
 
         ArrayList<Transaction> transactions = transactionRepository.getTransactions(selectedSaving.getID());
         TransactionAdapter adapter = new TransactionAdapter(this, transactions);
 
-        RecyclerView transactionList = transactionDialog.findViewById(R.id.transaction_list);
+        RecyclerView transactionList = historyDialogView.findViewById(R.id.transaction_list);
         transactionList.setLayoutManager(new LinearLayoutManager(this));
         transactionList.setAdapter(adapter);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_history_saving)
                 .setIcon(R.drawable.ic_history)
-                .setView(transactionDialog)
+                .setView(historyDialogView)
                 .setPositiveButton(R.string.dialog_button_close, null);
 
         AlertDialog dialog = builder.create();
@@ -258,42 +258,42 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     @SuppressLint("DefaultLocale")
     private void showEditDialog(Saving selectedSaving) {
-        View savingDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_edit, null, false);
+        View editDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_edit, null, false);
 
-        TextInputLayout savingNameLayout = savingDialog.findViewById(R.id.field_saving_name_layout);
-        TextInputLayout savingGoalLayout = savingDialog.findViewById(R.id.field_saving_goal_layout);
+        TextInputLayout nameLayout = editDialogView.findViewById(R.id.field_saving_name_layout);
+        TextInputLayout goalLayout = editDialogView.findViewById(R.id.field_saving_goal_layout);
 
-        TextInputEditText savingNameInput = savingDialog.findViewById(R.id.field_saving_name_text);
-        TextInputEditText savingGoalInput = savingDialog.findViewById(R.id.field_saving_goal_text);
-        TextInputEditText savingNotesInput = savingDialog.findViewById(R.id.field_saving_notes_text);
+        TextInputEditText nameInput = editDialogView.findViewById(R.id.field_saving_name_text);
+        TextInputEditText goalInput = editDialogView.findViewById(R.id.field_saving_goal_text);
+        TextInputEditText notesInput = editDialogView.findViewById(R.id.field_saving_notes_text);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_edit_saving)
                 .setIcon(R.drawable.ic_edit)
-                .setView(savingDialog)
+                .setView(editDialogView)
                 .setPositiveButton(R.string.dialog_button_edit, null)
                 .setNegativeButton(R.string.dialog_button_cancel, null);
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
-            savingNameInput.setText(selectedSaving.getName());
-            savingGoalInput.setText(String.format("%.2f", selectedSaving.getGoal()));
-            savingNotesInput.setText(selectedSaving.getNotes());
+            nameInput.setText(selectedSaving.getName());
+            goalInput.setText(String.format("%.2f", selectedSaving.getGoal()));
+            notesInput.setText(selectedSaving.getNotes());
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
-                String savingNameString = Objects.requireNonNull(savingNameInput.getText()).toString();
-                String savingGoalString = Objects.requireNonNull(savingGoalInput.getText()).toString();
-                String savingNotesString = Objects.requireNonNull(savingNotesInput.getText()).toString();
+                String nameText = Objects.requireNonNull(nameInput.getText()).toString();
+                String goalText = Objects.requireNonNull(goalInput.getText()).toString();
+                String notesText = Objects.requireNonNull(notesInput.getText()).toString();
 
-                if (!savingNameString.isEmpty() && !savingGoalString.isEmpty()) {
-                    double savingGoal = Double.parseDouble(savingGoalString);
+                if (!nameText.isEmpty() && !goalText.isEmpty()) {
+                    double goal = Double.parseDouble(goalText);
 
                     Saving editedSaving = new Saving();
                     editedSaving.setID(selectedSaving.getID());
-                    editedSaving.setName(savingNameString);
+                    editedSaving.setName(nameText);
                     editedSaving.setCurrentSaving(selectedSaving.getCurrentSaving());
-                    editedSaving.setGoal(savingGoal);
-                    editedSaving.setNotes(savingNotesString);
+                    editedSaving.setGoal(goal);
+                    editedSaving.setNotes(notesText);
                     editedSaving.setIsArchived(selectedSaving.getIsArchived());
 
                     savingRepository.update(editedSaving);
@@ -301,8 +301,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
                     dialog.dismiss();
                 }
 
-                savingNameLayout.setError(savingNameString.isEmpty() ? getString(R.string.field_error_required) : null);
-                savingGoalLayout.setError(savingGoalString.isEmpty() ? getString(R.string.field_error_required) : null);
+                nameLayout.setError(nameText.isEmpty() ? getString(R.string.field_error_required) : null);
+                goalLayout.setError(goalText.isEmpty() ? getString(R.string.field_error_required) : null);
             });
         });
         dialog.show();
@@ -333,30 +333,31 @@ public class MainActivity extends BaseActivity implements SavingListener {
         startActivity(shareIntent);
     }
 
-    private void showUpdateDialog(Saving selectedSaving) {
-        View updateSavingValue = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
+    private void showTransactionDialog(Saving selectedSaving) {
+        View transactionDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
 
-        TextInputLayout savingValueLayout = updateSavingValue.findViewById(R.id.field_saving_update_layout);
-        TextInputEditText savingValueInput = updateSavingValue.findViewById(R.id.field_saving_update_text);
+        TextInputLayout currentSavingLayout = transactionDialogView.findViewById(R.id.field_saving_update_layout);
+        TextInputEditText currentSavingInput = transactionDialogView.findViewById(R.id.field_saving_update_text);
 
-        MaterialButton depositButton = updateSavingValue.findViewById(R.id.button_saving_deposit);
-        MaterialButton withdrawButton = updateSavingValue.findViewById(R.id.button_saving_withdraw);
+        MaterialButton depositButton = transactionDialogView.findViewById(R.id.button_saving_deposit);
+        MaterialButton withdrawButton = transactionDialogView.findViewById(R.id.button_saving_withdraw);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_create_transaction)
                 .setIcon(R.drawable.ic_add_circle)
-                .setView(updateSavingValue);
+                .setView(transactionDialogView);
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
             depositButton.setOnClickListener(view -> {
-                String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
-                if (savingValueString.isEmpty()) {
-                    savingValueLayout.setError(getString(R.string.field_error_empty_saving));
+                String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString();
+
+                if (currentSavingText.isEmpty()) {
+                    currentSavingLayout.setError(getString(R.string.field_error_empty_saving));
                     return;
                 }
 
-                double addedValue = selectedSaving.getCurrentSaving() + Double.parseDouble(savingValueString);
+                double addedValue = selectedSaving.getCurrentSaving() + Double.parseDouble(currentSavingText);
                 Transaction transaction = new Transaction();
                 transaction.setSavingID(selectedSaving.getID());
                 transaction.setAmount(Math.abs(addedValue - selectedSaving.getCurrentSaving()));
@@ -370,15 +371,16 @@ public class MainActivity extends BaseActivity implements SavingListener {
             });
 
             withdrawButton.setOnClickListener(view -> {
-                String savingValueString = Objects.requireNonNull(savingValueInput.getText()).toString();
-                if (savingValueString.isEmpty()) {
-                    savingValueLayout.setError(getString(R.string.field_error_empty_saving));
+                String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString();
+
+                if (currentSavingText.isEmpty()) {
+                    currentSavingLayout.setError(getString(R.string.field_error_empty_saving));
                     return;
                 }
 
-                double deductedValue = selectedSaving.getCurrentSaving() - Double.parseDouble(savingValueString);
+                double deductedValue = selectedSaving.getCurrentSaving() - Double.parseDouble(currentSavingText);
                 if (deductedValue < 0) {
-                    savingValueLayout.setError(getString(R.string.field_error_negative_saving));
+                    currentSavingLayout.setError(getString(R.string.field_error_negative_saving));
                     return;
                 }
 
@@ -414,7 +416,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         Saving selectedSaving = savings.get(position);
         if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
         if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
-        if (operation.equals(SavingOperation.UPDATE)) showUpdateDialog(selectedSaving);
+        if (operation.equals(SavingOperation.UPDATE)) showTransactionDialog(selectedSaving);
         if (operation.equals(SavingOperation.ARCHIVE)) archiveSaving(selectedSaving);
         if (operation.equals(SavingOperation.HISTORY)) showHistoryDialog(selectedSaving);
     }
