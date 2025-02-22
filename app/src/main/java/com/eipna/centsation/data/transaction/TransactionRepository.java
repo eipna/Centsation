@@ -23,7 +23,7 @@ public class TransactionRepository extends Database {
         values.put(COLUMN_TRANSACTION_SAVING_ID, createdTransaction.getSavingID());
         values.put(COLUMN_TRANSACTION_AMOUNT, createdTransaction.getAmount());
         values.put(COLUMN_TRANSACTION_TYPE, createdTransaction.getType());
-        values.put(COLUMN_TRANSACTION_DATE, createdTransaction.getDate());
+        values.put(COLUMN_TRANSACTION_DATE, System.currentTimeMillis());
         database.insert(TABLE_TRANSACTION, null, values);
         database.close();
     }
