@@ -29,6 +29,7 @@ import com.eipna.centsation.data.transaction.TransactionType;
 import com.eipna.centsation.databinding.ActivityMainBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.eipna.centsation.ui.adapters.TransactionAdapter;
+import com.eipna.centsation.util.TextWatcherUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
@@ -194,6 +195,9 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputEditText goalInput = createDialogView.findViewById(R.id.field_saving_goal_text);
         TextInputEditText notesInput = createDialogView.findViewById(R.id.field_saving_notes_text);
 
+        currentSavingInput.addTextChangedListener(new TextWatcherUtil(currentSavingInput));
+        goalInput.addTextChangedListener(new TextWatcherUtil(goalInput));
+
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_create_saving)
                 .setIcon(R.drawable.ic_add_circle)
@@ -204,8 +208,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
             String nameText = Objects.requireNonNull(nameInput.getText()).toString();
-            String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString();
-            String goalText = Objects.requireNonNull(goalInput.getText()).toString();
+            String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString().replaceAll(",", "");
+            String goalText = Objects.requireNonNull(goalInput.getText()).toString().replaceAll(",", "");
             String notesText = Objects.requireNonNull(notesInput.getText()).toString();
 
             if (!nameText.isEmpty() && !currentSavingText.isEmpty() && !goalText.isEmpty()) {
@@ -267,6 +271,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputEditText goalInput = editDialogView.findViewById(R.id.field_saving_goal_text);
         TextInputEditText notesInput = editDialogView.findViewById(R.id.field_saving_notes_text);
 
+        goalInput.addTextChangedListener(new TextWatcherUtil(goalInput));
+
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_edit_saving)
                 .setIcon(R.drawable.ic_edit)
@@ -282,7 +288,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
                 String nameText = Objects.requireNonNull(nameInput.getText()).toString();
-                String goalText = Objects.requireNonNull(goalInput.getText()).toString();
+                String goalText = Objects.requireNonNull(goalInput.getText()).toString().replaceAll(",", "");
                 String notesText = Objects.requireNonNull(notesInput.getText()).toString();
 
                 if (!nameText.isEmpty() && !goalText.isEmpty()) {
@@ -342,6 +348,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
         MaterialButton depositButton = transactionDialogView.findViewById(R.id.button_saving_deposit);
         MaterialButton withdrawButton = transactionDialogView.findViewById(R.id.button_saving_withdraw);
 
+        currentSavingInput.addTextChangedListener(new TextWatcherUtil(currentSavingInput));
+
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_create_transaction)
                 .setIcon(R.drawable.ic_add_circle)
@@ -350,7 +358,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
             depositButton.setOnClickListener(view -> {
-                String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString();
+                String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString().replaceAll(",", "");
 
                 if (currentSavingText.isEmpty()) {
                     currentSavingLayout.setError(getString(R.string.field_error_empty_saving));

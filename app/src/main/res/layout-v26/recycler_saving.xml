@@ -43,7 +43,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/saving_value"
+                android:id="@+id/saving_current_saving"
                 android:text="1000.0"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:textAppearance="?attr/textAppearanceBodyLarge"

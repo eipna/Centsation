@@ -1,7 +1,7 @@
 package com.eipna.centsation.ui.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.NumberFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +66,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView parent;
-        MaterialTextView name, value, goal, percent;
+        MaterialTextView name, saving, goal, percent;
         MaterialButton update, history, archive, unarchive, delete, share;
 
         LinearLayout description;
@@ -76,7 +76,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             super(itemView);
             parent = itemView.findViewById(R.id.saving_parent);
             name = itemView.findViewById(R.id.saving_name);
-            value = itemView.findViewById(R.id.saving_value);
+            saving = itemView.findViewById(R.id.saving_current_saving);
             goal = itemView.findViewById(R.id.saving_goal);
             percent = itemView.findViewById(R.id.saving_percent);
             description = itemView.findViewById(R.id.saving_description);
@@ -90,18 +90,17 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             share = itemView.findViewById(R.id.saving_share);
         }
 
-        @SuppressLint("DefaultLocale")
         public void bind(Saving currentSaving, PreferenceUtil preferences) {
             String currencySymbol = Currency.getSymbol(preferences.getCurrency());
             int percentValue = (int) ((currentSaving.getCurrentSaving() / currentSaving.getGoal()) * 100);
 
             if (Currency.isRTLCurrency(preferences.getCurrency())) {
                 description.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-                value.setTextDirection(View.TEXT_DIRECTION_RTL);
+                saving.setTextDirection(View.TEXT_DIRECTION_RTL);
                 goal.setTextDirection(View.TEXT_DIRECTION_RTL);
             } else {
                 description.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-                value.setTextDirection(View.TEXT_DIRECTION_LTR);
+                saving.setTextDirection(View.TEXT_DIRECTION_LTR);
                 goal.setTextDirection(View.TEXT_DIRECTION_LTR);
             }
 
@@ -120,8 +119,8 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             name.setText(currentSaving.getName());
             percent.setText(String.format("(%s%c)", percentValue, '%'));
             parent.setChecked(currentSaving.getCurrentSaving() >= currentSaving.getGoal());
-            value.setText(String.format("%s%.2f", currencySymbol, currentSaving.getCurrentSaving()));
-            goal.setText(String.format("%s%.2f", currencySymbol, currentSaving.getGoal()));
+            saving.setText(String.format("%s%s", currencySymbol, NumberFormat.getInstance().format(currentSaving.getCurrentSaving())));
+            goal.setText(String.format("%s%s", currencySymbol, NumberFormat.getInstance().format(currentSaving.getGoal())));
             progress.setProgress(percentValue, true);
         }
     }
