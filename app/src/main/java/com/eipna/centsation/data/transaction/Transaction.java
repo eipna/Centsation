@@ -6,12 +6,14 @@ public class Transaction {
     private int savingID;
     private double amount;
     private String type;
+    private long date;
 
     public Transaction() {
         this.ID = -1;
         this.savingID = -1;
         this.amount = -1;
         this.type = null;
+        this.date = -1;
     }
 
     public int getID() {
@@ -44,5 +46,13 @@ public class Transaction {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 }
