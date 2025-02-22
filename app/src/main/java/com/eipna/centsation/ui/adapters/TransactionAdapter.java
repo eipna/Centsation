@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.transaction.Transaction;
 import com.eipna.centsation.data.transaction.TransactionType;
+import com.eipna.centsation.util.DateUtil;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -46,17 +47,19 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialTextView type, amount;
+        MaterialTextView type, amount, date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             type = itemView.findViewById(R.id.transaction_type);
             amount = itemView.findViewById(R.id.transaction_amount);
+            date = itemView.findViewById(R.id.transaction_date);
         }
 
         @SuppressLint("DefaultLocale")
         public void bind(Transaction currentTransaction) {
             type.setText(currentTransaction.getType());
+            date.setText(DateUtil.getStringDate(currentTransaction.getDate()));
 
             if (currentTransaction.getType().equals(TransactionType.DEPOSIT.VALUE) || currentTransaction.getType().equals(TransactionType.CREATED.VALUE)) {
                 amount.setTextColor(itemView.getContext().getResources().getColor(R.color.md_theme_secondary, itemView.getContext().getTheme()));
