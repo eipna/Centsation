@@ -159,7 +159,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
             depositButton.setOnClickListener(view -> {
                 String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString().replaceAll(",", "");
 
-                if (currentSavingText.isEmpty()) {
+                if (currentSavingText.isEmpty() || Double.parseDouble(currentSavingText) == 0) {
                     currentSavingLayout.setError(getString(R.string.field_error_empty_saving));
                     return;
                 }
@@ -175,7 +175,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
             withdrawButton.setOnClickListener(view -> {
                 String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString();
 
-                if (currentSavingText.isEmpty()) {
+                if (currentSavingText.isEmpty() || Double.parseDouble(currentSavingText) == 0) {
                     currentSavingLayout.setError(getString(R.string.field_error_empty_saving));
                     return;
                 }
