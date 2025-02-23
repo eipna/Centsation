@@ -141,13 +141,13 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     private void showTransactionDialog(Saving selectedSaving) {
         View transactionDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
 
-        TextInputLayout currentSavingLayout = transactionDialogView.findViewById(R.id.field_saving_amount_layout);
-        TextInputEditText currentSavingInput = transactionDialogView.findViewById(R.id.field_saving_amount_text);
+        TextInputLayout amountLayout = transactionDialogView.findViewById(R.id.field_saving_amount_layout);
+        TextInputEditText amountInput = transactionDialogView.findViewById(R.id.field_saving_amount_text);
 
         MaterialButton depositButton = transactionDialogView.findViewById(R.id.button_saving_deposit);
         MaterialButton withdrawButton = transactionDialogView.findViewById(R.id.button_saving_withdraw);
 
-        currentSavingInput.addTextChangedListener(new TextWatcherUtil(currentSavingInput));
+        amountInput.addTextChangedListener(new TextWatcherUtil(amountInput));
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_create_transaction)
@@ -157,37 +157,40 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
             depositButton.setOnClickListener(view -> {
-                String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString().replaceAll(",", "");
+                String amountText = Objects.requireNonNull(amountInput.getText()).toString().replaceAll(",", "");
 
-                if (currentSavingText.isEmpty() || Double.parseDouble(currentSavingText) == 0) {
-                    currentSavingLayout.setError(getString(R.string.field_error_empty_saving));
+                if (amountText.isEmpty() || Double.parseDouble(amountText) == 0) {
+                    amountLayout.setError(getString(R.string.field_error_empty_saving));
                     return;
                 }
 
-                double addedSaving = selectedSaving.getCurrentSaving() + Double.parseDouble(currentSavingText);
+                double addedSaving = selectedSaving.getCurrentSaving() + Double.parseDouble(amountText);
+                double amount = Double.parseDouble(amountText);
+
                 selectedSaving.setCurrentSaving(addedSaving);
-                savingRepository.makeTransaction(selectedSaving, addedSaving, TransactionType.DEPOSIT);
+                savingRepository.makeTransaction(selectedSaving, amount, TransactionType.DEPOSIT);
 
                 refreshList();
                 dialog.dismiss();
             });
 
             withdrawButton.setOnClickListener(view -> {
-                String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString();
+                String amountText = Objects.requireNonNull(amountInput.getText()).toString().replaceAll(",", "");
 
-                if (currentSavingText.isEmpty() || Double.parseDouble(currentSavingText) == 0) {
-                    currentSavingLayout.setError(getString(R.string.field_error_empty_saving));
+                if (amountText.isEmpty() || Double.parseDouble(amountText) == 0) {
+                    amountLayout.setError(getString(R.string.field_error_empty_saving));
                     return;
                 }
 
-                double deductedSaving = selectedSaving.getCurrentSaving() - Double.parseDouble(currentSavingText);
+                double deductedSaving = selectedSaving.getCurrentSaving() - Double.parseDouble(amountText);
+                double amount = Double.parseDouble(amountText);
                 if (deductedSaving < 0) {
-                    currentSavingLayout.setError(getString(R.string.field_error_negative_saving));
+                    amountLayout.setError(getString(R.string.field_error_negative_saving));
                     return;
                 }
 
                 selectedSaving.setCurrentSaving(deductedSaving);
-                savingRepository.makeTransaction(selectedSaving, deductedSaving, TransactionType.WITHDRAW);
+                savingRepository.makeTransaction(selectedSaving, amount, TransactionType.WITHDRAW);
 
                 refreshList();
                 dialog.dismiss();
@@ -236,12 +239,11 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
                     editedSaving.setGoal(savingGoal);
                     editedSaving.setNotes(notesText);
                     editedSaving.setIsArchived(selectedSaving.getIsArchived());
-
                     savingRepository.update(editedSaving);
+
                     refreshList();
                     dialog.dismiss();
                 }
-
                 nameLayout.setError(nameText.isEmpty() ? getString(R.string.field_error_required) : null);
                 goalLayout.setError(nameText.isEmpty() ? getString(R.string.field_error_required) : null);
             });
