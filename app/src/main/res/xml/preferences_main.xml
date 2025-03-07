@@ -2,61 +2,61 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        app:title="@string/preference_category_app"
+        android:title="@string/preference_category_app"
         app:iconSpaceReserved="false"
         app:allowDividerBelow="true">
 
         <ListPreference
-            app:key="theme"
-            app:title="@string/preference_list_theme"
-            app:iconSpaceReserved="false"/>
+            android:key="theme"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_list_theme"/>
 
         <SwitchPreferenceCompat
-            app:key="dynamic_colors"
+            android:key="dynamic_colors"
+            android:widgetLayout="@layout/view_preference_switch"
             app:iconSpaceReserved="false"
-            app:widgetLayout="@layout/view_preference_switch"
-            app:title="@string/preference_switch_dynamic_colors_title"
-            app:summary="@string/preference_switch_dynamic_colors_summary"/>
+            android:title="@string/preference_switch_dynamic_colors_title"
+            android:summary="@string/preference_switch_dynamic_colors_summary"/>
 
         <ListPreference
-            app:key="currency"
-            app:title="@string/preference_list_currency"
-            app:iconSpaceReserved="false"/>
+            android:key="currency"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_list_currency"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preference_category_backup"
+        app:iconSpaceReserved="false"
+        app:allowDividerBelow="true">
+
+        <Preference
+            android:key="import"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_import_title"
+            android:summary="@string/preference_import_summary"/>
+
+        <Preference
+            android:key="export"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_export_title"
+            android:summary="@string/preference_export_summary"/>
     </PreferenceCategory>
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/preference_category_backup"
-        app:allowDividerBelow="true">
+        android:title="@string/preference_category_about">
 
         <Preference
-            app:key="import"
-            app:title="@string/preference_import_title"
-            app:summary="@string/preference_import_summary"
-            app:iconSpaceReserved="false"/>
+            android:key="app_license"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_app_license"
+            android:summary="@string/app_license"/>
 
         <Preference
-            app:key="export"
-            app:title="@string/preference_export_title"
-            app:summary="@string/preference_export_summary"
-            app:iconSpaceReserved="false"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/preference_category_about"
-        app:iconSpaceReserved="false">
-
-        <Preference
-            app:key="app_license"
-            app:title="@string/preference_app_license"
-            app:summary="@string/app_license"
-            app:iconSpaceReserved="false"/>
-
-        <Preference
-            app:key="app_source_code"
-            app:title="@string/preference_app_source_code_title"
-            app:summary="@string/preference_app_source_code_summary"
-            app:iconSpaceReserved="false">
+            android:key="app_source_code"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_app_source_code_title"
+            android:summary="@string/preference_app_source_code_summary">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -64,10 +64,10 @@
         </Preference>
 
         <Preference
-            app:key="app_author"
-            app:title="@string/preference_app_author"
-            app:summary="@string/app_author"
-            app:iconSpaceReserved="false">
+            android:key="app_author"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_app_author"
+            android:summary="@string/app_author">
 
             <intent
                 android:action="android.intent.action.VIEW"
@@ -75,9 +75,8 @@
         </Preference>
 
         <Preference
-            app:key="app_version"
-            app:title="@string/preference_app_version"
-            app:iconSpaceReserved="false"/>
+            android:key="app_version"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_app_version"/>
     </PreferenceCategory>
-
 </PreferenceScreen>
