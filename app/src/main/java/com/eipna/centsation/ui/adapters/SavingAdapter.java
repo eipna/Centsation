@@ -2,6 +2,9 @@ package com.eipna.centsation.ui.adapters;
 
 import android.content.Context;
 import android.icu.text.NumberFormat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,8 +109,15 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
             if (currentSaving.getIsArchived() == Saving.IS_ARCHIVE) {
                 archive.setVisibility(View.GONE);
+                update.setVisibility(View.GONE);
+                name.setAlpha(0.6f);
+
+                SpannableString spannableString = new SpannableString(currentSaving.getName());
+                spannableString.setSpan(new StrikethroughSpan(), 0, currentSaving.getName().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                name.setText(spannableString);
             } else {
                 unarchive.setVisibility(View.GONE);
+                name.setText(currentSaving.getName());
             }
 
             if (currentSaving.getNotes().isEmpty()) {
@@ -116,7 +126,6 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 share.setVisibility(View.VISIBLE);
             }
 
-            name.setText(currentSaving.getName());
             percent.setText(String.format("(%s%c)", percentValue, '%'));
             parent.setChecked(currentSaving.getCurrentSaving() >= currentSaving.getGoal());
             saving.setText(String.format("%s%s", currencySymbol, NumberFormat.getInstance().format(currentSaving.getCurrentSaving())));
