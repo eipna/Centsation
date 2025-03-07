@@ -117,9 +117,15 @@ public class SettingsActivity extends BaseActivity {
             listContrast.setEntryValues(Contrast.toValueArray());
             listContrast.setValue(preferences.getContrast());
             listContrast.setSummary(Contrast.getName(preferences.getContrast()));
-            listContrast.setOnPreferenceChangeListener((preference, contrast) -> {
-                preferences.setContrast((String) contrast);
-                listContrast.setSummary(Contrast.getName((String) contrast));
+            listContrast.setOnPreferenceChangeListener((preference, newValue) -> {
+                String selectedContrast = (String) newValue;
+                if (selectedContrast.equals(Contrast.LOW.VALUE)) requireActivity().setTheme(R.style.Theme_Centsation);
+                if (selectedContrast.equals(Contrast.MEDIUM.VALUE)) requireActivity().setTheme(R.style.Theme_Centsation_MediumContrast);
+                if (selectedContrast.equals(Contrast.HIGH.VALUE)) requireActivity().setTheme(R.style.Theme_Centsation_HighContrast);
+                requireActivity().recreate();
+
+                preferences.setContrast(selectedContrast);
+                listContrast.setSummary(Contrast.getName(selectedContrast));
                 return true;
             });
 
