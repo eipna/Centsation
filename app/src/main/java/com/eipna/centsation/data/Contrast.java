@@ -18,7 +18,7 @@ public enum Contrast {
         this.NAME = name;
     }
 
-    public String[] toNameArray() {
+    public static String[] toNameArray() {
         String[] strings = new String[contrasts.length];
         for (int i = 0; i < contrasts.length; i++) {
             strings[i] = contrasts[i].NAME;
@@ -26,11 +26,20 @@ public enum Contrast {
         return strings;
     }
 
-    public String[] toValueArray() {
+    public static String[] toValueArray() {
         String[] strings = new String[contrasts.length];
         for (int i = 0; i < contrasts.length; i++) {
             strings[i] = contrasts[i].VALUE;
         }
         return strings;
+    }
+
+    public static String getName(String value) {
+        for (Contrast contrast : contrasts) {
+            if (contrast.VALUE.equals(value)) {
+                return contrast.NAME;
+            }
+        }
+        return null;
     }
 }

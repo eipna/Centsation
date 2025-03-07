@@ -20,6 +20,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Contrast;
 import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.Theme;
@@ -72,6 +73,7 @@ public class SettingsActivity extends BaseActivity {
         private PreferenceUtil preferences;
         private Database database;
 
+        private ListPreference listContrast;
         private ListPreference listTheme;
         private ListPreference listCurrency;
 
@@ -108,6 +110,16 @@ public class SettingsActivity extends BaseActivity {
 
             importSavings.setOnPreferenceClickListener(preference -> {
                 importData();
+                return true;
+            });
+
+            listContrast.setEntries(Contrast.toNameArray());
+            listContrast.setEntryValues(Contrast.toValueArray());
+            listContrast.setValue(preferences.getContrast());
+            listContrast.setSummary(Contrast.getName(preferences.getContrast()));
+            listContrast.setOnPreferenceChangeListener((preference, contrast) -> {
+                preferences.setContrast((String) contrast);
+                listContrast.setSummary(Contrast.getName((String) contrast));
                 return true;
             });
 
@@ -187,7 +199,10 @@ public class SettingsActivity extends BaseActivity {
 
             listCurrency = findPreference("currency");
             listTheme = findPreference("theme");
+            listContrast = findPreference("contrast");
+
             switchDynamicColors = findPreference("dynamic_colors");
+
             appVersion = findPreference("app_version");
             appLicense = findPreference("app_license");
             exportSavings = findPreference("export");
