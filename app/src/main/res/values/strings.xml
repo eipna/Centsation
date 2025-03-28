@@ -23,7 +23,7 @@
     <string name="field_saving_current_saving">Current Saving</string>
     <string name="field_saving_transaction">Amount</string>
     <string name="field_saving_goal">Goal</string>
-    <string name="field_saving_notes">Notes (Optional)</string>
+    <string name="field_saving_notes">Notes</string>
 
     <string name="dialog_title_create_saving">Create saving</string>
     <string name="dialog_title_edit_saving">Edit saving</string>
