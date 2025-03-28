@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
@@ -198,6 +199,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
     private void showEditDialog(Saving selectedSaving) {
         View editDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_edit, null, false);
+        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
 
         TextInputLayout nameLayout = editDialogView.findViewById(R.id.field_saving_name_layout);
         TextInputLayout goalLayout = editDialogView.findViewById(R.id.field_saving_goal_layout);
@@ -205,6 +207,8 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         TextInputEditText nameInput = editDialogView.findViewById(R.id.field_saving_name_text);
         TextInputEditText goalInput = editDialogView.findViewById(R.id.field_saving_goal_text);
         TextInputEditText notesInput = editDialogView.findViewById(R.id.field_saving_notes_text);
+
+        goalLayout.setPrefixText(currentCurrencySymbol);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_edit_saving)

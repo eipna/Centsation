@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
@@ -184,6 +185,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     private void showCreateDialog() {
         View createDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_create, null, false);
+        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
 
         TextInputLayout nameLayout = createDialogView.findViewById(R.id.field_saving_name_layout);
         TextInputLayout currentSavingLayout = createDialogView.findViewById(R.id.field_saving_current_saving_layout);
@@ -193,6 +195,9 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputEditText currentSavingInput = createDialogView.findViewById(R.id.field_saving_current_saving_text);
         TextInputEditText goalInput = createDialogView.findViewById(R.id.field_saving_goal_text);
         TextInputEditText notesInput = createDialogView.findViewById(R.id.field_saving_notes_text);
+
+        currentSavingLayout.setPrefixText(currentCurrencySymbol);
+        goalLayout.setPrefixText(currentCurrencySymbol);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_create_saving)
@@ -258,6 +263,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     @SuppressLint("DefaultLocale")
     private void showEditDialog(Saving selectedSaving) {
         View editDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_edit, null, false);
+        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
 
         TextInputLayout nameLayout = editDialogView.findViewById(R.id.field_saving_name_layout);
         TextInputLayout goalLayout = editDialogView.findViewById(R.id.field_saving_goal_layout);
@@ -265,6 +271,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputEditText nameInput = editDialogView.findViewById(R.id.field_saving_name_text);
         TextInputEditText goalInput = editDialogView.findViewById(R.id.field_saving_goal_text);
         TextInputEditText notesInput = editDialogView.findViewById(R.id.field_saving_notes_text);
+
+        goalLayout.setPrefixText(currentCurrencySymbol);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_edit_saving)
@@ -333,12 +341,15 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     private void showTransactionDialog(Saving selectedSaving) {
         View transactionDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
+        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
 
         TextInputLayout amountLayout = transactionDialogView.findViewById(R.id.field_saving_amount_layout);
         TextInputEditText amountInput = transactionDialogView.findViewById(R.id.field_saving_amount_text);
 
         MaterialButton depositButton = transactionDialogView.findViewById(R.id.button_saving_deposit);
         MaterialButton withdrawButton = transactionDialogView.findViewById(R.id.button_saving_withdraw);
+
+        amountLayout.setPrefixText(currentCurrencySymbol);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_create_transaction)
