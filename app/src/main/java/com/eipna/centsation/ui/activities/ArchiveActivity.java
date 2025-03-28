@@ -31,6 +31,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ArchiveActivity extends BaseActivity implements SavingListener {
@@ -155,7 +156,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
             depositButton.setOnClickListener(view -> {
-                String amountText = Objects.requireNonNull(amountInput.getText()).toString().replaceAll(",", "");
+                String amountText = Objects.requireNonNull(amountInput.getText()).toString();
 
                 if (amountText.isEmpty() || Double.parseDouble(amountText) == 0) {
                     amountLayout.setError(getString(R.string.field_error_empty_saving));
@@ -173,7 +174,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
             });
 
             withdrawButton.setOnClickListener(view -> {
-                String amountText = Objects.requireNonNull(amountInput.getText()).toString().replaceAll(",", "");
+                String amountText = Objects.requireNonNull(amountInput.getText()).toString();
 
                 if (amountText.isEmpty() || Double.parseDouble(amountText) == 0) {
                     amountLayout.setError(getString(R.string.field_error_empty_saving));
@@ -220,12 +221,12 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
             nameInput.setText(selectedSaving.getName());
-            goalInput.setText(String.valueOf(selectedSaving.getGoal()));
+            goalInput.setText(String.format(Locale.getDefault(), "%.2f", selectedSaving.getGoal()));
             notesInput.setText(selectedSaving.getNotes());
 
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
                 String nameText = Objects.requireNonNull(nameInput.getText()).toString();
-                String goalText = Objects.requireNonNull(goalInput.getText()).toString().replaceAll(",", "");
+                String goalText = Objects.requireNonNull(goalInput.getText()).toString();
                 String notesText = Objects.requireNonNull(notesInput.getText()).toString();
 
                 if (!nameText.isEmpty() && !goalText.isEmpty()) {
