@@ -23,7 +23,6 @@ import com.eipna.centsation.data.transaction.TransactionType;
 import com.eipna.centsation.databinding.ActivityArchiveBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.eipna.centsation.ui.adapters.TransactionAdapter;
-import com.eipna.centsation.util.TextWatcherUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
@@ -147,8 +146,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         MaterialButton depositButton = transactionDialogView.findViewById(R.id.button_saving_deposit);
         MaterialButton withdrawButton = transactionDialogView.findViewById(R.id.button_saving_withdraw);
 
-        amountInput.addTextChangedListener(new TextWatcherUtil(amountInput));
-
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_create_transaction)
                 .setIcon(R.drawable.ic_add_circle)
@@ -208,8 +205,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         TextInputEditText nameInput = editDialogView.findViewById(R.id.field_saving_name_text);
         TextInputEditText goalInput = editDialogView.findViewById(R.id.field_saving_goal_text);
         TextInputEditText notesInput = editDialogView.findViewById(R.id.field_saving_notes_text);
-
-        goalInput.addTextChangedListener(new TextWatcherUtil(goalInput));
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_edit_saving)
