@@ -33,6 +33,7 @@ public class SavingRepository extends Database {
         values.put(COLUMN_SAVING_GOAL, createdSaving.getGoal());
         values.put(COLUMN_SAVING_NOTES, createdSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, createdSaving.getIsArchived());
+        values.put(COLUMN_SAVING_DEADLINE, createdSaving.getDeadline());
         long createdSavingID = database.insert(TABLE_SAVING, null, values);
 
         Transaction initialTransaction = new Transaction();
@@ -52,6 +53,7 @@ public class SavingRepository extends Database {
         values.put(COLUMN_SAVING_GOAL, updatedSaving.getGoal());
         values.put(COLUMN_SAVING_NOTES, updatedSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, updatedSaving.getIsArchived());
+        values.put(COLUMN_SAVING_DEADLINE, updatedSaving.getDeadline());
 
         database.update(TABLE_SAVING, values, COLUMN_SAVING_ID + " = ?", new String[]{String.valueOf(updatedSaving.getID())});
         database.close();
@@ -95,6 +97,7 @@ public class SavingRepository extends Database {
                 queriedSaving.setGoal(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_GOAL)));
                 queriedSaving.setNotes(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_NOTES)));
                 queriedSaving.setIsArchived(cursor.getInt(cursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));
+                queriedSaving.setDeadline(cursor.getLong(cursor.getColumnIndex(COLUMN_SAVING_DEADLINE)));
                 list.add(queriedSaving);
             } while (cursor.moveToNext());
         }

@@ -36,6 +36,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_SAVING_GOAL = "goal";
     public static final String COLUMN_SAVING_NOTES = "notes";
     public static final String COLUMN_SAVING_IS_ARCHIVED = "is_archived";
+    public static final String COLUMN_SAVING_DEADLINE = "deadline";
 
     public static final String TABLE_TRANSACTION = "transactions";
     public static final String COLUMN_TRANSACTION_ID = "id";
@@ -57,7 +58,8 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_SAVING_CURRENT_SAVING+ " REAL NOT NULL, " +
                 COLUMN_SAVING_GOAL + " REAL NOT NULL, " +
                 COLUMN_SAVING_NOTES + " TEXT, " +
-                COLUMN_SAVING_IS_ARCHIVED + " INTEGER NOT NULL);";
+                COLUMN_SAVING_IS_ARCHIVED + " INTEGER NOT NULL, " +
+                COLUMN_SAVING_DEADLINE + " INTEGER NOT NULL);";
 
         String createTransactionTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTION + "(" +
                 COLUMN_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

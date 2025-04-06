@@ -11,6 +11,7 @@ public class Saving {
     private double goal;
     private String notes;
     private int isArchived;
+    private long deadline;
 
     public static int IS_ARCHIVE = 1;
     public static int NOT_ARCHIVE = 0;
@@ -22,6 +23,7 @@ public class Saving {
         this.goal = 0.0;
         this.notes = null;
         this.isArchived = 0;
+        this.deadline = -1;
     }
 
     public static final Comparator<Saving> SORT_NAME = Comparator.comparing(firstSaving -> firstSaving.getName().toLowerCase());
@@ -76,5 +78,13 @@ public class Saving {
 
     public String getNotes() {
         return notes;
+    }
+
+    public long getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(long deadline) {
+        this.deadline = deadline;
     }
 }
