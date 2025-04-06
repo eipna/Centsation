@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
 
-        binding.createSaving.setOnClickListener(view -> showCreateDialog());
+        binding.createSaving.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, CreateActivity.class)));
     }
 
     @Override

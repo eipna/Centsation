@@ -26,6 +26,7 @@
     <string name="field_saving_transaction">Amount</string>
     <string name="field_saving_goal">Goal</string>
     <string name="field_saving_notes">Notes</string>
+    <string name="field_saving_deadline">Deadline</string>
 
     <string name="dialog_title_create_saving">Create saving</string>
     <string name="dialog_title_edit_saving">Edit saving</string>
@@ -43,6 +44,7 @@
     <string name="dialog_button_deposit">Deposit</string>
     <string name="dialog_button_withdraw">Withdraw</string>
 
+    <string name="menu_item_save">Save</string>
     <string name="menu_item_archive">Archive</string>
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_overflow">More Options</string>
