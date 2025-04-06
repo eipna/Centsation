@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.databinding.ActivityCreateBinding;
+import com.eipna.centsation.util.DateUtil;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -24,6 +28,29 @@ public class CreateActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
+        binding.fieldSavingDeadlineText.setOnClickListener(v -> showDeadlineDialog());
+        binding.fieldSavingDeadlineLayout.setEndIconOnClickListener(v -> {
+            binding.fieldSavingDeadlineText.setText("");
+            binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
+        });
+    }
+
+    private void showDeadlineDialog() {
+        CalendarConstraints.Builder calendarConstraints = new CalendarConstraints.Builder()
+                .setValidator(DateValidatorPointForward.now());
+
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select deadline date")
+                .setCalendarConstraints(calendarConstraints.build())
+                .build();
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, "MM/dd/yyyy"));
+            binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
+        });
+        datePicker.show(getSupportFragmentManager(), null);
     }
 
     @Override

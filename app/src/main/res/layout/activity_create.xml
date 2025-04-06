@@ -89,6 +89,8 @@
                 android:id="@+id/field_saving_deadline_layout"
                 android:hint="@string/field_saving_deadline"
                 app:helperText="This field is optional"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_clear"
                 android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
