@@ -5,6 +5,8 @@
     <string name="app_author">eipna</string>
 
     <string name="toolbar_main">Centsation</string>
+    <string name="toolbar_create">New saving</string>
+    <string name="toolbar_edit">Edit saving</string>
     <string name="toolbar_archive">Archive</string>
     <string name="toolbar_settings">Settings</string>
 
