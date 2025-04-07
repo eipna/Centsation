@@ -32,6 +32,8 @@ public class Saving {
 
     public static final Comparator<Saving> SORT_GOAL = Comparator.comparingDouble(Saving::getGoal);
 
+    public static final Comparator<Saving> SORT_DEADLINE = Comparator.comparingLong(Saving::getDeadline);
+
     public int getID() {
         return ID;
     }

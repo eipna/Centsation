@@ -129,6 +129,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
             menu.findItem(R.id.sort_value).setChecked(true);
         } else if (sortCriteria.equals(SavingSort.GOAL.SORT)) {
             menu.findItem(R.id.sort_goal).setChecked(true);
+        } else if (sortCriteria.equals(SavingSort.DEADLINE.SORT)) {
+            menu.findItem(R.id.sort_deadline).setChecked(true);
         }
 
         if (isSortAscending) {
@@ -161,6 +163,12 @@ public class MainActivity extends BaseActivity implements SavingListener {
             sortSavings(sortCriteria);
         }
 
+        if (item.getItemId() == R.id.sort_deadline) {
+            sortCriteria = SavingSort.DEADLINE.SORT;
+            item.setChecked(true);
+            sortSavings(sortCriteria);
+        }
+
         if (item.getItemId() == R.id.sort_ascending) {
             isSortAscending = true;
             item.setChecked(true);
@@ -185,6 +193,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
             savingComparator = Saving.SORT_VALUE;
         } else if (criteria.equals(SavingSort.GOAL.SORT)) {
             savingComparator = Saving.SORT_GOAL;
+        } else if (criteria.equals(SavingSort.DEADLINE.SORT)) {
+            savingComparator = Saving.SORT_DEADLINE;
         }
 
         if (savingComparator != null) {
