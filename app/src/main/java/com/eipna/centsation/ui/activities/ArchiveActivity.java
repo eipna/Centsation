@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +43,13 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     private TransactionRepository transactionRepository;
     private SavingAdapter savingAdapter;
     private ArrayList<Saving> savings;
+
+    private final ActivityResultLauncher<Intent> editSavingLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    refreshList();
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +145,15 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     @Override
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
-        showEditDialog(selectedSaving);
+        Intent editIntent = new Intent(this, EditActivity.class);
+        editIntent.putExtra("id", selectedSaving.getID());
+        editIntent.putExtra("name", selectedSaving.getName());
+        editIntent.putExtra("current_saving", selectedSaving.getCurrentSaving());
+        editIntent.putExtra("goal", selectedSaving.getGoal());
+        editIntent.putExtra("notes", selectedSaving.getNotes());
+        editIntent.putExtra("deadline", selectedSaving.getDeadline());
+        editIntent.putExtra("is_archive", selectedSaving.getIsArchived());
+        editSavingLauncher.launch(editIntent);
     }
 
     private void showTransactionDialog(Saving selectedSaving) {

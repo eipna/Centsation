@@ -3,6 +3,7 @@ package com.eipna.centsation.ui.activities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -25,7 +26,7 @@ public class EditActivity extends BaseActivity {
     private ActivityEditBinding binding;
     private SavingRepository savingRepository;
 
-    private int IDExtra;
+    private int IDExtra, isArchiveExtra;
     private String nameExtra, notesExtra;
     private double currentSavingExtra, goalExtra;
     private long deadlineExtra, selectedDeadline;
@@ -53,9 +54,11 @@ public class EditActivity extends BaseActivity {
         goalExtra = getIntent().getDoubleExtra("goal", -1);
         notesExtra = getIntent().getStringExtra("notes");
         deadlineExtra = getIntent().getLongExtra("deadline", AlarmUtil.NO_ALARM);
+        isArchiveExtra = getIntent().getIntExtra("is_archive", Saving.NOT_ARCHIVE);
 
         selectedDeadline = deadlineExtra;
 
+        binding.fieldSavingDeadlineLayout.setVisibility(isArchiveExtra == Saving.IS_ARCHIVE ? View.GONE : View.VISIBLE);
         binding.fieldSavingNameText.setText(nameExtra);
         binding.fieldSavingGoalText.setText(String.valueOf(goalExtra));
         binding.fieldSavingNotesText.setText(notesExtra);

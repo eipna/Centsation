@@ -32,6 +32,7 @@ import com.eipna.centsation.data.transaction.TransactionType;
 import com.eipna.centsation.databinding.ActivityMainBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.eipna.centsation.ui.adapters.TransactionAdapter;
+import com.eipna.centsation.util.AlarmUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
@@ -331,14 +332,15 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.show();
     }
 
-    private void showDeleteDialog(int savingID) {
+    private void showDeleteDialog(Saving saving) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_delete_saving)
                 .setIcon(R.drawable.ic_delete_forever)
                 .setMessage(R.string.dialog_message_delete_saving)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_delete, (dialogInterface, i) -> {
-                    savingRepository.delete(savingID);
+                    AlarmUtil.cancel(this, saving);
+                    savingRepository.delete(saving.getID());
                     refreshList();
                 });
 
@@ -420,6 +422,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     private void archiveSaving(Saving selectedSaving) {
         selectedSaving.setIsArchived(Saving.IS_ARCHIVE);
+        selectedSaving.setDeadline(AlarmUtil.NO_ALARM);
+        AlarmUtil.cancel(this, selectedSaving);
         savingRepository.update(selectedSaving);
         refreshList();
     }
@@ -441,7 +445,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     @Override
     public void OnOperationClick(SavingOperation operation, int position) {
         Saving selectedSaving = savings.get(position);
-        if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
+        if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving);
         if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
         if (operation.equals(SavingOperation.TRANSACTION)) showTransactionDialog(selectedSaving);
         if (operation.equals(SavingOperation.ARCHIVE)) archiveSaving(selectedSaving);
