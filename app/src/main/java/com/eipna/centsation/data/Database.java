@@ -59,7 +59,7 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_SAVING_GOAL + " REAL NOT NULL, " +
                 COLUMN_SAVING_NOTES + " TEXT, " +
                 COLUMN_SAVING_IS_ARCHIVED + " INTEGER NOT NULL, " +
-                COLUMN_SAVING_DEADLINE + " INTEGER NOT NULL);";
+                COLUMN_SAVING_DEADLINE + " INTEGER);";
 
         String createTransactionTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTION + "(" +
                 COLUMN_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

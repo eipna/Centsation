@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.MenuCompat;
@@ -52,6 +54,20 @@ public class MainActivity extends BaseActivity implements SavingListener {
     private String sortCriteria;
     private boolean isSortAscending;
 
+    private final ActivityResultLauncher<Intent> createSavingLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    refreshList();
+                }
+            });
+
+    private final ActivityResultLauncher<Intent> editSavingLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    refreshList();
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +94,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
 
-        binding.createSaving.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, CreateActivity.class)));
+        binding.createSaving.setOnClickListener(v -> createSavingLauncher.launch(new Intent(MainActivity.this, CreateActivity.class)));
     }
 
     @Override
@@ -234,6 +250,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 refreshList();
                 dialog.dismiss();
             }
+
             nameLayout.setError(nameText.isEmpty() ? getString(R.string.field_error_required) : null);
             currentSavingLayout.setError(currentSavingText.isEmpty() ? getString(R.string.field_error_required) : null);
             goalLayout.setError(goalText.isEmpty() ? getString(R.string.field_error_required) : null);
@@ -410,7 +427,15 @@ public class MainActivity extends BaseActivity implements SavingListener {
     @Override
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
-        showEditDialog(selectedSaving);
+        Intent editIntent = new Intent(MainActivity.this, EditActivity.class);
+        editIntent.putExtra("id", selectedSaving.getID());
+        editIntent.putExtra("name", selectedSaving.getName());
+        editIntent.putExtra("current_saving", selectedSaving.getCurrentSaving());
+        editIntent.putExtra("goal", selectedSaving.getGoal());
+        editIntent.putExtra("notes", selectedSaving.getNotes());
+        editIntent.putExtra("deadline", selectedSaving.getDeadline());
+        editIntent.putExtra("is_archive", selectedSaving.getIsArchived());
+        editSavingLauncher.launch(editIntent);
     }
 
     @Override

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Contrast;
 import com.eipna.centsation.data.Theme;
+import com.eipna.centsation.util.NotificationUtil;
 import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.color.DynamicColors;
 
@@ -22,6 +23,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         preferences = new PreferenceUtil(this);
         super.onCreate(savedInstanceState);
+
+        NotificationUtil.createChannels(this);
 
         String theme = preferences.getTheme();
         if (theme.equals(Theme.SYSTEM.VALUE)) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
