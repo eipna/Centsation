@@ -55,7 +55,7 @@ public class CreateActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         savingRepository = new SavingRepository(this);
-        selectedDeadline = 0;
+        selectedDeadline = AlarmUtil.NO_ALARM;
 
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {

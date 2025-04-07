@@ -9,6 +9,9 @@ import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.receiver.DeadlineReceiver;
 
 public class AlarmUtil {
+
+    public static int NO_ALARM = 0;
+
     public static void set(Context context, Saving saving) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 

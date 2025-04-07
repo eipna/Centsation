@@ -23,7 +23,7 @@ public class Saving {
         this.goal = 0.0;
         this.notes = null;
         this.isArchived = 0;
-        this.deadline = -1;
+        this.deadline = 0;
     }
 
     public static final Comparator<Saving> SORT_NAME = Comparator.comparing(firstSaving -> firstSaving.getName().toLowerCase());

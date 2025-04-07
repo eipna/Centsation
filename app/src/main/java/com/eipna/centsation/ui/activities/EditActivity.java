@@ -49,7 +49,7 @@ public class EditActivity extends AppCompatActivity {
         currentSavingExtra = getIntent().getDoubleExtra("current_saving", -1);
         goalExtra = getIntent().getDoubleExtra("goal", -1);
         notesExtra = getIntent().getStringExtra("notes");
-        deadlineExtra = getIntent().getLongExtra("deadline", -1);
+        deadlineExtra = getIntent().getLongExtra("deadline", AlarmUtil.NO_ALARM);
 
         selectedDeadline = deadlineExtra;
 
@@ -58,7 +58,7 @@ public class EditActivity extends AppCompatActivity {
         binding.fieldSavingNotesText.setText(notesExtra);
         binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
 
-        if (deadlineExtra != 0) {
+        if (deadlineExtra != AlarmUtil.NO_ALARM) {
             binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
             binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(deadlineExtra, "MM/dd/yyyy"));
         }
@@ -119,7 +119,7 @@ public class EditActivity extends AppCompatActivity {
 
             if (deadlineText.isEmpty()) {
                 AlarmUtil.cancel(this, editedSaving);
-                editedSaving.setDeadline(0);
+                editedSaving.setDeadline(AlarmUtil.NO_ALARM);
             } else {
                 AlarmUtil.set(this, editedSaving);
             }
