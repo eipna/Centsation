@@ -18,6 +18,8 @@ import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
+import com.eipna.centsation.util.AlarmUtil;
+import com.eipna.centsation.util.DateUtil;
 import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -69,7 +71,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView parent;
-        MaterialTextView name, saving, goal, percent;
+        MaterialTextView name, saving, goal, percent, deadline;
         MaterialButton update, history, archive, unarchive, delete, share;
 
         LinearLayout description;
@@ -84,6 +86,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             percent = itemView.findViewById(R.id.saving_percent);
             description = itemView.findViewById(R.id.saving_description);
             progress = itemView.findViewById(R.id.saving_progress);
+            deadline = itemView.findViewById(R.id.saving_deadline);
 
             update = itemView.findViewById(R.id.saving_update);
             history = itemView.findViewById(R.id.saving_history);
@@ -125,6 +128,9 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
             } else {
                 share.setVisibility(View.VISIBLE);
             }
+
+            deadline.setVisibility(currentSaving.getDeadline() == AlarmUtil.NO_ALARM ? View.GONE : View.VISIBLE);
+            deadline.setText(String.format("Deadline: %s", DateUtil.getStringDate(currentSaving.getDeadline(), "MM/dd/yyyy")));
 
             percent.setText(String.format("(%s%c)", percentValue, '%'));
             parent.setChecked(currentSaving.getCurrentSaving() >= currentSaving.getGoal());

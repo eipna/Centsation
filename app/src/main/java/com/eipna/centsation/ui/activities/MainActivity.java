@@ -41,7 +41,6 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements SavingListener {
@@ -201,64 +200,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         preferences.setSortOrder(isSortAscending);
     }
 
-    private void showCreateDialog() {
-        View createDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_create, null, false);
-        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
-
-        TextInputLayout nameLayout = createDialogView.findViewById(R.id.field_saving_name_layout);
-        TextInputLayout currentSavingLayout = createDialogView.findViewById(R.id.field_saving_current_saving_layout);
-        TextInputLayout goalLayout = createDialogView.findViewById(R.id.field_saving_goal_layout);
-
-        TextInputEditText nameInput = createDialogView.findViewById(R.id.field_saving_name_text);
-        TextInputEditText currentSavingInput = createDialogView.findViewById(R.id.field_saving_current_saving_text);
-        TextInputEditText goalInput = createDialogView.findViewById(R.id.field_saving_goal_text);
-        TextInputEditText notesInput = createDialogView.findViewById(R.id.field_saving_notes_text);
-
-        currentSavingLayout.setPrefixText(currentCurrencySymbol);
-        goalLayout.setPrefixText(currentCurrencySymbol);
-
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_title_create_saving)
-                .setIcon(R.drawable.ic_add_circle)
-                .setView(createDialogView)
-                .setNegativeButton(R.string.dialog_button_cancel, null)
-                .setPositiveButton(R.string.dialog_button_create, null);
-
-        AlertDialog dialog = builder.create();
-        dialog.setOnShowListener(dialogInterface -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
-            String nameText = Objects.requireNonNull(nameInput.getText()).toString();
-            String currentSavingText = Objects.requireNonNull(currentSavingInput.getText()).toString();
-            String goalText = Objects.requireNonNull(goalInput.getText()).toString();
-            String notesText = Objects.requireNonNull(notesInput.getText()).toString();
-
-            if (!nameText.isEmpty() && !currentSavingText.isEmpty() && !goalText.isEmpty()) {
-                double currentSaving = Double.parseDouble(currentSavingText);
-                double goal = Double.parseDouble(goalText);
-
-                if (currentSaving > goal) {
-                    goalLayout.setError(getString(R.string.field_error_lower_goal));
-                    return;
-                }
-
-                Saving createdSaving = new Saving();
-                createdSaving.setName(nameText);
-                createdSaving.setCurrentSaving(currentSaving);
-                createdSaving.setGoal(goal);
-                createdSaving.setNotes(notesText);
-                createdSaving.setIsArchived(Saving.NOT_ARCHIVE);
-                savingRepository.create(createdSaving);
-
-                refreshList();
-                dialog.dismiss();
-            }
-
-            nameLayout.setError(nameText.isEmpty() ? getString(R.string.field_error_required) : null);
-            currentSavingLayout.setError(currentSavingText.isEmpty() ? getString(R.string.field_error_required) : null);
-            goalLayout.setError(goalText.isEmpty() ? getString(R.string.field_error_required) : null);
-        }));
-        dialog.show();
-    }
-
     private void showHistoryDialog(Saving selectedSaving) {
         View historyDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_history, null, false);
 
@@ -276,59 +217,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
                 .setPositiveButton(R.string.dialog_button_close, null);
 
         AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void showEditDialog(Saving selectedSaving) {
-        View editDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_edit, null, false);
-        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
-
-        TextInputLayout nameLayout = editDialogView.findViewById(R.id.field_saving_name_layout);
-        TextInputLayout goalLayout = editDialogView.findViewById(R.id.field_saving_goal_layout);
-
-        TextInputEditText nameInput = editDialogView.findViewById(R.id.field_saving_name_text);
-        TextInputEditText goalInput = editDialogView.findViewById(R.id.field_saving_goal_text);
-        TextInputEditText notesInput = editDialogView.findViewById(R.id.field_saving_notes_text);
-
-        goalLayout.setPrefixText(currentCurrencySymbol);
-
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_title_edit_saving)
-                .setIcon(R.drawable.ic_edit)
-                .setView(editDialogView)
-                .setPositiveButton(R.string.dialog_button_edit, null)
-                .setNegativeButton(R.string.dialog_button_cancel, null);
-
-        AlertDialog dialog = builder.create();
-        dialog.setOnShowListener(dialogInterface -> {
-            nameInput.setText(selectedSaving.getName());
-            goalInput.setText(String.format(Locale.getDefault(), "%.2f", selectedSaving.getGoal()));
-            notesInput.setText(selectedSaving.getNotes());
-
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
-                String nameText = Objects.requireNonNull(nameInput.getText()).toString();
-                String goalText = Objects.requireNonNull(goalInput.getText()).toString();
-                String notesText = Objects.requireNonNull(notesInput.getText()).toString();
-
-                if (!nameText.isEmpty() && !goalText.isEmpty()) {
-                    double goal = Double.parseDouble(goalText);
-
-                    Saving editedSaving = new Saving();
-                    editedSaving.setID(selectedSaving.getID());
-                    editedSaving.setName(nameText);
-                    editedSaving.setCurrentSaving(selectedSaving.getCurrentSaving());
-                    editedSaving.setGoal(goal);
-                    editedSaving.setNotes(notesText);
-                    editedSaving.setIsArchived(selectedSaving.getIsArchived());
-                    savingRepository.update(editedSaving);
-
-                    refreshList();
-                    dialog.dismiss();
-                }
-                nameLayout.setError(nameText.isEmpty() ? getString(R.string.field_error_required) : null);
-                goalLayout.setError(goalText.isEmpty() ? getString(R.string.field_error_required) : null);
-            });
-        });
         dialog.show();
     }
 

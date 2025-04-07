@@ -27,7 +27,6 @@
             android:id="@+id/saving_name"
             android:text="Saving Name"
             android:textAppearance="?attr/textAppearanceTitleLarge"
-            app:fontFamily="sans-serif-medium"
             android:textColor="?attr/colorPrimary"
             android:ellipsize="end"
             android:maxLines="1"
@@ -39,7 +38,7 @@
             android:id="@+id/saving_description"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -53,7 +52,7 @@
                 tools:ignore="HardcodedText" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:text="/"
+                android:text="out of"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:layout_marginEnd="4dp"
@@ -81,6 +80,16 @@
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/saving_deadline"
+            android:text="Deadline: 04/11/2025"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:layout_marginBottom="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
