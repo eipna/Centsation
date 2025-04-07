@@ -15,11 +15,11 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.databinding.ActivityCreateBinding;
@@ -32,7 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
-public class CreateActivity extends AppCompatActivity {
+public class CreateActivity extends BaseActivity {
 
     private ActivityCreateBinding binding;
     private SavingRepository savingRepository;
@@ -61,6 +61,10 @@ public class CreateActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
+        binding.fieldSavingCurrentSavingLayout.setPrefixText(currentCurrencySymbol);
+        binding.fieldSavingGoalLayout.setPrefixText(currentCurrencySymbol);
 
         binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
         binding.fieldSavingDeadlineText.setOnClickListener(v -> hasNotificationPermission());

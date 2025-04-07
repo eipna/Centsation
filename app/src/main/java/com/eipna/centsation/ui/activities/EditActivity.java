@@ -6,9 +6,9 @@ import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.databinding.ActivityEditBinding;
@@ -20,7 +20,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.util.Objects;
 
-public class EditActivity extends AppCompatActivity {
+public class EditActivity extends BaseActivity {
 
     private ActivityEditBinding binding;
     private SavingRepository savingRepository;
@@ -43,6 +43,9 @@ public class EditActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
+        binding.fieldSavingGoalLayout.setPrefixText(currentCurrencySymbol);
 
         IDExtra = getIntent().getIntExtra("id", -1);
         nameExtra = getIntent().getStringExtra("name");
