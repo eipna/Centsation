@@ -16,6 +16,9 @@
     <string name="empty_indicator_main">No savings found</string>
     <string name="empty_indicator_archive">No archived savings</string>
 
+    <string name="radio_button_deposit">Deposit</string>
+    <string name="radio_button_withdraw">Withdraw</string>
+
     <string name="field_error_required">*required</string>
     <string name="field_error_empty_saving">Please enter a value</string>
     <string name="field_error_negative_saving">Saving cannot be negative</string>
@@ -26,7 +29,6 @@
     <string name="field_saving_goal">Goal</string>
     <string name="field_saving_notes">Notes</string>
     <string name="field_saving_deadline">Deadline</string>
-    <string name="field_transaction_type">Transaction Type</string>
 
     <string name="dialog_title_create_saving">Create saving</string>
     <string name="dialog_title_edit_saving">Edit saving</string>

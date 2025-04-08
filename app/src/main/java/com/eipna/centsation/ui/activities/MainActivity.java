@@ -34,8 +34,8 @@ import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.eipna.centsation.ui.adapters.TransactionAdapter;
 import com.eipna.centsation.util.AlarmUtil;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.shape.MaterialShapeDrawable;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -263,8 +263,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
         TextInputLayout amountLayout = transactionDialogView.findViewById(R.id.field_saving_amount_layout);
         TextInputEditText amountInput = transactionDialogView.findViewById(R.id.field_saving_amount_text);
 
-        TextInputLayout typeDropdownLayout = transactionDialogView.findViewById(R.id.field_transaction_type_layout);
-        MaterialAutoCompleteTextView typeDropdownInput = transactionDialogView.findViewById(R.id.field_transaction_type_text);
+        MaterialRadioButton depositOption = transactionDialogView.findViewById(R.id.radio_button_deposit);
+        MaterialRadioButton withdrawOption = transactionDialogView.findViewById(R.id.radio_button_withdraw);
 
         amountLayout.setPrefixText(currentCurrencySymbol);
 
@@ -279,36 +279,35 @@ public class MainActivity extends BaseActivity implements SavingListener {
         dialog.setOnShowListener(dialogInterface -> {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
                 String amountText = Objects.requireNonNull(amountInput.getText()).toString();
-                String typeText = typeDropdownInput.getText().toString();
 
-                if (!amountText.isEmpty() && !typeText.isEmpty()) {
-                    if (typeText.equals(TransactionType.DEPOSIT.VALUE)) {
-                        double addedSaving = selectedSaving.getCurrentSaving() + Double.parseDouble(amountText);
-                        double amount = Double.parseDouble(amountText);
-
-                        selectedSaving.setCurrentSaving(addedSaving);
-                        savingRepository.makeTransaction(selectedSaving, amount, TransactionType.DEPOSIT);
-
-                        refreshList();
-                        dialog.dismiss();
-                    } else if (typeText.equals(TransactionType.WITHDRAW.VALUE)) {
-                        double deductedSaving = selectedSaving.getCurrentSaving() - Double.parseDouble(amountText);
-                        double amount = Double.parseDouble(amountText);
-                        if (deductedSaving < 0) {
-                            amountLayout.setError(getString(R.string.field_error_negative_saving));
-                            return;
-                        }
-
-                        selectedSaving.setCurrentSaving(deductedSaving);
-                        savingRepository.makeTransaction(selectedSaving, amount, TransactionType.WITHDRAW);
-
-                        refreshList();
-                        dialog.dismiss();
-                    }
+                if (amountText.isEmpty()) {
+                    amountLayout.setError(getString(R.string.field_error_required));
+                    return;
                 }
 
-                amountLayout.setError(amountText.isEmpty() ? getString(R.string.field_error_required) : null);
-                typeDropdownLayout.setError(typeText.isEmpty() ? getString(R.string.field_error_required) : null);
+                if (depositOption.isChecked()) {
+                    double addedSaving = selectedSaving.getCurrentSaving() + Double.parseDouble(amountText);
+                    double amount = Double.parseDouble(amountText);
+
+                    selectedSaving.setCurrentSaving(addedSaving);
+                    savingRepository.makeTransaction(selectedSaving, amount, TransactionType.DEPOSIT);
+
+                    refreshList();
+                    dialog.dismiss();
+                } else if (withdrawOption.isChecked()) {
+                    double deductedSaving = selectedSaving.getCurrentSaving() - Double.parseDouble(amountText);
+                    double amount = Double.parseDouble(amountText);
+                    if (deductedSaving < 0) {
+                        amountLayout.setError(getString(R.string.field_error_negative_saving));
+                        return;
+                    }
+
+                    selectedSaving.setCurrentSaving(deductedSaving);
+                    savingRepository.makeTransaction(selectedSaving, amount, TransactionType.WITHDRAW);
+
+                    refreshList();
+                    dialog.dismiss();
+                }
             });
         });
         dialog.show();

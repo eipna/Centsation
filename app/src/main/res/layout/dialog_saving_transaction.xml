@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingBottom="24dp"
     android:paddingEnd="24dp"
     android:paddingStart="24dp"
     android:paddingTop="16dp"
@@ -22,22 +21,22 @@
             android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/field_transaction_type_layout"
-        android:hint="@string/field_transaction_type"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_marginTop="16dp"
+    <RadioGroup
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/field_transaction_type_text"
-            android:inputType="none"
-            android:clickable="false"
-            android:focusable="false"
-            app:simpleItems="@array/transaction_type"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radio_button_deposit"
+            android:text="@string/radio_button_deposit"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radio_button_withdraw"
+            android:text="@string/radio_button_withdraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
 </LinearLayout>
