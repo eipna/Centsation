@@ -21,18 +21,13 @@ import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.data.transaction.Transaction;
 import com.eipna.centsation.data.transaction.TransactionRepository;
-import com.eipna.centsation.data.transaction.TransactionType;
 import com.eipna.centsation.databinding.ActivityArchiveBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.eipna.centsation.ui.adapters.TransactionAdapter;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ArchiveActivity extends BaseActivity implements SavingListener {
 
@@ -154,65 +149,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         editSavingLauncher.launch(editIntent);
     }
 
-    private void showTransactionDialog(Saving selectedSaving) {
-        View transactionDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_transaction, null, false);
-
-        TextInputLayout amountLayout = transactionDialogView.findViewById(R.id.field_saving_amount_layout);
-        TextInputEditText amountInput = transactionDialogView.findViewById(R.id.field_saving_amount_text);
-
-        MaterialButton depositButton = transactionDialogView.findViewById(R.id.button_saving_deposit);
-        MaterialButton withdrawButton = transactionDialogView.findViewById(R.id.button_saving_withdraw);
-
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.dialog_title_create_transaction)
-                .setIcon(R.drawable.ic_add_circle)
-                .setView(transactionDialogView);
-
-        AlertDialog dialog = builder.create();
-        dialog.setOnShowListener(dialogInterface -> {
-            depositButton.setOnClickListener(view -> {
-                String amountText = Objects.requireNonNull(amountInput.getText()).toString();
-
-                if (amountText.isEmpty() || Double.parseDouble(amountText) == 0) {
-                    amountLayout.setError(getString(R.string.field_error_empty_saving));
-                    return;
-                }
-
-                double addedSaving = selectedSaving.getCurrentSaving() + Double.parseDouble(amountText);
-                double amount = Double.parseDouble(amountText);
-
-                selectedSaving.setCurrentSaving(addedSaving);
-                savingRepository.makeTransaction(selectedSaving, amount, TransactionType.DEPOSIT);
-
-                refreshList();
-                dialog.dismiss();
-            });
-
-            withdrawButton.setOnClickListener(view -> {
-                String amountText = Objects.requireNonNull(amountInput.getText()).toString();
-
-                if (amountText.isEmpty() || Double.parseDouble(amountText) == 0) {
-                    amountLayout.setError(getString(R.string.field_error_empty_saving));
-                    return;
-                }
-
-                double deductedSaving = selectedSaving.getCurrentSaving() - Double.parseDouble(amountText);
-                double amount = Double.parseDouble(amountText);
-                if (deductedSaving < 0) {
-                    amountLayout.setError(getString(R.string.field_error_negative_saving));
-                    return;
-                }
-
-                selectedSaving.setCurrentSaving(deductedSaving);
-                savingRepository.makeTransaction(selectedSaving, amount, TransactionType.WITHDRAW);
-
-                refreshList();
-                dialog.dismiss();
-            });
-        });
-        dialog.show();
-    }
-
     @Override
     public void OnOperationClick(SavingOperation operation, int position) {
         Saving selectedSaving = savings.get(position);
@@ -220,6 +156,5 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         if (operation.equals(SavingOperation.SHARE)) showShareIntent(selectedSaving.getNotes());
         if (operation.equals(SavingOperation.DELETE)) showDeleteDialog(selectedSaving.getID());
         if (operation.equals(SavingOperation.HISTORY)) showHistoryDialog(selectedSaving);
-        if (operation.equals(SavingOperation.TRANSACTION)) showTransactionDialog(selectedSaving);
     }
 }

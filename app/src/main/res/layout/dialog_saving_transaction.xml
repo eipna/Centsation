@@ -11,7 +11,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/field_saving_amount_layout"
-        android:hint="@string/field_saving_transaction"
+        android:hint="@string/field_transaction_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -22,31 +22,22 @@
             android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/field_transaction_type_layout"
+        android:hint="@string/field_transaction_type"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_saving_withdraw"
-            android:text="@string/dialog_button_withdraw"
-            android:textColor="?attr/colorOnTertiary"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:backgroundTint="?attr/colorTertiary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_saving_deposit"
-            android:text="@string/dialog_button_deposit"
-            android:textColor="?attr/colorOnPrimary"
-            android:backgroundTint="?attr/colorPrimary"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/field_transaction_type_text"
+            android:inputType="none"
+            android:clickable="false"
+            android:focusable="false"
+            app:simpleItems="@array/transaction_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>
