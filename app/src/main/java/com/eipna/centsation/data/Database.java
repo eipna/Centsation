@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.saving.Saving;
+import com.eipna.centsation.util.AlarmUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,7 +68,7 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_TRANSACTION_SAVING_ID + " INTEGER NOT NULL, " +
                 COLUMN_TRANSACTION_AMOUNT + " REAL NOT NULL, " +
                 COLUMN_TRANSACTION_TYPE + " TEXT NOT NULL," +
-                COLUMN_TRANSACTION_DATE + " LONG NOT NULL, " +
+                COLUMN_TRANSACTION_DATE + " INTEGER NOT NULL, " +
                 "FOREIGN KEY (" + COLUMN_TRANSACTION_SAVING_ID + ") REFERENCES " + TABLE_SAVING + "(" + COLUMN_SAVING_ID + ") ON DELETE CASCADE);";
 
         sqLiteDatabase.execSQL(createSavingTable);
@@ -121,6 +123,7 @@ public class Database extends SQLiteOpenHelper {
                     transactionObject.put(COLUMN_TRANSACTION_SAVING_ID, transactionCursor.getInt(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_SAVING_ID)));
                     transactionObject.put(COLUMN_TRANSACTION_AMOUNT, transactionCursor.getDouble(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_AMOUNT)));
                     transactionObject.put(COLUMN_TRANSACTION_TYPE, transactionCursor.getString(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_TYPE)));
+                    transactionObject.put(COLUMN_TRANSACTION_DATE, transactionCursor.getLong(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_DATE)));
                     transactionArray.put(transactionObject);
                 } while (transactionCursor.moveToNext());
             }
@@ -174,6 +177,14 @@ public class Database extends SQLiteOpenHelper {
                 for (int i = 0; i < savingArray.length(); i++) {
                     JSONObject savingObject = savingArray.getJSONObject(i);
                     ContentValues values = new ContentValues();
+
+                    if (savingObject.getLong(COLUMN_SAVING_DEADLINE) != AlarmUtil.NO_ALARM) {
+                        Saving rescheduledSaving = new Saving();
+                        rescheduledSaving.setName(savingObject.getString(COLUMN_SAVING_NAME));
+                        rescheduledSaving.setDeadline(savingObject.getLong(COLUMN_SAVING_DEADLINE));
+                        AlarmUtil.set(context, rescheduledSaving);
+                    }
+
                     values.put(COLUMN_SAVING_NAME, savingObject.getString(COLUMN_SAVING_NAME));
                     values.put(COLUMN_SAVING_CURRENT_SAVING, savingObject.getDouble(COLUMN_SAVING_CURRENT_SAVING));
                     values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
@@ -189,6 +200,7 @@ public class Database extends SQLiteOpenHelper {
                     values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getInt(COLUMN_TRANSACTION_SAVING_ID));
                     values.put(COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(COLUMN_TRANSACTION_AMOUNT));
                     values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
+                    values.put(COLUMN_TRANSACTION_DATE, transactionObject.getLong(COLUMN_TRANSACTION_DATE));
                     database.insert(TABLE_TRANSACTION, null, values);
                 }
                 
