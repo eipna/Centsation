@@ -19,6 +19,7 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class EditActivity extends BaseActivity {
@@ -60,7 +61,7 @@ public class EditActivity extends BaseActivity {
 
         binding.fieldSavingDeadlineLayout.setVisibility(isArchiveExtra == Saving.IS_ARCHIVE ? View.GONE : View.VISIBLE);
         binding.fieldSavingNameText.setText(nameExtra);
-        binding.fieldSavingGoalText.setText(String.valueOf(goalExtra));
+        binding.fieldSavingGoalText.setText(String.format(Locale.getDefault(), "%.2f", goalExtra));
         binding.fieldSavingNotesText.setText(notesExtra);
         binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
 
