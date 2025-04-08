@@ -32,8 +32,8 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_archive"
             tools:ignore="ContentDescription"
@@ -41,9 +41,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:text="@string/empty_indicator_archive"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:alpha="0.8"
-            app:fontFamily="sans-serif-medium"
+            android:textAppearance="?attr/textAppearanceTitleSmall"
             android:layout_marginTop="4dp"
             android:textColor="?attr/colorOnSurfaceVariant"
             android:textAlignment="center"
