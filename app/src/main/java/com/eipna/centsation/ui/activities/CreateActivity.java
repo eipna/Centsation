@@ -118,7 +118,7 @@ public class CreateActivity extends BaseActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             showDeadlineDialog();
         } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
-            Snackbar.make(binding.getRoot(), "This application requires notification permission for this feature to work.", Snackbar.LENGTH_SHORT)
+            Snackbar.make(binding.getRoot(), getString(R.string.snack_bar_permission_notifications), Snackbar.LENGTH_SHORT)
                     .setAction("Grant", v -> {
                         Intent intent;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

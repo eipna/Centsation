@@ -1,12 +1,23 @@
 package com.eipna.centsation.ui.activities;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
@@ -18,6 +29,7 @@ import com.eipna.centsation.util.DateUtil;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -31,6 +43,15 @@ public class EditActivity extends BaseActivity {
     private String nameExtra, notesExtra;
     private double currentSavingExtra, goalExtra;
     private long deadlineExtra, selectedDeadline;
+
+    private final ActivityResultLauncher<String> requestNotificationPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    showDeadlineDialog();
+                } else {
+                    Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show();
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +91,34 @@ public class EditActivity extends BaseActivity {
             binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(deadlineExtra, "MM/dd/yyyy"));
         }
 
-        binding.fieldSavingDeadlineText.setOnClickListener(v -> showDeadlineDialog());
+        binding.fieldSavingDeadlineText.setOnClickListener(v -> hasNotificationPermission());
         binding.fieldSavingDeadlineLayout.setEndIconOnClickListener(v -> {
             binding.fieldSavingDeadlineText.setText("");
             binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
         });
+    }
+
+    private void hasNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            showDeadlineDialog();
+        } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
+            Snackbar.make(binding.getRoot(), getString(R.string.snack_bar_permission_notifications), Snackbar.LENGTH_SHORT)
+                    .setAction("Grant", v -> {
+                        Intent intent;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                        } else {
+                            intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            intent.setData(Uri.parse("package:" + getPackageName()));
+                        }
+                        startActivity(intent);
+                    }).show();
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
     }
 
     private void showDeadlineDialog() {
