@@ -105,6 +105,7 @@ public class Database extends SQLiteOpenHelper {
                     savingObject.put(COLUMN_SAVING_GOAL, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_GOAL)));
                     savingObject.put(COLUMN_SAVING_NOTES, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NOTES)));
                     savingObject.put(COLUMN_SAVING_IS_ARCHIVED, savingCursor.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));
+                    savingObject.put(COLUMN_SAVING_DEADLINE, savingCursor.getLong(savingCursor.getColumnIndex(COLUMN_SAVING_DEADLINE)));
                     savingArray.put(savingObject);
                 } while (savingCursor.moveToNext());
             }
@@ -178,6 +179,7 @@ public class Database extends SQLiteOpenHelper {
                     values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
                     values.put(COLUMN_SAVING_NOTES, savingObject.getString(COLUMN_SAVING_NOTES));
                     values.put(COLUMN_SAVING_IS_ARCHIVED, savingObject.getInt(COLUMN_SAVING_IS_ARCHIVED));
+                    values.put(COLUMN_SAVING_DEADLINE, savingObject.getLong(COLUMN_SAVING_DEADLINE));
                     database.insert(TABLE_SAVING, null, values);
                 }
 
