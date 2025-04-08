@@ -23,6 +23,7 @@ import com.eipna.centsation.R;
 import com.eipna.centsation.data.Contrast;
 import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.Database;
+import com.eipna.centsation.data.DateFormat;
 import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
 import com.eipna.centsation.util.PreferenceUtil;
@@ -73,6 +74,7 @@ public class SettingsActivity extends BaseActivity {
         private PreferenceUtil preferences;
         private Database database;
 
+        private ListPreference listDeadlineFormat;
         private ListPreference listContrast;
         private ListPreference listTheme;
         private ListPreference listCurrency;
@@ -110,6 +112,16 @@ public class SettingsActivity extends BaseActivity {
 
             importSavings.setOnPreferenceClickListener(preference -> {
                 importData();
+                return true;
+            });
+
+            listDeadlineFormat.setEntries(DateFormat.getNames());
+            listDeadlineFormat.setEntryValues(DateFormat.getPatterns());
+            listDeadlineFormat.setValue(preferences.getDeadlineFormat());
+            listDeadlineFormat.setSummary(DateFormat.getNameByPattern(preferences.getDeadlineFormat()));
+            listDeadlineFormat.setOnPreferenceChangeListener((preference, newValue) -> {
+                preferences.setDeadlineFormat((String) newValue);
+                listDeadlineFormat.setSummary(DateFormat.getNameByPattern((String) newValue));
                 return true;
             });
 
@@ -203,6 +215,7 @@ public class SettingsActivity extends BaseActivity {
             preferences = new PreferenceUtil(requireContext());
             database = new Database(requireContext());
 
+            listDeadlineFormat = findPreference("deadline_format");
             listCurrency = findPreference("currency");
             listTheme = findPreference("theme");
             listContrast = findPreference("contrast");

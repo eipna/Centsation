@@ -98,6 +98,7 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
         public void bind(Saving currentSaving, PreferenceUtil preferences) {
             String currencySymbol = Currency.getSymbol(preferences.getCurrency());
+            String deadlineFormat = preferences.getDeadlineFormat();
             int percentValue = (int) ((currentSaving.getCurrentSaving() / currentSaving.getGoal()) * 100);
 
             if (Currency.isRTLCurrency(preferences.getCurrency())) {
@@ -123,14 +124,10 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
                 name.setText(currentSaving.getName());
             }
 
-            if (currentSaving.getNotes().isEmpty()) {
-                share.setVisibility(View.GONE);
-            } else {
-                share.setVisibility(View.VISIBLE);
-            }
+            share.setVisibility(currentSaving.getNotes().isEmpty() ? View.GONE : View.VISIBLE);
 
             deadline.setVisibility(currentSaving.getDeadline() == AlarmUtil.NO_ALARM ? View.GONE : View.VISIBLE);
-            deadline.setText(String.format("Deadline: %s", DateUtil.getStringDate(currentSaving.getDeadline(), "MM/dd/yyyy")));
+            deadline.setText(String.format("Deadline: %s", DateUtil.getStringDate(currentSaving.getDeadline(), deadlineFormat)));
 
             percent.setText(String.format("(%s%c)", percentValue, '%'));
             parent.setChecked(currentSaving.getCurrentSaving() >= currentSaving.getGoal());

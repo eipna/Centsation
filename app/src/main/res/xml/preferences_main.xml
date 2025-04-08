@@ -2,9 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/preference_category_app"
-        app:iconSpaceReserved="false"
-        app:allowDividerBelow="true">
+        android:title="@string/preference_category_appearance"
+        app:iconSpaceReserved="false">
 
         <ListPreference
             android:key="theme"
@@ -22,17 +21,26 @@
             app:iconSpaceReserved="false"
             android:title="@string/preference_switch_dynamic_colors_title"
             android:summary="@string/preference_switch_dynamic_colors_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/preference_category_savings"
+        app:iconSpaceReserved="false">
 
         <ListPreference
             android:key="currency"
             app:iconSpaceReserved="false"
             android:title="@string/preference_list_currency"/>
+
+        <ListPreference
+            android:key="deadline_format"
+            app:iconSpaceReserved="false"
+            android:title="@string/preference_list_deadline_format"/>
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/preference_category_backup"
-        app:iconSpaceReserved="false"
-        app:allowDividerBelow="true">
+        app:iconSpaceReserved="false">
 
         <Preference
             android:key="import"

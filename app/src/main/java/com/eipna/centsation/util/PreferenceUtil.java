@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 
 import com.eipna.centsation.data.Contrast;
 import com.eipna.centsation.data.Currency;
+import com.eipna.centsation.data.DateFormat;
 import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.data.saving.SavingSort;
 
@@ -64,5 +65,13 @@ public class PreferenceUtil {
 
     public void setContrast(String value) {
         sharedPreferences.edit().putString("contrast", value).apply();
+    }
+
+    public void setDeadlineFormat(String value) {
+        sharedPreferences.edit().putString("deadline_format", value).apply();
+    }
+
+    public String getDeadlineFormat() {
+        return sharedPreferences.getString("deadline_format", DateFormat.MM_DD_YYYY.PATTERN);
     }
 }
