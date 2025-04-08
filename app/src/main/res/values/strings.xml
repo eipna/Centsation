@@ -17,7 +17,6 @@
     <string name="empty_indicator_archive">No archived savings</string>
 
     <string name="field_error_required">*required</string>
-    <string name="field_error_lower_goal">Goal cannot be lower</string>
     <string name="field_error_empty_saving">Please enter a value</string>
     <string name="field_error_negative_saving">Saving cannot be negative</string>
 

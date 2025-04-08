@@ -92,11 +92,6 @@ public class CreateActivity extends BaseActivity {
             double currentSaving = Double.parseDouble(currentSavingText);
             double goal = Double.parseDouble(goalText);
 
-            if (currentSaving > goal) {
-                binding.fieldSavingGoalLayout.setError(getString(R.string.field_error_lower_goal));
-                return;
-            }
-
             Saving createdSaving = new Saving();
             createdSaving.setName(nameText);
             createdSaving.setCurrentSaving(currentSaving);

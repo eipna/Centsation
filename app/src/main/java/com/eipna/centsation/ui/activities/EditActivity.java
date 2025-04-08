@@ -109,11 +109,6 @@ public class EditActivity extends BaseActivity {
         if (!nameText.isEmpty() && !goalText.isEmpty()) {
             double goal = Double.parseDouble(goalText);
 
-            if (currentSavingExtra > goal) {
-                binding.fieldSavingGoalLayout.setError(getString(R.string.field_error_lower_goal));
-                return;
-            }
-
             Saving editedSaving = new Saving();
             editedSaving.setID(IDExtra);
             editedSaving.setName(nameText);
