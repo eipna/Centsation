@@ -30,6 +30,7 @@ import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -141,7 +142,7 @@ public class CreateActivity extends BaseActivity {
 
     private void showDeadlineDialog() {
         CalendarConstraints.Builder calendarConstraints = new CalendarConstraints.Builder()
-                .setValidator(DateValidatorPointForward.now());
+                .setValidator(DateValidatorPointForward.from(Calendar.getInstance().getTimeInMillis()));
 
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setCalendarConstraints(calendarConstraints.build())
