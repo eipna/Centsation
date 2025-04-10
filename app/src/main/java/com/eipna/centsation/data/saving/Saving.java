@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class Saving {
 
-    private int ID;
+    private String ID;
     private String name;
     private double currentSaving;
     private double goal;
@@ -17,7 +17,7 @@ public class Saving {
     public static int NOT_ARCHIVE = 0;
 
     public Saving() {
-        this.ID = -1;
+        this.ID = null;
         this.name = null;
         this.currentSaving = 0.0;
         this.goal = 0.0;
@@ -34,11 +34,11 @@ public class Saving {
 
     public static final Comparator<Saving> SORT_DEADLINE = Comparator.comparingLong(Saving::getDeadline);
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 

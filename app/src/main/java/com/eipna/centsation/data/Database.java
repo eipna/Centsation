@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createSavingTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SAVING + "(" +
-                COLUMN_SAVING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_SAVING_ID + " TEXT PRIMARY KEY, " +
                 COLUMN_SAVING_NAME + " TEXT NOT NULL, " +
                 COLUMN_SAVING_CURRENT_SAVING+ " REAL NOT NULL, " +
                 COLUMN_SAVING_GOAL + " REAL NOT NULL, " +
@@ -65,7 +65,7 @@ public class Database extends SQLiteOpenHelper {
 
         String createTransactionTable = "CREATE TABLE IF NOT EXISTS " + TABLE_TRANSACTION + "(" +
                 COLUMN_TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_TRANSACTION_SAVING_ID + " INTEGER NOT NULL, " +
+                COLUMN_TRANSACTION_SAVING_ID + " TEXT NOT NULL, " +
                 COLUMN_TRANSACTION_AMOUNT + " REAL NOT NULL, " +
                 COLUMN_TRANSACTION_TYPE + " TEXT NOT NULL," +
                 COLUMN_TRANSACTION_DATE + " INTEGER NOT NULL, " +
@@ -101,7 +101,7 @@ public class Database extends SQLiteOpenHelper {
             if (savingCursor.moveToFirst()) {
                 do {
                     JSONObject savingObject = new JSONObject();
-                    savingObject.put(COLUMN_SAVING_ID, savingCursor.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_ID)));
+                    savingObject.put(COLUMN_SAVING_ID, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_ID)));
                     savingObject.put(COLUMN_SAVING_NAME, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NAME)));
                     savingObject.put(COLUMN_SAVING_CURRENT_SAVING, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_CURRENT_SAVING)));
                     savingObject.put(COLUMN_SAVING_GOAL, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_GOAL)));
@@ -120,7 +120,7 @@ public class Database extends SQLiteOpenHelper {
                 do {
                     JSONObject transactionObject = new JSONObject();
                     transactionObject.put(COLUMN_TRANSACTION_ID, transactionCursor.getInt(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_ID)));
-                    transactionObject.put(COLUMN_TRANSACTION_SAVING_ID, transactionCursor.getInt(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_SAVING_ID)));
+                    transactionObject.put(COLUMN_TRANSACTION_SAVING_ID, transactionCursor.getString(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_SAVING_ID)));
                     transactionObject.put(COLUMN_TRANSACTION_AMOUNT, transactionCursor.getDouble(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_AMOUNT)));
                     transactionObject.put(COLUMN_TRANSACTION_TYPE, transactionCursor.getString(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_TYPE)));
                     transactionObject.put(COLUMN_TRANSACTION_DATE, transactionCursor.getLong(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_DATE)));
@@ -185,6 +185,7 @@ public class Database extends SQLiteOpenHelper {
                         AlarmUtil.set(context, rescheduledSaving);
                     }
 
+                    values.put(COLUMN_SAVING_ID, savingObject.getString(COLUMN_SAVING_ID));
                     values.put(COLUMN_SAVING_NAME, savingObject.getString(COLUMN_SAVING_NAME));
                     values.put(COLUMN_SAVING_CURRENT_SAVING, savingObject.getDouble(COLUMN_SAVING_CURRENT_SAVING));
                     values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
@@ -197,13 +198,13 @@ public class Database extends SQLiteOpenHelper {
                 for (int i = 0; i < transactionArray.length(); i++) {
                     JSONObject transactionObject = transactionArray.getJSONObject(i);
                     ContentValues values = new ContentValues();
-                    values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getInt(COLUMN_TRANSACTION_SAVING_ID));
+                    values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getString(COLUMN_TRANSACTION_SAVING_ID));
                     values.put(COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(COLUMN_TRANSACTION_AMOUNT));
                     values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
                     values.put(COLUMN_TRANSACTION_DATE, transactionObject.getLong(COLUMN_TRANSACTION_DATE));
                     database.insert(TABLE_TRANSACTION, null, values);
                 }
-                
+
                 database.setTransactionSuccessful();
                 Toast.makeText(context, context.getString(R.string.toast_import_successful), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {

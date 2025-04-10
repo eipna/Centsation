@@ -28,16 +28,17 @@ public class SavingRepository extends Database {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        values.put(COLUMN_SAVING_ID, createdSaving.getID());
         values.put(COLUMN_SAVING_NAME, createdSaving.getName());
         values.put(COLUMN_SAVING_CURRENT_SAVING, createdSaving.getCurrentSaving());
         values.put(COLUMN_SAVING_GOAL, createdSaving.getGoal());
         values.put(COLUMN_SAVING_NOTES, createdSaving.getNotes());
         values.put(COLUMN_SAVING_IS_ARCHIVED, createdSaving.getIsArchived());
         values.put(COLUMN_SAVING_DEADLINE, createdSaving.getDeadline());
-        long createdSavingID = database.insert(TABLE_SAVING, null, values);
+        database.insert(TABLE_SAVING, null, values);
 
         Transaction initialTransaction = new Transaction();
-        initialTransaction.setSavingID((int) createdSavingID);
+        initialTransaction.setSavingID(createdSaving.getID());
         initialTransaction.setAmount(createdSaving.getCurrentSaving());
         initialTransaction.setType(TransactionType.CREATED.VALUE);
         transactionRepository.create(initialTransaction);
@@ -55,13 +56,13 @@ public class SavingRepository extends Database {
         values.put(COLUMN_SAVING_IS_ARCHIVED, updatedSaving.getIsArchived());
         values.put(COLUMN_SAVING_DEADLINE, updatedSaving.getDeadline());
 
-        database.update(TABLE_SAVING, values, COLUMN_SAVING_ID + " = ?", new String[]{String.valueOf(updatedSaving.getID())});
+        database.update(TABLE_SAVING, values, COLUMN_SAVING_ID + " = ?", new String[]{updatedSaving.getID()});
         database.close();
     }
 
-    public void delete(int savingID) {
+    public void delete(String savingID) {
         SQLiteDatabase database = getWritableDatabase();
-        database.delete(TABLE_SAVING, COLUMN_SAVING_ID + " = ?", new String[]{String.valueOf(savingID)});
+        database.delete(TABLE_SAVING, COLUMN_SAVING_ID + " = ?", new String[]{savingID});
         database.close();
     }
 
@@ -70,7 +71,7 @@ public class SavingRepository extends Database {
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_SAVING_CURRENT_SAVING, updatedSaving.getCurrentSaving());
-        database.update(TABLE_SAVING, values, COLUMN_SAVING_ID + " = ?", new String[]{String.valueOf(updatedSaving.getID())});
+        database.update(TABLE_SAVING, values, COLUMN_SAVING_ID + " = ?", new String[]{updatedSaving.getID()});
 
         Transaction transaction = new Transaction();
         transaction.setSavingID(updatedSaving.getID());
@@ -91,7 +92,7 @@ public class SavingRepository extends Database {
         if (cursor.moveToFirst()) {
             do {
                 Saving queriedSaving = new Saving();
-                queriedSaving.setID(cursor.getInt(cursor.getColumnIndex(COLUMN_SAVING_ID)));
+                queriedSaving.setID(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_ID)));
                 queriedSaving.setName(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_NAME)));
                 queriedSaving.setCurrentSaving(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_CURRENT_SAVING)));
                 queriedSaving.setGoal(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_GOAL)));

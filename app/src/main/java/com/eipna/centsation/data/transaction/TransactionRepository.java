@@ -29,17 +29,17 @@ public class TransactionRepository extends Database {
     }
 
     @SuppressLint("Range")
-    public ArrayList<Transaction> getTransactions(int savingId) {
+    public ArrayList<Transaction> getTransactions(String savingID) {
         ArrayList<Transaction> list = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_TRANSACTION_SAVING_ID + " = ?";
-        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(savingId)});
+        Cursor cursor = database.rawQuery(query, new String[]{savingID});
 
         if (cursor.moveToFirst()) {
             do {
                 Transaction queriedTransaction = new Transaction();
                 queriedTransaction.setID(cursor.getInt(cursor.getColumnIndex(COLUMN_TRANSACTION_ID)));
-                queriedTransaction.setSavingID(cursor.getInt(cursor.getColumnIndex(COLUMN_TRANSACTION_SAVING_ID)));
+                queriedTransaction.setSavingID(cursor.getString(cursor.getColumnIndex(COLUMN_TRANSACTION_SAVING_ID)));
                 queriedTransaction.setAmount(cursor.getDouble(cursor.getColumnIndex(COLUMN_TRANSACTION_AMOUNT)));
                 queriedTransaction.setType(cursor.getString(cursor.getColumnIndex(COLUMN_TRANSACTION_TYPE)));
                 queriedTransaction.setDate(cursor.getLong(cursor.getColumnIndex(COLUMN_TRANSACTION_DATE)));

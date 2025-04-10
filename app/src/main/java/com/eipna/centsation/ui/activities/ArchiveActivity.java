@@ -86,7 +86,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         startActivity(shareIntent);
     }
 
-    private void showDeleteDialog(int savingID) {
+    private void showDeleteDialog(String savingID) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_delete_saving)
                 .setIcon(R.drawable.ic_delete_forever)

@@ -31,6 +31,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class CreateActivity extends BaseActivity {
 
@@ -93,6 +94,7 @@ public class CreateActivity extends BaseActivity {
             double goal = Double.parseDouble(goalText);
 
             Saving createdSaving = new Saving();
+            createdSaving.setID(UUID.randomUUID().toString());
             createdSaving.setName(nameText);
             createdSaving.setCurrentSaving(currentSaving);
             createdSaving.setGoal(goal);

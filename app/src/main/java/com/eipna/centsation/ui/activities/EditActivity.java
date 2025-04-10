@@ -39,8 +39,8 @@ public class EditActivity extends BaseActivity {
     private ActivityEditBinding binding;
     private SavingRepository savingRepository;
 
-    private int IDExtra, isArchiveExtra;
-    private String nameExtra, notesExtra;
+    private int isArchiveExtra;
+    private String IDExtra, nameExtra, notesExtra;
     private double currentSavingExtra, goalExtra;
     private long deadlineExtra, selectedDeadline;
 
@@ -70,7 +70,7 @@ public class EditActivity extends BaseActivity {
         String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
         binding.fieldSavingGoalLayout.setPrefixText(currentCurrencySymbol);
 
-        IDExtra = getIntent().getIntExtra("id", -1);
+        IDExtra = getIntent().getStringExtra("id");
         nameExtra = getIntent().getStringExtra("name");
         currentSavingExtra = getIntent().getDoubleExtra("current_saving", -1);
         goalExtra = getIntent().getDoubleExtra("goal", -1);

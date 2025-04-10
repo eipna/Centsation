@@ -3,14 +3,14 @@ package com.eipna.centsation.data.transaction;
 public class Transaction {
 
     private int ID;
-    private int savingID;
+    private String savingID;
     private double amount;
     private String type;
     private long date;
 
     public Transaction() {
         this.ID = -1;
-        this.savingID = -1;
+        this.savingID = null;
         this.amount = -1;
         this.type = null;
         this.date = -1;
@@ -24,12 +24,12 @@ public class Transaction {
         this.ID = ID;
     }
 
-    public int getSavingID() {
-        return savingID;
+    public void setSavingID(String savingID) {
+        this.savingID = savingID;
     }
 
-    public void setSavingID(int savingID) {
-        this.savingID = savingID;
+    public String getSavingID() {
+        return savingID;
     }
 
     public double getAmount() {
