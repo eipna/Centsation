@@ -18,6 +18,7 @@ public class AlarmUtil {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, DeadlineReceiver.class);
+        intent.putExtra("saving_id", saving.getID());
         intent.putExtra("saving_name", saving.getName());
         intent.putExtra("saving_deadline", saving.getDeadline());
 
@@ -26,7 +27,7 @@ public class AlarmUtil {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) saving.getDeadline(), intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, saving.getID().hashCode(), intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
@@ -34,7 +35,7 @@ public class AlarmUtil {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, DeadlineReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) saving.getDeadline(), intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, saving.getID().hashCode(), intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
     }
 }

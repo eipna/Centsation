@@ -12,6 +12,8 @@ import androidx.core.app.NotificationCompat;
 import com.eipna.centsation.R;
 import com.eipna.centsation.ui.activities.MainActivity;
 
+import java.util.Objects;
+
 public class NotificationUtil {
 
     public static String CHANNEL_DEADLINE_ID = "channel_deadline";
@@ -30,7 +32,7 @@ public class NotificationUtil {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         String savingName = intent.getStringExtra("saving_name");
-        int savingRequestCode = (int) intent.getLongExtra("saving_deadline", -1);
+        int savingRequestCode = Objects.requireNonNull(intent.getStringExtra("saving_id")).hashCode();
 
         Intent notificationIntent = new Intent(context, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
