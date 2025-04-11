@@ -156,9 +156,10 @@ public class CreateActivity extends BaseActivity {
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-
             selectedDeadline = calendar.getTimeInMillis();
-            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, "MM/dd/yyyy"));
+
+            String deadlineFormat = preferences.getDeadlineFormat();
+            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, deadlineFormat));
             binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
         });
         datePicker.show(getSupportFragmentManager(), null);

@@ -88,8 +88,9 @@ public class EditActivity extends BaseActivity {
         binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
 
         if (deadlineExtra != AlarmUtil.NO_ALARM) {
+            String deadlineFormat = preferences.getDeadlineFormat();
             binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
-            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(deadlineExtra, "MM/dd/yyyy"));
+            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(deadlineExtra, deadlineFormat));
         }
 
         binding.fieldSavingDeadlineText.setOnClickListener(v -> hasNotificationPermission());
@@ -132,15 +133,16 @@ public class EditActivity extends BaseActivity {
                 .build();
 
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            Calendar calendar = Calendar.getInstance();
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.setTimeInMillis(selection);
             calendar.set(java.util.Calendar.HOUR_OF_DAY, 0);
             calendar.set(java.util.Calendar.MINUTE, 0);
             calendar.set(java.util.Calendar.SECOND, 0);
             calendar.set(java.util.Calendar.MILLISECOND, 0);
-
             selectedDeadline = calendar.getTimeInMillis();
-            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, "MM/dd/yyyy"));
+
+            String deadlineFormat = preferences.getDeadlineFormat();
+            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, deadlineFormat));
             binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
         });
         datePicker.show(getSupportFragmentManager(), null);
