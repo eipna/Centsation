@@ -3,6 +3,7 @@ package com.eipna.centsation.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingRepository;
@@ -10,7 +11,7 @@ import com.eipna.centsation.util.AlarmUtil;
 
 import java.util.ArrayList;
 
-public class BootReceiver extends BroadcastReceiver {
+public class RebootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
@@ -27,7 +28,7 @@ public class BootReceiver extends BroadcastReceiver {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("Reschedule Alarm", "Error while rescheduling some deadlines", e);
         }
     }
 }
