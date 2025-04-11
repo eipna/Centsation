@@ -150,7 +150,14 @@ public class CreateActivity extends BaseActivity {
                 .build();
 
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            selectedDeadline = selection;
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(selection);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            selectedDeadline = calendar.getTimeInMillis();
             binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, "MM/dd/yyyy"));
             binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
         });

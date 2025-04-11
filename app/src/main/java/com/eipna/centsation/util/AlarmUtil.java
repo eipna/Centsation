@@ -8,8 +8,6 @@ import android.content.Intent;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.receiver.DeadlineReceiver;
 
-import java.util.Calendar;
-
 public class AlarmUtil {
 
     public static int NO_ALARM = 0;
@@ -22,13 +20,8 @@ public class AlarmUtil {
         intent.putExtra("saving_name", saving.getName());
         intent.putExtra("saving_deadline", saving.getDeadline());
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(saving.getDeadline());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, saving.getID().hashCode(), intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, saving.getDeadline(), pendingIntent);
     }
 
     public static void cancel(Context context, Saving saving) {
