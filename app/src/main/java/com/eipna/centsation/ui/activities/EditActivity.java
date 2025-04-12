@@ -3,7 +3,6 @@ package com.eipna.centsation.ui.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -123,7 +122,7 @@ public class EditActivity extends BaseActivity {
 
     private void showDeadlineDialog() {
         CalendarConstraints.Builder calendarConstraints = new CalendarConstraints.Builder()
-                .setValidator(DateValidatorPointForward.from(Calendar.getInstance().getTimeInMillis()));
+                .setValidator(DateValidatorPointForward.now());
 
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setCalendarConstraints(calendarConstraints.build())

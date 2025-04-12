@@ -142,7 +142,7 @@ public class CreateActivity extends BaseActivity {
 
     private void showDeadlineDialog() {
         CalendarConstraints.Builder calendarConstraints = new CalendarConstraints.Builder()
-                .setValidator(DateValidatorPointForward.from(Calendar.getInstance().getTimeInMillis()));
+                .setValidator(DateValidatorPointForward.now());
 
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setCalendarConstraints(calendarConstraints.build())
