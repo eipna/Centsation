@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -50,7 +49,7 @@ public class EditActivity extends BaseActivity {
                 if (isGranted) {
                     showDeadlineDialog();
                 } else {
-                    Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_notification_permission_denied, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -81,7 +80,6 @@ public class EditActivity extends BaseActivity {
 
         selectedDeadline = deadlineExtra;
 
-        binding.fieldSavingDeadlineLayout.setVisibility(isArchiveExtra == Saving.IS_ARCHIVE ? View.GONE : View.VISIBLE);
         binding.fieldSavingNameText.setText(nameExtra);
         binding.fieldSavingGoalText.setText(String.format(Locale.getDefault(), "%.2f", goalExtra));
         binding.fieldSavingNotesText.setText(notesExtra);
@@ -170,7 +168,7 @@ public class EditActivity extends BaseActivity {
             editedSaving.setCurrentSaving(currentSavingExtra);
             editedSaving.setGoal(goal);
             editedSaving.setNotes(notesText);
-            editedSaving.setIsArchived(Saving.NOT_ARCHIVE);
+            editedSaving.setIsArchived(isArchiveExtra);
             editedSaving.setDeadline(selectedDeadline);
 
             if (deadlineText.isEmpty()) {

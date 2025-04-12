@@ -314,9 +314,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
     }
 
     private void archiveSaving(Saving selectedSaving) {
-        AlarmUtil.cancel(this, selectedSaving);
         selectedSaving.setIsArchived(Saving.IS_ARCHIVE);
-        selectedSaving.setDeadline(AlarmUtil.NO_ALARM);
         savingRepository.update(selectedSaving);
         refreshList();
     }
