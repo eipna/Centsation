@@ -62,7 +62,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         savingRepository = new SavingRepository(this);
         transactionRepository = new TransactionRepository(this);
 
-        savings = new ArrayList<>(savingRepository.getSavings(Saving.IS_ARCHIVE));
+        savings = new ArrayList<>(savingRepository.get(Saving.IS_ARCHIVE));
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
 
         savingAdapter = new SavingAdapter(this, this, savings);
@@ -72,7 +72,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
 
     private void unarchiveSaving(Saving selectedSaving) {
         selectedSaving.setIsArchived(Saving.NOT_ARCHIVE);
-        savingRepository.update(selectedSaving);
+        savingRepository.edit(selectedSaving);
         refreshList();
     }
 
@@ -124,7 +124,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     @SuppressLint("NotifyDataSetChanged")
     private void refreshList() {
         savings.clear();
-        savings.addAll(savingRepository.getSavings(Saving.IS_ARCHIVE));
+        savings.addAll(savingRepository.get(Saving.IS_ARCHIVE));
         savingAdapter.notifyDataSetChanged();
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
     }

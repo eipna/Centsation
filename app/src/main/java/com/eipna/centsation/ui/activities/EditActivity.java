@@ -178,7 +178,7 @@ public class EditActivity extends BaseActivity {
                 AlarmUtil.set(this, editedSaving);
             }
 
-            savingRepository.update(editedSaving);
+            savingRepository.edit(editedSaving);
             setResult(RESULT_OK);
             finish();
         }

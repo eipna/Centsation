@@ -21,7 +21,7 @@ public class RebootReceiver extends BroadcastReceiver {
 
     private void rescheduleDeadlines(Context context) {
         try (SavingRepository savingRepository = new SavingRepository(context)) {
-            ArrayList<Saving> savings = new ArrayList<>(savingRepository.getSavings(Saving.NOT_ARCHIVE));
+            ArrayList<Saving> savings = new ArrayList<>(savingRepository.getAll());
             for (Saving saving : savings) {
                 if (saving.getDeadline() != AlarmUtil.NO_ALARM) {
                     AlarmUtil.set(context, saving);

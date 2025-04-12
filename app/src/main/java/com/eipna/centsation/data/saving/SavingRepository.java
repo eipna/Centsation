@@ -1,6 +1,5 @@
 package com.eipna.centsation.data.saving;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -45,18 +44,18 @@ public class SavingRepository extends Database {
         database.close();
     }
 
-    public void update(Saving updatedSaving) {
+    public void edit(Saving editedSaving) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(COLUMN_SAVING_NAME, updatedSaving.getName());
-        values.put(COLUMN_SAVING_CURRENT_SAVING, updatedSaving.getCurrentSaving());
-        values.put(COLUMN_SAVING_GOAL, updatedSaving.getGoal());
-        values.put(COLUMN_SAVING_NOTES, updatedSaving.getNotes());
-        values.put(COLUMN_SAVING_IS_ARCHIVED, updatedSaving.getIsArchived());
-        values.put(COLUMN_SAVING_DEADLINE, updatedSaving.getDeadline());
+        values.put(COLUMN_SAVING_NAME, editedSaving.getName());
+        values.put(COLUMN_SAVING_CURRENT_SAVING, editedSaving.getCurrentSaving());
+        values.put(COLUMN_SAVING_GOAL, editedSaving.getGoal());
+        values.put(COLUMN_SAVING_NOTES, editedSaving.getNotes());
+        values.put(COLUMN_SAVING_IS_ARCHIVED, editedSaving.getIsArchived());
+        values.put(COLUMN_SAVING_DEADLINE, editedSaving.getDeadline());
 
-        database.update(TABLE_SAVING, values, COLUMN_SAVING_ID + " = ?", new String[]{updatedSaving.getID()});
+        database.update(TABLE_SAVING, values, COLUMN_SAVING_ID + " = ?", new String[]{editedSaving.getID()});
         database.close();
     }
 
@@ -82,8 +81,7 @@ public class SavingRepository extends Database {
         database.close();
     }
 
-    @SuppressLint("Range")
-    public ArrayList<Saving> getSavings(int isArchive) {
+    public ArrayList<Saving> get(int isArchive) {
         ArrayList<Saving> list = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_SAVING + " WHERE " + COLUMN_SAVING_IS_ARCHIVED + " = ?";
@@ -92,13 +90,13 @@ public class SavingRepository extends Database {
         if (cursor.moveToFirst()) {
             do {
                 Saving queriedSaving = new Saving();
-                queriedSaving.setID(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_ID)));
-                queriedSaving.setName(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_NAME)));
-                queriedSaving.setCurrentSaving(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_CURRENT_SAVING)));
-                queriedSaving.setGoal(cursor.getDouble(cursor.getColumnIndex(COLUMN_SAVING_GOAL)));
-                queriedSaving.setNotes(cursor.getString(cursor.getColumnIndex(COLUMN_SAVING_NOTES)));
-                queriedSaving.setIsArchived(cursor.getInt(cursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));
-                queriedSaving.setDeadline(cursor.getLong(cursor.getColumnIndex(COLUMN_SAVING_DEADLINE)));
+                queriedSaving.setID(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SAVING_ID)));
+                queriedSaving.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SAVING_NAME)));
+                queriedSaving.setCurrentSaving(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SAVING_CURRENT_SAVING)));
+                queriedSaving.setGoal(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SAVING_GOAL)));
+                queriedSaving.setNotes(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SAVING_NOTES)));
+                queriedSaving.setIsArchived(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_SAVING_IS_ARCHIVED)));
+                queriedSaving.setDeadline(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SAVING_DEADLINE)));
                 list.add(queriedSaving);
             } while (cursor.moveToNext());
         }
