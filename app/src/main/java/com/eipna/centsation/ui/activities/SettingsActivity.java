@@ -25,6 +25,8 @@ import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.DateFormat;
 import com.eipna.centsation.data.Theme;
+import com.eipna.centsation.data.saving.Saving;
+import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
 import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.color.DynamicColors;
@@ -35,6 +37,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -196,12 +199,24 @@ public class SettingsActivity extends BaseActivity {
             });
         }
 
+        private boolean noSavingsFound() {
+            try (SavingRepository savingRepository = new SavingRepository(requireContext())) {
+                ArrayList<Saving> savings = new ArrayList<>(savingRepository.getAll());
+                if (savings.isEmpty()) return true;
+            }
+            return false;
+        }
+
         private void exportData() {
-            Intent exportIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-            exportIntent.addCategory(Intent.CATEGORY_OPENABLE);
-            exportIntent.setType("application/json");
-            exportIntent.putExtra(Intent.EXTRA_TITLE, "exported_savings.json");
-            exportDataLauncher.launch(exportIntent);
+            if (noSavingsFound()) {
+                Toast.makeText(requireContext(), R.string.toast_export_no_savings_found, Toast.LENGTH_SHORT).show();
+            } else {
+                Intent exportIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                exportIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                exportIntent.setType("application/json");
+                exportIntent.putExtra(Intent.EXTRA_TITLE, "exported_savings.json");
+                exportDataLauncher.launch(exportIntent);
+            }
         }
 
         private void importData() {

@@ -106,4 +106,27 @@ public class SavingRepository extends Database {
         database.close();
         return list;
     }
+
+    public ArrayList<Saving> getAll() {
+        ArrayList<Saving> list = new ArrayList<>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_SAVING, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Saving queriedSaving = new Saving();
+                queriedSaving.setID(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SAVING_ID)));
+                queriedSaving.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SAVING_NAME)));
+                queriedSaving.setCurrentSaving(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SAVING_CURRENT_SAVING)));
+                queriedSaving.setGoal(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SAVING_GOAL)));
+                queriedSaving.setNotes(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SAVING_NOTES)));
+                queriedSaving.setIsArchived(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_SAVING_IS_ARCHIVED)));
+                queriedSaving.setDeadline(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_SAVING_DEADLINE)));
+                list.add(queriedSaving);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return list;
+    }
 }
