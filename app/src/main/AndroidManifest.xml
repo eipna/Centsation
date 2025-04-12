@@ -49,7 +49,9 @@
             </intent-filter>
         </activity>
         <receiver android:name=".receiver.DeadlineReceiver"/>
-        <receiver android:name=".receiver.RebootReceiver" android:exported="true">
+        <receiver android:name=".receiver.RebootReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
