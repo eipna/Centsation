@@ -141,13 +141,8 @@ public class EditActivity extends BaseActivity {
                 Snackbar.make(binding.getRoot(), getString(R.string.snack_bar_permission_notifications), Snackbar.LENGTH_SHORT)
                         .setAction("Grant", v -> {
                             Intent intent;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
-                            } else {
-                                intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.setData(Uri.parse("package:" + getPackageName()));
-                            }
+                            intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
                             startActivity(intent);
                         }).show();
             } else {
