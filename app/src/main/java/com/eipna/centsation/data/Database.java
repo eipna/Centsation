@@ -1,32 +1,12 @@
 package com.eipna.centsation.data;
 
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.eipna.centsation.R;
-import com.eipna.centsation.data.saving.Saving;
-import com.eipna.centsation.util.AlarmUtil;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-
 public class Database extends SQLiteOpenHelper {
-
-    private final Context context;
 
     private static final String DATABASE_NAME = "centsation.db";
     private static final int DATABASE_VERSION = 1;
@@ -49,7 +29,6 @@ public class Database extends SQLiteOpenHelper {
 
     public Database(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
     }
 
     @Override
@@ -86,136 +65,5 @@ public class Database extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVING);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTION);
         onCreate(sqLiteDatabase);
-    }
-
-    @SuppressLint("Range")
-    public void exportJSON(Uri uri) {
-        SQLiteDatabase database = getReadableDatabase();
-        Cursor savingCursor = database.rawQuery("SELECT * FROM " + TABLE_SAVING, null);
-        Cursor transactionCursor = database.rawQuery("SELECT * FROM " + TABLE_TRANSACTION, null);
-
-        JSONArray savingArray = new JSONArray();
-        JSONArray transactionArray = new JSONArray();
-
-        try {
-            if (savingCursor.moveToFirst()) {
-                do {
-                    JSONObject savingObject = new JSONObject();
-                    savingObject.put(COLUMN_SAVING_ID, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_ID)));
-                    savingObject.put(COLUMN_SAVING_NAME, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NAME)));
-                    savingObject.put(COLUMN_SAVING_CURRENT_SAVING, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_CURRENT_SAVING)));
-                    savingObject.put(COLUMN_SAVING_GOAL, savingCursor.getDouble(savingCursor.getColumnIndex(COLUMN_SAVING_GOAL)));
-                    savingObject.put(COLUMN_SAVING_NOTES, savingCursor.getString(savingCursor.getColumnIndex(COLUMN_SAVING_NOTES)));
-                    savingObject.put(COLUMN_SAVING_IS_ARCHIVED, savingCursor.getInt(savingCursor.getColumnIndex(COLUMN_SAVING_IS_ARCHIVED)));
-                    savingObject.put(COLUMN_SAVING_DEADLINE, savingCursor.getLong(savingCursor.getColumnIndex(COLUMN_SAVING_DEADLINE)));
-                    savingArray.put(savingObject);
-                } while (savingCursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.e("Export", "Something went wrong when collecting savings");
-        }
-
-        try {
-            if (transactionCursor.moveToFirst()) {
-                do {
-                    JSONObject transactionObject = new JSONObject();
-                    transactionObject.put(COLUMN_TRANSACTION_ID, transactionCursor.getInt(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_ID)));
-                    transactionObject.put(COLUMN_TRANSACTION_SAVING_ID, transactionCursor.getString(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_SAVING_ID)));
-                    transactionObject.put(COLUMN_TRANSACTION_AMOUNT, transactionCursor.getDouble(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_AMOUNT)));
-                    transactionObject.put(COLUMN_TRANSACTION_TYPE, transactionCursor.getString(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_TYPE)));
-                    transactionObject.put(COLUMN_TRANSACTION_DATE, transactionCursor.getLong(transactionCursor.getColumnIndex(COLUMN_TRANSACTION_DATE)));
-                    transactionArray.put(transactionObject);
-                } while (transactionCursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.e("Export", "Something went wrong when collecting transactions");
-        }
-
-        try {
-            JSONObject exportData = new JSONObject();
-            exportData.put(TABLE_SAVING, savingArray);
-            exportData.put(TABLE_TRANSACTION, transactionArray);
-
-            assert context != null;
-            OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
-
-            assert outputStream != null;
-            outputStream.write(exportData.toString().getBytes());
-            outputStream.close();
-
-            Toast.makeText(context, context.getString(R.string.toast_export_successful), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Log.e("Export", "Something went wrong when exporting data");
-        } finally {
-            savingCursor.close();
-            transactionCursor.close();
-            database.close();
-        }
-    }
-
-    public void importJSON(Uri uri) {
-        SQLiteDatabase database = getWritableDatabase();
-        StringBuilder jsonBuilder = new StringBuilder();
-
-        try {
-            assert context != null;
-            InputStream inputStream = context.getContentResolver().openInputStream(uri);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                jsonBuilder.append(line);
-            }
-            bufferedReader.close();
-
-            JSONObject importData = new JSONObject(jsonBuilder.toString());
-            JSONArray savingArray = importData.getJSONArray(TABLE_SAVING);
-            JSONArray transactionArray = importData.getJSONArray(TABLE_TRANSACTION);
-
-            database.beginTransaction();
-            try {
-                for (int i = 0; i < savingArray.length(); i++) {
-                    JSONObject savingObject = savingArray.getJSONObject(i);
-                    ContentValues values = new ContentValues();
-
-                    if (savingObject.getLong(COLUMN_SAVING_DEADLINE) != AlarmUtil.NO_ALARM) {
-                        Saving rescheduledSaving = new Saving();
-                        rescheduledSaving.setName(savingObject.getString(COLUMN_SAVING_NAME));
-                        rescheduledSaving.setDeadline(savingObject.getLong(COLUMN_SAVING_DEADLINE));
-                        AlarmUtil.set(context, rescheduledSaving);
-                    }
-
-                    values.put(COLUMN_SAVING_ID, savingObject.getString(COLUMN_SAVING_ID));
-                    values.put(COLUMN_SAVING_NAME, savingObject.getString(COLUMN_SAVING_NAME));
-                    values.put(COLUMN_SAVING_CURRENT_SAVING, savingObject.getDouble(COLUMN_SAVING_CURRENT_SAVING));
-                    values.put(COLUMN_SAVING_GOAL, savingObject.getDouble(COLUMN_SAVING_GOAL));
-                    values.put(COLUMN_SAVING_NOTES, savingObject.getString(COLUMN_SAVING_NOTES));
-                    values.put(COLUMN_SAVING_IS_ARCHIVED, savingObject.getInt(COLUMN_SAVING_IS_ARCHIVED));
-                    values.put(COLUMN_SAVING_DEADLINE, savingObject.getLong(COLUMN_SAVING_DEADLINE));
-                    database.insert(TABLE_SAVING, null, values);
-                }
-
-                for (int i = 0; i < transactionArray.length(); i++) {
-                    JSONObject transactionObject = transactionArray.getJSONObject(i);
-                    ContentValues values = new ContentValues();
-                    values.put(COLUMN_TRANSACTION_SAVING_ID, transactionObject.getString(COLUMN_TRANSACTION_SAVING_ID));
-                    values.put(COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(COLUMN_TRANSACTION_AMOUNT));
-                    values.put(COLUMN_TRANSACTION_TYPE, transactionObject.getString(COLUMN_TRANSACTION_TYPE));
-                    values.put(COLUMN_TRANSACTION_DATE, transactionObject.getLong(COLUMN_TRANSACTION_DATE));
-                    database.insert(TABLE_TRANSACTION, null, values);
-                }
-
-                database.setTransactionSuccessful();
-                Toast.makeText(context, context.getString(R.string.toast_import_successful), Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                Log.e("Import", "Error importing data");
-            } finally {
-                database.endTransaction();
-            }
-        } catch (Exception e) {
-            Log.e("Import", "Error reading JSON file");
-        } finally {
-            database.close();
-        }
     }
 }

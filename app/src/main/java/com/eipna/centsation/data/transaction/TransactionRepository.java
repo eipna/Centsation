@@ -1,6 +1,5 @@
 package com.eipna.centsation.data.transaction;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -28,8 +27,7 @@ public class TransactionRepository extends Database {
         database.close();
     }
 
-    @SuppressLint("Range")
-    public ArrayList<Transaction> getTransactions(String savingID) {
+    public ArrayList<Transaction> get(String savingID) {
         ArrayList<Transaction> list = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_TRANSACTION + " WHERE " + COLUMN_TRANSACTION_SAVING_ID + " = ?";
@@ -38,11 +36,32 @@ public class TransactionRepository extends Database {
         if (cursor.moveToFirst()) {
             do {
                 Transaction queriedTransaction = new Transaction();
-                queriedTransaction.setID(cursor.getInt(cursor.getColumnIndex(COLUMN_TRANSACTION_ID)));
-                queriedTransaction.setSavingID(cursor.getString(cursor.getColumnIndex(COLUMN_TRANSACTION_SAVING_ID)));
-                queriedTransaction.setAmount(cursor.getDouble(cursor.getColumnIndex(COLUMN_TRANSACTION_AMOUNT)));
-                queriedTransaction.setType(cursor.getString(cursor.getColumnIndex(COLUMN_TRANSACTION_TYPE)));
-                queriedTransaction.setDate(cursor.getLong(cursor.getColumnIndex(COLUMN_TRANSACTION_DATE)));
+                queriedTransaction.setID(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_ID)));
+                queriedTransaction.setSavingID(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_SAVING_ID)));
+                queriedTransaction.setAmount(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_AMOUNT)));
+                queriedTransaction.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_TYPE)));
+                queriedTransaction.setDate(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_DATE)));
+                list.add(queriedTransaction);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return list;
+    }
+
+    public ArrayList<Transaction> getAll() {
+        ArrayList<Transaction> list = new ArrayList<>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_TRANSACTION, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Transaction queriedTransaction = new Transaction();
+                queriedTransaction.setID(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_ID)));
+                queriedTransaction.setSavingID(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_SAVING_ID)));
+                queriedTransaction.setAmount(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_AMOUNT)));
+                queriedTransaction.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_TYPE)));
+                queriedTransaction.setDate(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_TRANSACTION_DATE)));
                 list.add(queriedTransaction);
             } while (cursor.moveToNext());
         }

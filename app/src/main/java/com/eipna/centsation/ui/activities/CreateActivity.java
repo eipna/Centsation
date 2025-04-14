@@ -154,25 +154,21 @@ public class CreateActivity extends BaseActivity {
     }
 
     private void hasNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            hasAlarmPermission();
-        } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
-            Snackbar.make(binding.getRoot(), getString(R.string.snack_bar_permission_notifications), Snackbar.LENGTH_SHORT)
-                    .setAction("Grant", v -> {
-                        Intent intent;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                hasAlarmPermission();
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
+                Snackbar.make(binding.getRoot(), getString(R.string.snack_bar_permission_notifications), Snackbar.LENGTH_SHORT)
+                        .setAction("Grant", v -> {
+                            Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                             intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
-                        } else {
-                            intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            intent.setData(Uri.parse("package:" + getPackageName()));
-                        }
-                        startActivity(intent);
-                    }).show();
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            startActivity(intent);
+                        }).show();
+            } else {
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
             }
+        } else {
+            hasAlarmPermission();
         }
     }
 

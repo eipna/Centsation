@@ -1,13 +1,16 @@
 package com.eipna.centsation.ui.activities;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,16 +30,23 @@ import com.eipna.centsation.data.DateFormat;
 import com.eipna.centsation.data.Theme;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingRepository;
+import com.eipna.centsation.data.transaction.Transaction;
+import com.eipna.centsation.data.transaction.TransactionRepository;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
+import com.eipna.centsation.util.AlarmUtil;
 import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class SettingsActivity extends BaseActivity {
@@ -75,7 +85,8 @@ public class SettingsActivity extends BaseActivity {
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
         private PreferenceUtil preferences;
-        private Database database;
+        private SavingRepository savingRepository;
+        private TransactionRepository transactionRepository;
 
         private ListPreference listDeadlineFormat;
         private ListPreference listContrast;
@@ -91,16 +102,24 @@ public class SettingsActivity extends BaseActivity {
 
         private int easterEggCounter;
 
-        private final ActivityResultLauncher<Intent> exportDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            assert result.getData() != null;
-            Uri uri = result.getData().getData();
-            database.exportJSON(uri);
+        private final ActivityResultLauncher<Intent> exportDataLauncher =
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            exportJSON(data.getData());
+                        }
+                    }
         });
 
-        private final ActivityResultLauncher<Intent> importDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            assert result.getData() != null;
-            Uri uri = result.getData().getData();
-            database.importJSON(uri);
+        private final ActivityResultLauncher<Intent> importDataLauncher =
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            importJSON(data.getData());
+                        }
+                    }
         });
 
         @Override
@@ -228,7 +247,8 @@ public class SettingsActivity extends BaseActivity {
 
         private void setPreferences() {
             preferences = new PreferenceUtil(requireContext());
-            database = new Database(requireContext());
+            savingRepository = new SavingRepository(requireContext());
+            transactionRepository = new TransactionRepository(requireContext());
 
             listDeadlineFormat = findPreference("deadline_format");
             listCurrency = findPreference("currency");
@@ -268,6 +288,126 @@ public class SettingsActivity extends BaseActivity {
                 Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             return stringBuilder.toString();
+        }
+
+        private void exportJSON(Uri uri) {
+            ArrayList<Saving> savings = new ArrayList<>(savingRepository.getAll());
+            ArrayList<Transaction> transactions = new ArrayList<>(transactionRepository.getAll());
+
+            JSONArray savingJsonArray = new JSONArray();
+            JSONArray transactionJsonArray = new JSONArray();
+
+            try {
+                for (Saving saving : savings) {
+                    JSONObject savingObject = new JSONObject();
+                    savingObject.put(Database.COLUMN_SAVING_ID, saving.getID());
+                    savingObject.put(Database.COLUMN_SAVING_NAME, saving.getName());
+                    savingObject.put(Database.COLUMN_SAVING_CURRENT_SAVING, saving.getCurrentSaving());
+                    savingObject.put(Database.COLUMN_SAVING_GOAL, saving.getGoal());
+                    savingObject.put(Database.COLUMN_SAVING_NOTES, saving.getNotes());
+                    savingObject.put(Database.COLUMN_SAVING_IS_ARCHIVED, saving.getIsArchived());
+                    savingObject.put(Database.COLUMN_SAVING_DEADLINE, saving.getDeadline());
+                    savingJsonArray.put(savingObject);
+                }
+            } catch (Exception e) {
+                Log.e("Export", "Something went wrong when collecting savings", e);
+            }
+
+            try {
+                for (Transaction transaction : transactions) {
+                    JSONObject transactionObject = new JSONObject();
+                    transactionObject.put(Database.COLUMN_TRANSACTION_ID, transaction.getID());
+                    transactionObject.put(Database.COLUMN_TRANSACTION_SAVING_ID, transaction.getSavingID());
+                    transactionObject.put(Database.COLUMN_TRANSACTION_AMOUNT, transaction.getAmount());
+                    transactionObject.put(Database.COLUMN_TRANSACTION_TYPE, transaction.getType());
+                    transactionObject.put(Database.COLUMN_TRANSACTION_DATE, transaction.getDate());
+                    transactionJsonArray.put(transactionObject);
+                }
+            } catch (Exception e) {
+                Log.e("Export", "Something went wrong when collecting saving transactions", e);
+            }
+
+            try {
+                JSONObject jsonExport = new JSONObject();
+                jsonExport.put(Database.TABLE_SAVING, savingJsonArray);
+                jsonExport.put(Database.TABLE_TRANSACTION, transactionJsonArray);
+
+                OutputStream outputStream = requireContext().getContentResolver().openOutputStream(uri);
+                if (outputStream != null) {
+                    outputStream.write(jsonExport.toString().getBytes());
+                    outputStream.close();
+                }
+
+                Toast.makeText(requireContext(), R.string.toast_export_successful, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.e("Export", "Something went wrong when exporting", e);
+            }
+        }
+
+        private void importJSON(Uri uri) {
+            StringBuilder jsonBuilder = new StringBuilder();
+
+            try (Database database = new Database(requireContext())) {
+                SQLiteDatabase writableDatabase = database.getWritableDatabase();
+
+                InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+                bufferedReader.close();
+
+                JSONObject jsonImport = new JSONObject(jsonBuilder.toString());
+                JSONArray savingJsonArray = jsonImport.getJSONArray(Database.TABLE_SAVING);
+                JSONArray transactionJsonArray = jsonImport.getJSONArray(Database.TABLE_TRANSACTION);
+
+                try {
+                    writableDatabase.beginTransaction();
+                    for (int i = 0; i < savingJsonArray.length(); i++) {
+                        JSONObject savingObject = savingJsonArray.getJSONObject(i);
+                        ContentValues savingValues = new ContentValues();
+
+                        long savingDeadline = savingObject.getLong(Database.COLUMN_SAVING_DEADLINE);
+                        if (savingDeadline != AlarmUtil.NO_ALARM) {
+                            Saving rescheduledSaving = new Saving();
+                            rescheduledSaving.setName(savingObject.getString(Database.COLUMN_SAVING_NAME));
+                            rescheduledSaving.setDeadline(savingObject.getLong(Database.COLUMN_SAVING_DEADLINE));
+                            AlarmUtil.set(requireContext(), rescheduledSaving);
+                        }
+
+                        savingValues.put(Database.COLUMN_SAVING_ID, savingObject.getString(Database.COLUMN_SAVING_ID));
+                        savingValues.put(Database.COLUMN_SAVING_NAME, savingObject.getString(Database.COLUMN_SAVING_NAME));
+                        savingValues.put(Database.COLUMN_SAVING_CURRENT_SAVING, savingObject.getDouble(Database.COLUMN_SAVING_CURRENT_SAVING));
+                        savingValues.put(Database.COLUMN_SAVING_GOAL, savingObject.getDouble(Database.COLUMN_SAVING_GOAL));
+                        savingValues.put(Database.COLUMN_SAVING_NOTES, savingObject.getString(Database.COLUMN_SAVING_NOTES));
+                        savingValues.put(Database.COLUMN_SAVING_IS_ARCHIVED, savingObject.getInt(Database.COLUMN_SAVING_IS_ARCHIVED));
+                        savingValues.put(Database.COLUMN_SAVING_DEADLINE, savingObject.getLong(Database.COLUMN_SAVING_DEADLINE));
+                        writableDatabase.insert(Database.TABLE_SAVING, null, savingValues);
+                    }
+
+                    for (int i = 0; i < transactionJsonArray.length(); i++) {
+                        JSONObject transactionObject = transactionJsonArray.getJSONObject(i);
+                        ContentValues transactionValues = new ContentValues();
+
+                        transactionValues.put(Database.COLUMN_TRANSACTION_SAVING_ID, transactionObject.getString(Database.COLUMN_TRANSACTION_SAVING_ID));
+                        transactionValues.put(Database.COLUMN_TRANSACTION_AMOUNT, transactionObject.getDouble(Database.COLUMN_TRANSACTION_AMOUNT));
+                        transactionValues.put(Database.COLUMN_TRANSACTION_TYPE, transactionObject.getString(Database.COLUMN_TRANSACTION_TYPE));
+                        transactionValues.put(Database.COLUMN_TRANSACTION_DATE, transactionObject.getLong(Database.COLUMN_TRANSACTION_DATE));
+                        writableDatabase.insert(Database.TABLE_TRANSACTION, null, transactionValues);
+                    }
+
+                    writableDatabase.setTransactionSuccessful();
+                    Toast.makeText(requireContext(), R.string.toast_import_successful, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.e("Import", "Something went wrong while importing savings or transactions", e);
+                } finally {
+                    writableDatabase.endTransaction();
+                }
+            } catch (Exception e) {
+                Log.e("Import", "Something went wrong while importing", e);
+            }
         }
     }
 }

@@ -104,7 +104,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     private void showHistoryDialog(Saving selectedSaving) {
         View transactionDialog = LayoutInflater.from(this).inflate(R.layout.dialog_saving_history, null, false);
 
-        ArrayList<Transaction> transactions = transactionRepository.getTransactions(selectedSaving.getID());
+        ArrayList<Transaction> transactions = transactionRepository.get(selectedSaving.getID());
         TransactionAdapter adapter = new TransactionAdapter(this, transactions);
 
         RecyclerView transactionList = transactionDialog.findViewById(R.id.transaction_list);

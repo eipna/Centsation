@@ -30,6 +30,7 @@
     <string name="field_saving_notes">Notes</string>
     <string name="field_saving_deadline">Deadline</string>
 
+    <string name="dialog_title_import_notice">Notice</string>
     <string name="dialog_title_request_alarm_permission">Alarm permission</string>
     <string name="dialog_title_create_saving">Create saving</string>
     <string name="dialog_title_edit_saving">Edit saving</string>
@@ -37,6 +38,7 @@
     <string name="dialog_title_create_transaction">Create transaction</string>
     <string name="dialog_title_history_saving">History</string>
 
+    <string name="dialog_message_import_notice">The imported savings data includes deadlines. To enable deadline reminders, the app requires certain permissions. Please grant these permissions in the following prompt.</string>
     <string name="dialog_message_delete_saving">You are about to delete this saving, this action cannot be undone.</string>
     <string name="dialog_message_request_alarm_permission">This app requires precise alarm scheduling for deadline reminders. Please grant this permission.</string>
 
@@ -60,10 +62,11 @@
     <string name="menu_item_sort_ascending">Ascending</string>
     <string name="menu_item_sort_descending">Descending</string>
 
-    <string name="toast_export_no_savings_found">No savings to export</string>
-    <string name="toast_export_successful">Export successful</string>
     <string name="toast_import_successful">Import successful</string>
+    <string name="toast_export_successful">Export successful</string>
+    <string name="toast_export_no_savings_found">No savings to export</string>
     <string name="toast_notification_permission_denied">Notification permission denied</string>
+    <string name="toast_deny_import_notice">Deadlines may not work properly</string>
 
     <string name="tooltip_share">Share Notes</string>
     <string name="tooltip_update">New Transaction</string>
