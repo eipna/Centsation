@@ -401,6 +401,7 @@ public class SettingsActivity extends BaseActivity {
                         long savingDeadline = savingObject.getLong(Database.COLUMN_SAVING_DEADLINE);
                         if (savingDeadline != AlarmUtil.NO_ALARM) {
                             Saving rescheduledSaving = new Saving();
+                            rescheduledSaving.setID(savingObject.getString(Database.COLUMN_SAVING_ID));
                             rescheduledSaving.setName(savingObject.getString(Database.COLUMN_SAVING_NAME));
                             rescheduledSaving.setDeadline(savingObject.getLong(Database.COLUMN_SAVING_DEADLINE));
                             AlarmUtil.set(requireContext(), rescheduledSaving);
