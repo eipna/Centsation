@@ -139,7 +139,7 @@ public class CreateActivity extends BaseActivity {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_request_alarm_permission)
                 .setMessage(R.string.dialog_message_request_alarm_permission)
-                .setIcon(R.drawable.ic_info)
+                .setIcon(R.drawable.ic_alarm)
                 .setNegativeButton(R.string.dialog_button_cancel, null)
                 .setPositiveButton(R.string.dialog_button_grant, (dialog, which) -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
