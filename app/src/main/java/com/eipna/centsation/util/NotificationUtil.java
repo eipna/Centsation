@@ -39,10 +39,12 @@ public class NotificationUtil {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, savingRequestCode, notificationIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_DEADLINE_ID)
-                .setSmallIcon(R.drawable.ic_stat_notification)
+                .setSmallIcon(R.drawable.ic_stat_centsation)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentTitle("Saving Deadline")
-                .setContentText(String.format("The deadline for your savings, %s, has been reached.", savingName))
+                .setContentTitle("Deadline")
+                .setContentText(String.format("The deadline for your %s savings has passed.", savingName))
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(String.format("The deadline for your %s savings has passed.", savingName)))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
