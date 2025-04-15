@@ -74,12 +74,4 @@ public class PreferenceUtil {
     public String getDeadlineFormat() {
         return sharedPreferences.getString("deadline_format", DateFormat.MM_DD_YYYY.PATTERN);
     }
-
-    public void setShowImportNotice(boolean value) {
-        sharedPreferences.edit().putBoolean("show_import_notice", value).apply();
-    }
-
-    public boolean shouldShowImportNotice() {
-        return sharedPreferences.getBoolean("show_import_notice", true);
-    }
 }

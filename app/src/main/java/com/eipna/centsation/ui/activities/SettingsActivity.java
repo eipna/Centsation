@@ -11,14 +11,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -38,7 +35,6 @@ import com.eipna.centsation.data.transaction.TransactionRepository;
 import com.eipna.centsation.databinding.ActivitySettingsBinding;
 import com.eipna.centsation.util.AlarmUtil;
 import com.eipna.centsation.util.PreferenceUtil;
-import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.shape.MaterialShapeDrawable;
@@ -137,11 +133,7 @@ public class SettingsActivity extends BaseActivity {
             });
 
             importSavings.setOnPreferenceClickListener(preference -> {
-                if (preferences.shouldShowImportNotice()) {
-                    showImportNoticeDialog();
-                } else {
-                    importData();
-                }
+                importData();
                 return true;
             });
 
@@ -224,27 +216,6 @@ public class SettingsActivity extends BaseActivity {
                 showLicenseDialog();
                 return true;
             });
-        }
-
-        private void showImportNoticeDialog() {
-            View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_import_notice, null, false);
-            MaterialCheckBox doNotShowAgain = dialogView.findViewById(R.id.never_show_again);
-
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(R.string.dialog_title_import_notice)
-                    .setMessage(R.string.dialog_message_import_notice)
-                    .setIcon(R.drawable.ic_info)
-                    .setView(dialogView)
-                    .setPositiveButton(R.string.dialog_button_okay, null)
-                    .setNegativeButton(R.string.dialog_button_close, null);
-
-            AlertDialog dialog = builder.create();
-            dialog.setOnShowListener(dialogInterface -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-                preferences.setShowImportNotice(!doNotShowAgain.isChecked());
-                importData();
-                dialog.dismiss();
-            }));
-            dialog.show();
         }
 
         private boolean noSavingsFound() {

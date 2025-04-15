@@ -30,9 +30,6 @@
     <string name="field_saving_notes">Notes</string>
     <string name="field_saving_deadline">Deadline</string>
 
-    <string name="check_box_never_show_again">Never show again</string>
-
-    <string name="dialog_title_import_notice">Import notice</string>
     <string name="dialog_title_request_alarm_permission">Alarm permission</string>
     <string name="dialog_title_create_saving">Create saving</string>
     <string name="dialog_title_edit_saving">Edit saving</string>
@@ -40,11 +37,9 @@
     <string name="dialog_title_create_transaction">Create transaction</string>
     <string name="dialog_title_history_saving">History</string>
 
-    <string name="dialog_message_import_notice">A backup may include deadlines. Make sure the application has all the necessary permissions for it to work properly.</string>
     <string name="dialog_message_delete_saving">You are about to delete this saving, this action cannot be undone.</string>
     <string name="dialog_message_request_alarm_permission">This app requires precise alarm scheduling for deadline reminders. Please grant this permission.</string>
 
-    <string name="dialog_button_okay">Okay</string>
     <string name="dialog_button_grant">Grant</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_create">Create</string>
