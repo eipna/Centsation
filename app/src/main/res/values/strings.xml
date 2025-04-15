@@ -78,7 +78,7 @@
     <string name="tooltip_unarchive">Unarchive</string>
     <string name="tooltip_delete">Delete</string>
 
-    <string name="snack_bar_permission_notifications">This feature requires notification permissions to work.</string>
+    <string name="snack_bar_permission_notifications">Deadlines requires notification permissions to work.</string>
 
     <!-- App Preference Category -->
     <string name="preference_category_appearance">Appearance</string>
