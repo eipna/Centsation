@@ -33,6 +33,35 @@ Centsation is the easy-to-use savings tracker that helps you reach your financia
 	</div>
 </div>
 
+## Verification
+
+APK releases on GitHub are signed using my key. They can
+be verified using
+[apksigner](https://developer.android.com/studio/command-line/apksigner.html#options-verify):
+
+```
+apksigner verify --print-certs --verbose centsation.apk
+```
+
+The output should look like:
+
+```
+Verifies
+Verified using v2 scheme (APK Signature Scheme v2): true
+```
+
+The certificate fingerprints should correspond to the ones listed below:
+
+```
+CN=Vrixzandro Eliponga
+O=OSSentials
+OU=Hobbyist Developer
+Certificate fingerprints:
+   MD5:  a8a82d68a60fe6ecf45eff4550b94d6f
+   SHA1: af8be376426c6725fc3bdb287abeb268bf94b768
+   SHA256: 561f3fec72e1f9878c2749d079f8b2175d02131c842955714e63365da5301baa
+```
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0. See the
