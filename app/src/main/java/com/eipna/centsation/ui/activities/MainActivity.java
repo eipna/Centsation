@@ -2,7 +2,6 @@ package com.eipna.centsation.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,7 +34,6 @@ import com.eipna.centsation.ui.adapters.TransactionAdapter;
 import com.eipna.centsation.util.AlarmUtil;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.radiobutton.MaterialRadioButton;
-import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -74,9 +72,6 @@ public class MainActivity extends BaseActivity implements SavingListener {
         EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        Drawable drawable = MaterialShapeDrawable.createWithElevationOverlay(this);
-        binding.appBar.setStatusBarForeground(drawable);
         setSupportActionBar(binding.toolbar);
 
         savingRepository = new SavingRepository(this);

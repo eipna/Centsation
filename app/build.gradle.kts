@@ -5,22 +5,11 @@ plugins {
     id("com.android.application")
 }
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystorePropertiesFile: File = rootProject.file("keystore.properties")
 val keystoreProperties = Properties()
-
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-}
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
-    signingConfigs {
-        create("release") {
-            storePassword = keystoreProperties["storePassword"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            keyAlias = keystoreProperties["keyAlias"] as String
-            storeFile = file(keystoreProperties["storeFile"] as String)
-        }
-    }
     namespace = "com.eipna.centsation"
     compileSdk = 35
 
@@ -32,6 +21,14 @@ android {
         versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
     }
 
     buildTypes {

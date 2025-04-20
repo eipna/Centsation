@@ -2,7 +2,6 @@ package com.eipna.centsation.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.eipna.centsation.databinding.ActivityArchiveBinding;
 import com.eipna.centsation.ui.adapters.SavingAdapter;
 import com.eipna.centsation.ui.adapters.TransactionAdapter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.shape.MaterialShapeDrawable;
 
 import java.util.ArrayList;
 
@@ -50,9 +48,6 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         EdgeToEdge.enable(this);
         binding = ActivityArchiveBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        Drawable drawable = MaterialShapeDrawable.createWithElevationOverlay(this);
-        binding.appBar.setStatusBarForeground(drawable);
 
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {

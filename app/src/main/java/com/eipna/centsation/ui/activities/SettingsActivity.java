@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +36,6 @@ import com.eipna.centsation.util.AlarmUtil;
 import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.shape.MaterialShapeDrawable;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -59,9 +57,6 @@ public class SettingsActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        Drawable drawable = MaterialShapeDrawable.createWithElevationOverlay(this);
-        binding.appBar.setStatusBarForeground(drawable);
 
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
