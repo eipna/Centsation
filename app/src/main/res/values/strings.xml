@@ -19,7 +19,7 @@
     <string name="radio_button_deposit">Deposit</string>
     <string name="radio_button_withdraw">Withdraw</string>
 
-    <string name="field_error_required">*required</string>
+    <string name="field_error_required">This field is required</string>
     <string name="field_error_empty_saving">Please enter a value</string>
     <string name="field_error_negative_saving">Saving cannot be negative</string>
 
