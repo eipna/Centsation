@@ -14,7 +14,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.graphics.Insets;
 import androidx.core.view.MenuCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,14 +76,19 @@ public class MainActivity extends BaseActivity implements SavingListener {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
+        savings = new ArrayList<>();
         savingRepository = new SavingRepository(this);
         transactionRepository = new TransactionRepository(this);
 
         sortCriteria = preferences.getSortCriteria();
         isSortAscending = preferences.getSortOrder();
 
-        savings = new ArrayList<>();
         savings.addAll(savingRepository.get(Saving.NOT_ARCHIVE));
         savingAdapter = new SavingAdapter(this, this, savings);
         sortSavings(sortCriteria);
@@ -103,6 +111,7 @@ public class MainActivity extends BaseActivity implements SavingListener {
         savings.clear();
         savings.addAll(savingRepository.get(Saving.NOT_ARCHIVE));
         sortSavings(sortCriteria);
+
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
         savingAdapter.notifyDataSetChanged();
     }
@@ -111,9 +120,10 @@ public class MainActivity extends BaseActivity implements SavingListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        MenuCompat.setGroupDividerEnabled(menu, true);
 
+        MenuCompat.setGroupDividerEnabled(menu, true);
         loadSortingMenu(menu);
+
         return true;
     }
 
