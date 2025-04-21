@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
@@ -142,13 +143,13 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
         Intent editIntent = new Intent(this, EditActivity.class);
-        editIntent.putExtra("id", selectedSaving.getID());
-        editIntent.putExtra("name", selectedSaving.getName());
-        editIntent.putExtra("current_saving", selectedSaving.getCurrentSaving());
-        editIntent.putExtra("goal", selectedSaving.getGoal());
-        editIntent.putExtra("notes", selectedSaving.getNotes());
-        editIntent.putExtra("deadline", selectedSaving.getDeadline());
-        editIntent.putExtra("is_archive", selectedSaving.getIsArchived());
+        editIntent.putExtra(Database.COLUMN_SAVING_ID, selectedSaving.getID());
+        editIntent.putExtra(Database.COLUMN_SAVING_NAME, selectedSaving.getName());
+        editIntent.putExtra(Database.COLUMN_SAVING_CURRENT_SAVING, selectedSaving.getCurrentSaving());
+        editIntent.putExtra(Database.COLUMN_SAVING_GOAL, selectedSaving.getGoal());
+        editIntent.putExtra(Database.COLUMN_SAVING_NOTES, selectedSaving.getNotes());
+        editIntent.putExtra(Database.COLUMN_SAVING_DEADLINE, selectedSaving.getDeadline());
+        editIntent.putExtra(Database.COLUMN_SAVING_IS_ARCHIVED, selectedSaving.getIsArchived());
         editSavingLauncher.launch(editIntent);
     }
 

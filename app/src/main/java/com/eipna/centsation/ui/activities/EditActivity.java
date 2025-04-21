@@ -27,6 +27,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
+import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.databinding.ActivityEditBinding;
@@ -83,13 +84,13 @@ public class EditActivity extends BaseActivity {
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         savingRepository = new SavingRepository(this);
 
-        IDExtra = getIntent().getStringExtra("id");
-        nameExtra = getIntent().getStringExtra("name");
-        currentSavingExtra = getIntent().getDoubleExtra("current_saving", -1);
-        goalExtra = getIntent().getDoubleExtra("goal", -1);
-        notesExtra = getIntent().getStringExtra("notes");
-        deadlineExtra = getIntent().getLongExtra("deadline", AlarmUtil.NO_ALARM);
-        isArchiveExtra = getIntent().getIntExtra("is_archive", Saving.NOT_ARCHIVE);
+        IDExtra = getIntent().getStringExtra(Database.COLUMN_SAVING_ID);
+        nameExtra = getIntent().getStringExtra(Database.COLUMN_SAVING_NAME);
+        currentSavingExtra = getIntent().getDoubleExtra(Database.COLUMN_SAVING_CURRENT_SAVING, -1);
+        goalExtra = getIntent().getDoubleExtra(Database.COLUMN_SAVING_GOAL, -1);
+        notesExtra = getIntent().getStringExtra(Database.COLUMN_SAVING_NOTES);
+        deadlineExtra = getIntent().getLongExtra(Database.COLUMN_SAVING_DEADLINE, AlarmUtil.NO_ALARM);
+        isArchiveExtra = getIntent().getIntExtra(Database.COLUMN_SAVING_IS_ARCHIVED, Saving.NOT_ARCHIVE);
 
         selectedCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
         binding.fieldSavingGoalLayout.setPrefixText(selectedCurrencySymbol);

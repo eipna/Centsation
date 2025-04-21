@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
+import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
@@ -219,11 +220,11 @@ public class MainActivity extends BaseActivity implements SavingListener {
         View historyDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_saving_history, null, false);
 
         ArrayList<Transaction> transactions = transactionRepository.get(selectedSaving.getID());
-        TransactionAdapter adapter = new TransactionAdapter(this, transactions);
+        TransactionAdapter transactionAdapter = new TransactionAdapter(this, transactions);
 
-        RecyclerView transactionList = historyDialogView.findViewById(R.id.transaction_list);
-        transactionList.setLayoutManager(new LinearLayoutManager(this));
-        transactionList.setAdapter(adapter);
+        RecyclerView historyList = historyDialogView.findViewById(R.id.transaction_list);
+        historyList.setLayoutManager(new LinearLayoutManager(this));
+        historyList.setAdapter(transactionAdapter);
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.dialog_title_history_saving)
@@ -253,8 +254,8 @@ public class MainActivity extends BaseActivity implements SavingListener {
 
     private void showShareIntent(String notes) {
         Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.setType("text/plain");
+        sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, notes);
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
@@ -328,13 +329,13 @@ public class MainActivity extends BaseActivity implements SavingListener {
     public void OnClick(int position) {
         Saving selectedSaving = savings.get(position);
         Intent editIntent = new Intent(MainActivity.this, EditActivity.class);
-        editIntent.putExtra("id", selectedSaving.getID());
-        editIntent.putExtra("name", selectedSaving.getName());
-        editIntent.putExtra("current_saving", selectedSaving.getCurrentSaving());
-        editIntent.putExtra("goal", selectedSaving.getGoal());
-        editIntent.putExtra("notes", selectedSaving.getNotes());
-        editIntent.putExtra("deadline", selectedSaving.getDeadline());
-        editIntent.putExtra("is_archive", selectedSaving.getIsArchived());
+        editIntent.putExtra(Database.COLUMN_SAVING_ID, selectedSaving.getID());
+        editIntent.putExtra(Database.COLUMN_SAVING_NAME, selectedSaving.getName());
+        editIntent.putExtra(Database.COLUMN_SAVING_CURRENT_SAVING, selectedSaving.getCurrentSaving());
+        editIntent.putExtra(Database.COLUMN_SAVING_GOAL, selectedSaving.getGoal());
+        editIntent.putExtra(Database.COLUMN_SAVING_NOTES, selectedSaving.getNotes());
+        editIntent.putExtra(Database.COLUMN_SAVING_DEADLINE, selectedSaving.getDeadline());
+        editIntent.putExtra(Database.COLUMN_SAVING_IS_ARCHIVED, selectedSaving.getIsArchived());
         editSavingLauncher.launch(editIntent);
     }
 
