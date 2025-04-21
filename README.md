@@ -12,13 +12,14 @@ Centsation is the easy-to-use savings tracker that helps you reach your financia
 
 - Free and open source
 - Material 3 design with support for dynamic colors
-- Support for multiple contrast (low, medium or high)
+- Support for UI contrasts (low, medium or high)
 - Support for dark mode
 - Support for multiple currencies
 - Archived savings
 - Export and import to and from JSON
 - History of transactions
-- Sort by name, current saving or goal
+- Optional deadlines
+- Sort by name, current saving, goal or deadline
 
 ## Screenshots
 
