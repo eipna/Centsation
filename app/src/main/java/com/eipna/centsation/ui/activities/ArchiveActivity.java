@@ -52,7 +52,7 @@ public class ArchiveActivity extends BaseActivity implements SavingListener {
         EdgeToEdge.enable(this);
         binding = ActivityArchiveBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
             return insets;

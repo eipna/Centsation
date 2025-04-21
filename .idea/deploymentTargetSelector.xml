@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-04-21T05:28:00.992756900Z">
+        <DropdownSelection timestamp="2025-04-21T06:41:49.227715300Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Vrixzandro Eliponga\.android\avd\Nougat.avd" />
