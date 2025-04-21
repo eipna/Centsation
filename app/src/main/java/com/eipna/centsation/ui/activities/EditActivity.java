@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
@@ -46,7 +50,9 @@ public class EditActivity extends BaseActivity {
     private int isArchiveExtra;
     private String IDExtra, nameExtra, notesExtra;
     private double currentSavingExtra, goalExtra;
-    private long deadlineExtra, selectedDeadline;
+    private long deadlineExtra;
+
+    private String selectedCurrencySymbol;
 
     private final ActivityResultLauncher<String> requestNotificationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -63,17 +69,19 @@ public class EditActivity extends BaseActivity {
         binding = ActivityEditBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
-
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        savingRepository = new SavingRepository(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
-        binding.fieldSavingGoalLayout.setPrefixText(currentCurrencySymbol);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        savingRepository = new SavingRepository(this);
 
         IDExtra = getIntent().getStringExtra("id");
         nameExtra = getIntent().getStringExtra("name");
@@ -83,7 +91,8 @@ public class EditActivity extends BaseActivity {
         deadlineExtra = getIntent().getLongExtra("deadline", AlarmUtil.NO_ALARM);
         isArchiveExtra = getIntent().getIntExtra("is_archive", Saving.NOT_ARCHIVE);
 
-        selectedDeadline = deadlineExtra;
+        selectedCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
+        binding.fieldSavingGoalLayout.setPrefixText(selectedCurrencySymbol);
 
         binding.fieldSavingNameText.setText(nameExtra);
         binding.fieldSavingGoalText.setText(String.format(Locale.getDefault(), "%.2f", goalExtra));
@@ -139,11 +148,10 @@ public class EditActivity extends BaseActivity {
                 hasAlarmPermission();
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
                 Snackbar.make(binding.getRoot(), getString(R.string.snack_bar_permission_notifications), Snackbar.LENGTH_SHORT)
-                        .setAction("Grant", v -> {
-                            Intent intent;
-                            intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
-                            startActivity(intent);
+                        .setAction(R.string.dialog_button_grant, v -> {
+                            Intent notificationSettingsIntent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                            notificationSettingsIntent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                            startActivity(notificationSettingsIntent);
                         }).show();
             } else {
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
@@ -163,15 +171,16 @@ public class EditActivity extends BaseActivity {
                 .build();
 
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(selection);
             calendar.set(java.util.Calendar.HOUR_OF_DAY, 0);
             calendar.set(java.util.Calendar.MINUTE, 0);
             calendar.set(java.util.Calendar.SECOND, 0);
             calendar.set(java.util.Calendar.MILLISECOND, 0);
-            selectedDeadline = calendar.getTimeInMillis();
 
+            deadlineExtra = calendar.getTimeInMillis();
             String deadlineFormat = preferences.getDeadlineFormat();
+
             binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, deadlineFormat));
             binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
         });
@@ -201,7 +210,7 @@ public class EditActivity extends BaseActivity {
             editedSaving.setGoal(goal);
             editedSaving.setNotes(notesText);
             editedSaving.setIsArchived(isArchiveExtra);
-            editedSaving.setDeadline(selectedDeadline);
+            editedSaving.setDeadline(deadlineExtra);
 
             if (deadlineText.isEmpty()) {
                 AlarmUtil.cancel(this, editedSaving);
