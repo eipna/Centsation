@@ -20,6 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
@@ -44,13 +47,14 @@ public class CreateActivity extends BaseActivity {
     private SavingRepository savingRepository;
     private AlarmManager alarmManager;
     private long selectedDeadline;
+    private String selectedCurrencySymbol;
 
     private final ActivityResultLauncher<String> requestNotificationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     hasAlarmPermission();
                 } else {
-                    Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_notification_permission_denied, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -60,19 +64,24 @@ public class CreateActivity extends BaseActivity {
         binding = ActivityCreateBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
-
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        savingRepository = new SavingRepository(this);
-        selectedDeadline = AlarmUtil.NO_ALARM;
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        String currentCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
-        binding.fieldSavingCurrentSavingLayout.setPrefixText(currentCurrencySymbol);
-        binding.fieldSavingGoalLayout.setPrefixText(currentCurrencySymbol);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        savingRepository = new SavingRepository(this);
+        selectedDeadline = AlarmUtil.NO_ALARM;
+
+        selectedCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
+        binding.fieldSavingCurrentSavingLayout.setPrefixText(selectedCurrencySymbol);
+        binding.fieldSavingGoalLayout.setPrefixText(selectedCurrencySymbol);
 
         binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
         binding.fieldSavingDeadlineText.setOnClickListener(v -> hasNotificationPermission());
@@ -159,7 +168,7 @@ public class CreateActivity extends BaseActivity {
                 hasAlarmPermission();
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
                 Snackbar.make(binding.getRoot(), getString(R.string.snack_bar_permission_notifications), Snackbar.LENGTH_SHORT)
-                        .setAction("Grant", v -> {
+                        .setAction(R.string.dialog_button_grant, v -> {
                             Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                             intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
                             startActivity(intent);
@@ -188,9 +197,10 @@ public class CreateActivity extends BaseActivity {
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-            selectedDeadline = calendar.getTimeInMillis();
 
+            selectedDeadline = calendar.getTimeInMillis();
             String deadlineFormat = preferences.getDeadlineFormat();
+
             binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, deadlineFormat));
             binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
         });
