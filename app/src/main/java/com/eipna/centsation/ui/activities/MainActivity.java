@@ -22,7 +22,6 @@ import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.saving.Saving;
-import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.data.saving.SavingSort;
@@ -43,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity implements SavingListener {
+public class MainActivity extends BaseActivity implements SavingAdapter.Listener {
 
     private ActivityMainBinding binding;
     private SavingRepository savingRepository;

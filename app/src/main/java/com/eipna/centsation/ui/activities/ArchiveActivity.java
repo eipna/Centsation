@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.saving.Saving;
-import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.data.transaction.Transaction;
@@ -29,7 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 
-public class ArchiveActivity extends BaseActivity implements SavingListener {
+public class ArchiveActivity extends BaseActivity implements SavingAdapter.Listener {
 
     private ActivityArchiveBinding binding;
     private SavingRepository savingRepository;

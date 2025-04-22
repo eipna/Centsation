@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
 import com.eipna.centsation.data.saving.Saving;
-import com.eipna.centsation.data.saving.SavingListener;
 import com.eipna.centsation.data.saving.SavingOperation;
 import com.eipna.centsation.util.AlarmUtil;
 import com.eipna.centsation.util.DateUtil;
@@ -31,15 +30,20 @@ import java.util.ArrayList;
 public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder> {
 
     private final Context context;
-    private final SavingListener savingListener;
+    private final Listener listener;
     private final PreferenceUtil preferences;
     private final ArrayList<Saving> savings;
 
-    public SavingAdapter(Context context, SavingListener savingListener, ArrayList<Saving> savings) {
+    public SavingAdapter(Context context, Listener listener, ArrayList<Saving> savings) {
         this.context = context;
-        this.savingListener = savingListener;
+        this.listener = listener;
         this.savings = savings;
         this.preferences = new PreferenceUtil(context);
+    }
+
+    public interface Listener {
+        void OnClick(int position);
+        void OnOperationClick(SavingOperation operation, int position);
     }
 
     @NonNull
@@ -54,13 +58,13 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         Saving currentSaving = savings.get(position);
         holder.bind(currentSaving, preferences);
 
-        holder.itemView.setOnClickListener(view -> savingListener.OnClick(position));
-        holder.delete.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.DELETE, position));
-        holder.share.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.SHARE, position));
-        holder.update.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.TRANSACTION, position));
-        holder.archive.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.ARCHIVE, position));
-        holder.unarchive.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.UNARCHIVE, position));
-        holder.history.setOnClickListener(view -> savingListener.OnOperationClick(SavingOperation.HISTORY, position));
+        holder.itemView.setOnClickListener(view -> listener.OnClick(position));
+        holder.delete.setOnClickListener(view -> listener.OnOperationClick(SavingOperation.DELETE, position));
+        holder.share.setOnClickListener(view -> listener.OnOperationClick(SavingOperation.SHARE, position));
+        holder.update.setOnClickListener(view -> listener.OnOperationClick(SavingOperation.TRANSACTION, position));
+        holder.archive.setOnClickListener(view -> listener.OnOperationClick(SavingOperation.ARCHIVE, position));
+        holder.unarchive.setOnClickListener(view -> listener.OnOperationClick(SavingOperation.UNARCHIVE, position));
+        holder.history.setOnClickListener(view -> listener.OnOperationClick(SavingOperation.HISTORY, position));
     }
 
     @Override
