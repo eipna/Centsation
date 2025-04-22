@@ -18,7 +18,6 @@ import com.eipna.centsation.util.PreferenceUtil;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
@@ -63,17 +62,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(Transaction currentTransaction, PreferenceUtil preferenceUtil, Context context) {
             String selectedCurrencySymbol = Currency.getSymbol(preferenceUtil.getCurrency());
-            double transactionAmount = Double.parseDouble(NumberFormat.getInstance().format(currentTransaction.getAmount()));
 
             type.setText(currentTransaction.getType());
             date.setText(DateUtil.getStringDate(currentTransaction.getDate()));
 
             if (currentTransaction.getType().equals(TransactionType.DEPOSIT.VALUE) || currentTransaction.getType().equals(TransactionType.CREATED.VALUE)) {
                 amount.setTextColor(context.getResources().getColor(R.color.md_theme_secondary, itemView.getContext().getTheme()));
-                amount.setText(String.format(Locale.getDefault(), "%c%s%.2f", '+', selectedCurrencySymbol, transactionAmount));
+                amount.setText(String.format("%c%s%s", '+', selectedCurrencySymbol, NumberFormat.getInstance().format(currentTransaction.getAmount())));
             } else if (currentTransaction.getType().equals(TransactionType.WITHDRAW.VALUE)) {
                 amount.setTextColor(context.getResources().getColor(R.color.md_theme_error, itemView.getContext().getTheme()));
-                amount.setText(String.format(Locale.getDefault(), "%c%s%.2f", '-', selectedCurrencySymbol, transactionAmount));
+                amount.setText(String.format("%c%s%s", '-', selectedCurrencySymbol, NumberFormat.getInstance().format(currentTransaction.getAmount())));
             }
         }
     }
