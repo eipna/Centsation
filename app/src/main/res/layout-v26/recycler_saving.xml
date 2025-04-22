@@ -7,11 +7,9 @@
     android:focusable="true"
     android:checkable="true"
     app:cardUseCompatPadding="true"
-    app:cardCornerRadius="12dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
+    app:cardElevation="0dp"
     android:id="@+id/saving_parent"
-    app:cardBackgroundColor="?attr/colorSurfaceContainer"
+    app:cardBackgroundColor="?attr/colorSurfaceContainerHighest"
     style="@style/Widget.Material3.CardView.Filled"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -44,7 +42,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/saving_current_saving"
                 android:text="1000.0"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="?attr/colorOnSurface"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +50,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:text="out of"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="?attr/colorOnSurface"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:layout_marginEnd="4dp"
                 android:layout_marginStart="4dp"
@@ -63,7 +61,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/saving_goal"
                 android:text="1000.0"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="?attr/colorOnSurface"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:layout_marginEnd="4dp"
                 android:layout_width="wrap_content"
@@ -74,7 +72,7 @@
                 android:id="@+id/saving_percent"
                 android:text="(100.0%)"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
@@ -83,7 +81,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/saving_deadline"
             android:text="Deadline: 04/11/2025"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textColor="?attr/colorOnSurface"
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:layout_marginBottom="12dp"
             android:layout_width="wrap_content"
