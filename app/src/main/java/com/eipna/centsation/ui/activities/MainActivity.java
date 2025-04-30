@@ -93,6 +93,8 @@ public class MainActivity extends BaseActivity implements SavingAdapter.Listener
         sortSavings(sortCriteria);
 
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.savingList.setVisibility(savings.isEmpty() ? View.GONE : View.VISIBLE);
+
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
         binding.savingList.setAdapter(savingAdapter);
 
@@ -112,6 +114,7 @@ public class MainActivity extends BaseActivity implements SavingAdapter.Listener
         sortSavings(sortCriteria);
 
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.savingList.setVisibility(savings.isEmpty() ? View.GONE : View.VISIBLE);
         savingAdapter.notifyDataSetChanged();
     }
 
