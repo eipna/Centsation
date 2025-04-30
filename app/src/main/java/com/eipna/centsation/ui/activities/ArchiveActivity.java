@@ -63,9 +63,10 @@ public class ArchiveActivity extends BaseActivity implements SavingAdapter.Liste
 
         savingRepository = new SavingRepository(this);
         transactionRepository = new TransactionRepository(this);
-
         savings = new ArrayList<>(savingRepository.get(Saving.IS_ARCHIVE));
+
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.savingList.setVisibility(savings.isEmpty() ? View.GONE : View.VISIBLE);
 
         savingAdapter = new SavingAdapter(this, this, savings);
         binding.savingList.setLayoutManager(new LinearLayoutManager(this));
@@ -129,6 +130,7 @@ public class ArchiveActivity extends BaseActivity implements SavingAdapter.Liste
         savings.addAll(savingRepository.get(Saving.IS_ARCHIVE));
         savingAdapter.notifyDataSetChanged();
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.savingList.setVisibility(savings.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     @Override
