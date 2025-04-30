@@ -57,6 +57,9 @@ The certificate fingerprints should correspond to the ones listed below:
 CN=Vrixzandro Eliponga
 O=OSSentials
 OU=Hobbyist Developer
+L=Lian
+ST=Batangas
+C=PH
 Certificate fingerprints:
    MD5:  a8a82d68a60fe6ecf45eff4550b94d6f
    SHA1: af8be376426c6725fc3bdb287abeb268bf94b768
