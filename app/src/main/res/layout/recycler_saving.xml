@@ -7,10 +7,10 @@
     android:focusable="true"
     android:checkable="true"
     app:cardUseCompatPadding="true"
-    app:cardElevation="0dp"
+    app:cardElevation="1dp"
     android:id="@+id/saving_parent"
-    app:cardBackgroundColor="?attr/colorSurfaceContainerHighest"
-    style="@style/Widget.Material3.CardView.Filled"
+    app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
+    style="@style/Widget.Material3.CardView.Elevated"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
