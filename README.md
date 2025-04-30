@@ -57,11 +57,16 @@ The certificate fingerprints should correspond to the ones listed below:
 CN=Vrixzandro Eliponga
 O=OSSentials
 OU=Hobbyist Developer
+L=Lian
+ST=Batangas
+C=PH
 Certificate fingerprints:
    MD5:  a8a82d68a60fe6ecf45eff4550b94d6f
    SHA1: af8be376426c6725fc3bdb287abeb268bf94b768
    SHA256: 561f3fec72e1f9878c2749d079f8b2175d02131c842955714e63365da5301baa
 ```
+
+**Warning:** Please be aware that versions 1.3 and below of this application were released without digital signatures. For the best security and to ensure you are using a genuine version of the application, I strongly recommend updating to the latest version (1.4 or higher) as soon as possible.
 
 ## License
 
