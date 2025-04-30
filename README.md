@@ -63,6 +63,8 @@ Certificate fingerprints:
    SHA256: 561f3fec72e1f9878c2749d079f8b2175d02131c842955714e63365da5301baa
 ```
 
+**Warning:** Please be aware that versions 1.3 and below of this application were released without digital signatures. For the best security and to ensure you are using a genuine version of our app, we strongly recommend updating to the latest version (1.4 or higher) as soon as possible.
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0. See the
