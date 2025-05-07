@@ -6,11 +6,13 @@
     android:clickable="true"
     android:focusable="true"
     android:checkable="true"
+    app:cardElevation="0dp"
     app:cardUseCompatPadding="true"
-    app:cardElevation="1dp"
+    app:cardBackgroundColor="?attr/colorSurfaceContainer"
+    style="@style/Widget.Material3.CardView.Filled"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
     android:id="@+id/saving_parent"
-    app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
-    style="@style/Widget.Material3.CardView.Elevated"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
