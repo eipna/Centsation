@@ -81,7 +81,7 @@ public class SavingRepository extends Database {
         database.close();
     }
 
-    public ArrayList<Saving> get(int isArchive) {
+    public ArrayList<Saving> getSavings(int isArchive) {
         ArrayList<Saving> list = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_SAVING + " WHERE " + COLUMN_SAVING_IS_ARCHIVED + " = ?";
@@ -105,7 +105,7 @@ public class SavingRepository extends Database {
         return list;
     }
 
-    public ArrayList<Saving> getAll() {
+    public ArrayList<Saving> getAllSavings() {
         ArrayList<Saving> list = new ArrayList<>();
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_SAVING, null);

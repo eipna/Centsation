@@ -217,7 +217,7 @@ public class SettingsActivity extends BaseActivity {
 
         private boolean noSavingsFound() {
             try (SavingRepository savingRepository = new SavingRepository(requireContext())) {
-                ArrayList<Saving> savings = new ArrayList<>(savingRepository.getAll());
+                ArrayList<Saving> savings = new ArrayList<>(savingRepository.getAllSavings());
                 if (savings.isEmpty()) return true;
             }
             return false;
@@ -288,7 +288,7 @@ public class SettingsActivity extends BaseActivity {
         }
 
         private void exportJSON(Uri uri) {
-            ArrayList<Saving> savings = new ArrayList<>(savingRepository.getAll());
+            ArrayList<Saving> savings = new ArrayList<>(savingRepository.getAllSavings());
             ArrayList<Transaction> transactions = new ArrayList<>(transactionRepository.getAll());
 
             JSONArray savingJsonArray = new JSONArray();

@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity implements SavingAdapter.Listener
         sortCriteria = preferences.getSortCriteria();
         isSortAscending = preferences.getSortOrder();
 
-        savings.addAll(savingRepository.get(Saving.NOT_ARCHIVE));
+        savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
         savingAdapter = new SavingAdapter(this, this, savings);
         sortSavings(sortCriteria);
 
@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity implements SavingAdapter.Listener
     @SuppressLint("NotifyDataSetChanged")
     private void refreshList() {
         savings.clear();
-        savings.addAll(savingRepository.get(Saving.NOT_ARCHIVE));
+        savings.addAll(savingRepository.getSavings(Saving.NOT_ARCHIVE));
         sortSavings(sortCriteria);
 
         binding.emptyIndicator.setVisibility(savings.isEmpty() ? View.VISIBLE : View.GONE);
