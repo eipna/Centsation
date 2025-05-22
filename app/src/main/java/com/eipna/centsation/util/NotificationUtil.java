@@ -10,6 +10,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import com.eipna.centsation.R;
+import com.eipna.centsation.data.Database;
 import com.eipna.centsation.ui.activities.MainActivity;
 
 import java.util.Objects;
@@ -31,8 +32,8 @@ public class NotificationUtil {
     public static void create(Context context, Intent intent) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        String savingName = intent.getStringExtra("saving_name");
-        int savingRequestCode = Objects.requireNonNull(intent.getStringExtra("saving_id")).hashCode();
+        String savingName = intent.getStringExtra(Database.COLUMN_SAVING_NAME);
+        int savingRequestCode = Objects.requireNonNull(intent.getStringExtra(Database.COLUMN_SAVING_ID)).hashCode();
 
         Intent notificationIntent = new Intent(context, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

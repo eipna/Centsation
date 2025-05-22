@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.eipna.centsation.data.Database;
 import com.eipna.centsation.data.saving.Saving;
 import com.eipna.centsation.receiver.DeadlineReceiver;
 
@@ -17,9 +18,9 @@ public class AlarmUtil {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, DeadlineReceiver.class);
-        intent.putExtra("saving_id", saving.getID());
-        intent.putExtra("saving_name", saving.getName());
-        intent.putExtra("saving_deadline", saving.getDeadline());
+        intent.putExtra(Database.COLUMN_SAVING_ID, saving.getID());
+        intent.putExtra(Database.COLUMN_SAVING_NAME, saving.getName());
+        intent.putExtra(Database.COLUMN_SAVING_DEADLINE, saving.getDeadline());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, saving.getID().hashCode(), intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         if (alarmManager != null) {
