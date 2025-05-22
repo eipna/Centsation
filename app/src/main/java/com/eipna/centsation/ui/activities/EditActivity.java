@@ -45,13 +45,7 @@ public class EditActivity extends BaseActivity {
     private ActivityEditBinding binding;
     private SavingRepository savingRepository;
     private AlarmManager alarmManager;
-
-    private int isArchiveExtra;
-    private String IDExtra, nameExtra, notesExtra;
-    private double currentSavingExtra, goalExtra;
-    private long deadlineExtra;
-
-    private String selectedCurrencySymbol;
+    private Saving currentSaving;
 
     private final ActivityResultLauncher<String> requestNotificationPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -75,29 +69,24 @@ public class EditActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        String savingIDExtra = getIntent().getStringExtra(Database.COLUMN_SAVING_ID);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
         savingRepository = new SavingRepository(this);
+        currentSaving = savingRepository.getSaving(savingIDExtra);
 
-        IDExtra = getIntent().getStringExtra(Database.COLUMN_SAVING_ID);
-        nameExtra = getIntent().getStringExtra(Database.COLUMN_SAVING_NAME);
-        currentSavingExtra = getIntent().getDoubleExtra(Database.COLUMN_SAVING_CURRENT_SAVING, -1);
-        goalExtra = getIntent().getDoubleExtra(Database.COLUMN_SAVING_GOAL, -1);
-        notesExtra = getIntent().getStringExtra(Database.COLUMN_SAVING_NOTES);
-        deadlineExtra = getIntent().getLongExtra(Database.COLUMN_SAVING_DEADLINE, AlarmUtil.NO_ALARM);
-        isArchiveExtra = getIntent().getIntExtra(Database.COLUMN_SAVING_IS_ARCHIVED, Saving.NOT_ARCHIVE);
-
-        selectedCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
+        String selectedCurrencySymbol = Currency.getSymbol(preferences.getCurrency());
         binding.fieldSavingGoalLayout.setPrefixText(selectedCurrencySymbol);
 
-        binding.fieldSavingNameText.setText(nameExtra);
-        binding.fieldSavingGoalText.setText(String.format(Locale.getDefault(), "%.2f", goalExtra));
-        binding.fieldSavingNotesText.setText(notesExtra);
+        binding.fieldSavingNameText.setText(currentSaving.getName());
+        binding.fieldSavingGoalText.setText(String.format(Locale.getDefault(), "%.2f", currentSaving.getGoal()));
+        binding.fieldSavingNotesText.setText(currentSaving.getNotes());
         binding.fieldSavingDeadlineLayout.setEndIconVisible(false);
 
-        if (deadlineExtra != AlarmUtil.NO_ALARM) {
+        if (currentSaving.getDeadline() != AlarmUtil.NO_ALARM) {
             String deadlineFormat = preferences.getDeadlineFormat();
             binding.fieldSavingDeadlineLayout.setEndIconVisible(true);
-            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(deadlineExtra, deadlineFormat));
+            binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(currentSaving.getDeadline(), deadlineFormat));
         }
 
         binding.fieldSavingDeadlineText.setOnClickListener(v -> hasNotificationPermission());
@@ -173,7 +162,7 @@ public class EditActivity extends BaseActivity {
             calendar.set(java.util.Calendar.SECOND, 0);
             calendar.set(java.util.Calendar.MILLISECOND, 0);
 
-            deadlineExtra = calendar.getTimeInMillis();
+            currentSaving.setDeadline(calendar.getTimeInMillis());
             String deadlineFormat = preferences.getDeadlineFormat();
 
             binding.fieldSavingDeadlineText.setText(DateUtil.getStringDate(selection, deadlineFormat));
@@ -199,13 +188,13 @@ public class EditActivity extends BaseActivity {
             double goal = Double.parseDouble(goalText);
 
             Saving editedSaving = new Saving();
-            editedSaving.setID(IDExtra);
+            editedSaving.setID(currentSaving.getID());
             editedSaving.setName(nameText);
-            editedSaving.setCurrentSaving(currentSavingExtra);
+            editedSaving.setCurrentSaving(currentSaving.getCurrentSaving());
             editedSaving.setGoal(goal);
             editedSaving.setNotes(notesText);
-            editedSaving.setIsArchived(isArchiveExtra);
-            editedSaving.setDeadline(deadlineExtra);
+            editedSaving.setIsArchived(currentSaving.getIsArchived());
+            editedSaving.setDeadline(currentSaving.getDeadline());
 
             if (deadlineText.isEmpty()) {
                 AlarmUtil.cancel(this, editedSaving);

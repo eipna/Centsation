@@ -144,12 +144,6 @@ public class ArchiveActivity extends BaseActivity implements SavingAdapter.Liste
         Saving selectedSaving = savings.get(position);
         Intent editIntent = new Intent(this, EditActivity.class);
         editIntent.putExtra(Database.COLUMN_SAVING_ID, selectedSaving.getID());
-        editIntent.putExtra(Database.COLUMN_SAVING_NAME, selectedSaving.getName());
-        editIntent.putExtra(Database.COLUMN_SAVING_CURRENT_SAVING, selectedSaving.getCurrentSaving());
-        editIntent.putExtra(Database.COLUMN_SAVING_GOAL, selectedSaving.getGoal());
-        editIntent.putExtra(Database.COLUMN_SAVING_NOTES, selectedSaving.getNotes());
-        editIntent.putExtra(Database.COLUMN_SAVING_DEADLINE, selectedSaving.getDeadline());
-        editIntent.putExtra(Database.COLUMN_SAVING_IS_ARCHIVED, selectedSaving.getIsArchived());
         editSavingLauncher.launch(editIntent);
     }
 
