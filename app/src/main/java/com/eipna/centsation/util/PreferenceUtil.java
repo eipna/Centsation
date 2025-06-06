@@ -74,4 +74,12 @@ public class PreferenceUtil {
     public String getDeadlineFormat() {
         return sharedPreferences.getString("deadline_format", DateFormat.MM_DD_YYYY.PATTERN);
     }
+
+    public void setScreenPrivacy(boolean value) {
+        sharedPreferences.edit().putBoolean("screen_privacy", value).apply();
+    }
+
+    public boolean isScreenPrivacyEnabled() {
+        return sharedPreferences.getBoolean("screen_privacy", false);
+    }
 }

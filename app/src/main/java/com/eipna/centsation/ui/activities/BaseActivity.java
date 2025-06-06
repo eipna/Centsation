@@ -2,6 +2,7 @@ package com.eipna.centsation.ui.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         preferences = new PreferenceUtil(this);
         super.onCreate(savedInstanceState);
+
+        if (preferences.isScreenPrivacyEnabled()) {
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_SECURE,
+                    WindowManager.LayoutParams.FLAG_SECURE
+            );
+        }
 
         NotificationUtil.createChannels(this);
 

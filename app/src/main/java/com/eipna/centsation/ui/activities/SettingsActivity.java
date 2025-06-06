@@ -91,6 +91,7 @@ public class SettingsActivity extends BaseActivity {
         private ListPreference listCurrency;
 
         private SwitchPreferenceCompat switchDynamicColors;
+        private SwitchPreferenceCompat switchScreenPrivacy;
 
         private Preference appVersion;
         private Preference appLicense;
@@ -178,6 +179,13 @@ public class SettingsActivity extends BaseActivity {
                 return true;
             });
 
+            switchScreenPrivacy.setChecked(preferences.isScreenPrivacyEnabled());
+            switchScreenPrivacy.setOnPreferenceChangeListener((preference, isChecked) -> {
+                preferences.setScreenPrivacy((boolean) isChecked);
+                requireActivity().recreate();
+                return true;
+            });
+
             listTheme.setEntries(Theme.getValues());
             listTheme.setEntryValues(Theme.getValues());
             listTheme.setSummary(preferences.getTheme());
@@ -253,6 +261,7 @@ public class SettingsActivity extends BaseActivity {
             listContrast = findPreference("contrast");
 
             switchDynamicColors = findPreference("dynamic_colors");
+            switchScreenPrivacy = findPreference("screen_privacy");
 
             appVersion = findPreference("app_version");
             appLicense = findPreference("app_license");
