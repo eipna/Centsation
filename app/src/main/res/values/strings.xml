@@ -87,6 +87,11 @@
     <string name="preference_list_currency">Currency</string>
     <string name="preference_list_deadline_format">Deadline Format</string>
 
+    <!-- Security Preference Category -->
+    <string name="preference_category_security">Security</string>
+    <string name="preference_switch_screen_privacy_title">Screen Privacy</string>
+    <string name="preference_switch_screen_privacy_summary">Prevents capturing of screenshots and screen recordings in the app</string>
+
     <!-- Backup Preference Category -->
     <string name="preference_category_backup">Backup</string>
     <string name="preference_import_title">Import</string>

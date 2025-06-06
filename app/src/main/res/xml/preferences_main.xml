@@ -39,6 +39,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="@string/preference_category_security"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            android:key="screen_privacy"
+            android:title="@string/preference_switch_screen_privacy_title"
+            android:summary="@string/preference_switch_screen_privacy_summary"
+            android:widgetLayout="@layout/view_preference_switch"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/preference_category_backup"
         app:iconSpaceReserved="false">
 
