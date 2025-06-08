@@ -13,6 +13,11 @@ android {
     namespace = "com.eipna.centsation"
     compileSdk = 35
 
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     defaultConfig {
         applicationId = "com.eipna.centsation"
         minSdk = 24
