@@ -25,12 +25,12 @@ Centsation is the easy-to-use savings tracker that helps you reach your financia
 
 <div align="center">
 	<div>
-		<img src="metadata/en-US/images/Phone Screenshots/Screenshot 1.jpg" width="30%" />
-    <img src="metadata/en-US/images/Phone Screenshots/Screenshot 2.jpg" width="30%" />
-    <img src="metadata/en-US/images/Phone Screenshots/Screenshot 3.jpg" width="30%" />
-    <img src="metadata/en-US/images/Phone Screenshots/Screenshot 4.jpg" width="30%" />
-    <img src="metadata/en-US/images/Phone Screenshots/Screenshot 5.jpg" width="30%" />
-    <img src="metadata/en-US/images/Phone Screenshots/Screenshot 6.jpg" width="30%" />
+		<img src="metadata/en-US/images/phoneScreenshots/Screenshot 1.jpg" width="30%" />
+    <img src="metadata/en-US/images/phoneScreenshots/Screenshot 2.jpg" width="30%" />
+    <img src="metadata/en-US/images/phoneScreenshots/Screenshot 3.jpg" width="30%" />
+    <img src="metadata/en-US/images/phoneScreenshots/Screenshot 4.jpg" width="30%" />
+    <img src="metadata/en-US/images/phoneScreenshots/Screenshot 5.jpg" width="30%" />
+    <img src="metadata/en-US/images/phoneScreenshots/Screenshot 6.jpg" width="30%" />
 	</div>
 </div>
 
