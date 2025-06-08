@@ -20,6 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.eipna.centsation.R;
 import com.eipna.centsation.data.Currency;
@@ -28,7 +31,6 @@ import com.eipna.centsation.data.saving.SavingRepository;
 import com.eipna.centsation.databinding.ActivityCreateBinding;
 import com.eipna.centsation.util.AlarmUtil;
 import com.eipna.centsation.util.DateUtil;
-import com.eipna.centsation.util.ViewUtil;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -62,7 +64,11 @@ public class CreateActivity extends BaseActivity {
         binding = ActivityCreateBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
-        ViewUtil.setInsets(binding.getRoot());
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
