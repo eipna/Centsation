@@ -34,6 +34,14 @@ Centsation is the easy-to-use savings tracker that helps you reach your financia
 	</div>
 </div>
 
+## Downloads
+
+Centsation is also available on IzzyOnDroid.
+
+[<img height=80 alt="Get it on IzzyOnDroid"
+src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
+/>](https://apt.izzysoft.de/fdroid/index/apk/com.eipna.centsation)
+
 ## Verification
 
 APK releases on GitHub are signed using my key. They can
