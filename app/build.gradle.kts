@@ -22,8 +22,8 @@ android {
         applicationId = "com.eipna.centsation"
         minSdk = 24
         targetSdk = 35
-        versionCode = 5
-        versionName = "1.5"
+        versionCode = 6
+        versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
