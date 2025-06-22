@@ -310,10 +310,6 @@ public class MainActivity extends BaseActivity implements SavingAdapter.Listener
                 } else if (withdrawOption.isChecked()) {
                     double deductedSaving = selectedSaving.getCurrentSaving() - Double.parseDouble(amountText);
                     double amount = Double.parseDouble(amountText);
-                    if (deductedSaving < 0) {
-                        amountLayout.setError(getString(R.string.field_error_negative_saving));
-                        return;
-                    }
 
                     selectedSaving.setCurrentSaving(deductedSaving);
                     savingRepository.makeTransaction(selectedSaving, amount, TransactionType.WITHDRAW);
