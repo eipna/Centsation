@@ -1,7 +1,6 @@
 package com.eipna.centsation.ui.adapters;
 
 import android.content.Context;
-import android.icu.text.NumberFormat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
@@ -101,7 +100,6 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
         }
 
         public void bind(Saving currentSaving, PreferenceUtil preferences) {
-            String currencySymbol = Currency.getSymbol(preferences.getCurrency());
             String deadlineFormat = preferences.getDeadlineFormat();
             int percentValue = (int) ((currentSaving.getCurrentSaving() / currentSaving.getGoal()) * 100);
 
@@ -135,8 +133,8 @@ public class SavingAdapter extends RecyclerView.Adapter<SavingAdapter.ViewHolder
 
             percent.setText(String.format("(%s%c)", percentValue, '%'));
             parent.setChecked(currentSaving.getCurrentSaving() >= currentSaving.getGoal());
-            saving.setText(String.format("%s%s", currencySymbol, NumberFormat.getInstance().format(currentSaving.getCurrentSaving())));
-            goal.setText(String.format("%s%s", currencySymbol, NumberFormat.getInstance().format(currentSaving.getGoal())));
+            saving.setText(Currency.formatAmount(preferences.getCurrency(), currentSaving.getCurrentSaving()));
+            goal.setText(Currency.formatAmount(preferences.getCurrency(), currentSaving.getGoal()));
             progress.setProgress(percentValue, true);
         }
     }
